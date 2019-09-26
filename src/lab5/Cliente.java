@@ -6,52 +6,36 @@ public class Cliente {
 	private String email;
 	private String localizacao;
 
-	public Cliente() {
+	/**
+	 * Cria o cliente com os dados parametros
+	 * 
+	 * @param cpf         cpf do cliente
+	 * @param nome        nome do cliente
+	 * @param email       email do cliente
+	 * @param localizacao local de trabalho do cliente
+	 */
+	public Cliente(String cpf, String nome, String email, String localizacao) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 		this.localizacao = localizacao;
 	}
-	
-	public void setNome(String novoNome) {
-		this.nome = novoNome;
-	}
-	
-	public void setEmail(String novoEmail) {
-		this.email = novoEmail;
+
+	/**
+	 * Altera os dados do cliente, que nao o cpf
+	 * 
+	 * @param nome        novo nome do cliente
+	 * @param email       novo email do cliente
+	 * @param localizacao novo localizacao do cliente
+	 */
+	public void editaCliente(String nome, String email, String localizacao) {
+		this.nome = nome;
+		this.email = email;
+		this.localizacao = localizacao;
 	}
 
-	public void setLocalizacao(String novaLocalizacao) {
-		this.localizacao = novaLocalizacao;
-	}
-	
 	@Override
 	public String toString() {
 		return this.nome + " - " + this.localizacao + " - " + this.email;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
-			return false;
-		return true;
 	}
 }
