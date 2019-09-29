@@ -1,2 +1,3 @@
-# lab5
-incrivel lab5 mater 2.0
+# lab5 - parte 1
+#### Sistema de comércio eletrônico
+## SAGA - Sistema para Auto-Gestão de comércio de Alimentos

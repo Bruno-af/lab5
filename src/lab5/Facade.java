@@ -65,30 +65,61 @@ public class Facade {
 	}
 
 	// comando administrador/fornecedor
-	public String cadastraFornecedor() {
-		/**
-		 * Em uma adição bem sucedida, o nome do fornecedor deve ser retornado. Quando
-		 * não é bem sucedida, uma exceção deve ser lançada e a mensagem de erro
-		 * mostrada para o usuário. Após isso, o programa não deverá continuar.
-		 * 
-		 */
-		return "";
+	/**
+	 * Cadastra um fornecedor
+	 * 
+	 * @param nome     nome e identificador do fornecedor
+	 * @param email    email do fornecedor
+	 * @param telefone telefone do fornecedor
+	 * @return nome do fornecedor caso o cadastro seja bem sucedido, senao, lanca-se
+	 *         um erro IllegalArgumentException
+	 */
+	public String cadastraFornecedor(String nome, String email, String telefone) {
+		try {
+			sistemaFornecedor.cadastraFornecedor(nome, email, telefone);
+			return nome;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
-	public String recuperaFornecedor() {
-		return "toString do fornecedor";
+	/**
+	 * retorna a representacao textual de um dado fornecedor
+	 * 
+	 * @param nome nome e identificador do fornecedor
+	 * @return representacao textual do fornecedor
+	 */
+	public String recuperaFornecedor(String nome) {
+		return sistemaFornecedor.retornaFornecedor(nome);
 	}
 
-	public void editaFornecedor(String nome) {
-		// so n pode o nome
-	}
-
-	public void deletaFornecedor() {
-
-	}
-
+	/**
+	 * lista todos os fornecedores
+	 * 
+	 * @return retorna em forma de texto a lista de todos os fornecedores
+	 */
 	public String listaFornecedores() {
-		return "toString1 | toString2 | (...) | toStringn";
+		return sistemaFornecedor.listarFornecedores();
+	}
+
+	/**
+	 * edita fornecedor
+	 * 
+	 * @param nome     identificador imutavel do fornecedor
+	 * @param email    novo email do fornecedor
+	 * @param telefone novo telefone do fornecedor
+	 */
+	public void editaFornecedor(String nome, String email, String telefone) {
+		sistemaFornecedor.editaFornecedor(nome, email, telefone);
+	}
+
+	/**
+	 * deleta um fornecedor do sistema
+	 * 
+	 * @param nome identificador do fornecedor
+	 */
+	public void deletaFornecedor(String nome) {
+		sistemaFornecedor.deletaFornecedor(nome);
 	}
 
 	// comandos administrador/produtos(dos fornecedores)
