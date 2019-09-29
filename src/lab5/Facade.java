@@ -39,8 +39,8 @@ public class Facade {
 	 * 
 	 * @return listagem de todos os clientes cadastrados
 	 */
-	public String listarClientes() {
-		return sistemaCliente.listarClientes();
+	public String listaClientes() {
+		return sistemaCliente.listaClientes();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Facade {
 	 * @return retorna em forma de texto a lista de todos os fornecedores
 	 */
 	public String listaFornecedores() {
-		return sistemaFornecedor.listarFornecedores();
+		return sistemaFornecedor.listaFornecedores();
 	}
 
 	/**

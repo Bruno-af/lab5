@@ -3,10 +3,10 @@ package lab5;
 import java.util.HashMap;
 
 public class CrudFornecedor {
+	/**
+	 * colecao de armazenamento dos fornecedores cadastrados
+	 */
 	private HashMap<String, Fornecedor> fornecedores;
-
-	// Como administrador do sistema, quero adicionar, recuperar, editar ou apagar
-	// fornecedores.
 
 	/**
 	 * Constroi sistema de fornecedores
@@ -60,7 +60,7 @@ public class CrudFornecedor {
 	 * 
 	 * @return representacao textual da listagem dos fornecedores
 	 */
-	public String listarFornecedores() {
+	public String listaFornecedores() {
 		String saida = "";
 		for (Fornecedor fornecedor : fornecedores.values()) {
 			saida += fornecedor.toString() + " | ";

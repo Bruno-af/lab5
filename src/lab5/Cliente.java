@@ -1,9 +1,21 @@
 package lab5;
 
 public class Cliente {
+	/**
+	 * cpf e identificador unico de um cliente
+	 */
 	private String cpf;
+	/**
+	 * nome do cliente
+	 */
 	private String nome;
+	/**
+	 * email do cliente
+	 */
 	private String email;
+	/**
+	 * local de trabalho do cliente
+	 */
 	private String localizacao;
 
 	/**
@@ -35,6 +47,10 @@ public class Cliente {
 	}
 
 	@Override
+	/**
+	 * representacao textual padrao de um cliente no formato: nome - local de
+	 * trabalho - email
+	 */
 	public String toString() {
 		return this.nome + " - " + this.localizacao + " - " + this.email;
 	}

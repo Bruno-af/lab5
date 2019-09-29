@@ -3,6 +3,9 @@ package lab5;
 import java.util.HashMap;
 
 public class CrudCliente {
+	/**
+	 * colecao de armazenamento dos clientes cadastrados
+	 */
 	private HashMap<String, Cliente> clientesCadastrados;
 
 	/**
@@ -45,7 +48,7 @@ public class CrudCliente {
 	 * 
 	 * @return texto da listagem
 	 */
-	public String listarClientes() {
+	public String listaClientes() {
 		String saida = "";
 		for (Cliente cliente : clientesCadastrados.values()) {
 			saida += cliente.toString() + " | ";

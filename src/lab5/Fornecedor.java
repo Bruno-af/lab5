@@ -34,7 +34,7 @@ public class Fornecedor {
 	}
 
 	/**
-	 * representacao textual do fornecedor
+	 * representacao textual do fornecedor no formato: nome - email - telefone
 	 */
 	public String toString() {
 		return this.nome + " - " + this.email + " - " + this.telefone;
