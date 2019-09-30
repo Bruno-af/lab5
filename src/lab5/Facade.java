@@ -122,28 +122,70 @@ public class Facade {
 		sistemaFornecedor.deletaFornecedor(nome);
 	}
 
-	// comandos administrador/produtos(dos fornecedores)
-	public String cadastrarProduto(String nomeFornecedor, String nomeProduto, String descricao, String preco) {
-		return "";
+	// comandos administrador/produtos(pelos fornecedores)
+	/**
+	 * cadastra produto ainda nao cadastrado de um dado fornecedor
+	 * 
+	 * @param nomeFornecedor nome e identificador do fornecedor
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 * @param preco          preco do produto
+	 */
+	public void cadastraProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+		sistemaFornecedor.cadastraProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
+	/**
+	 * consulta um produto em forma de texto
+	 * 
+	 * @param nomeFornecedor nome do fornecedor do produto
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 * @return representacao textual do produto
+	 */
 	public String consultarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
-		return "toString do produto";
+		return sistemaFornecedor.consultaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
+	/**
+	 * lista todos os produtos cadastrados de certo fornecedor
+	 * 
+	 * @param nomeFornecedor
+	 * @return listagem da representacao textual de todos os produtos
+	 */
 	public String listarProdutosFornecedor(String nomeFornecedor) {
-		return "toString de todos os produtos ' | ' " + "fornecedor - toString do produto ' | '";
+		return sistemaFornecedor.listaProdutos(nomeFornecedor);
 	}
 
+	/**
+	 * lista todos os produtos de todos os fornecedores
+	 * 
+	 * @return representacao textual de todos os produtos de todos os fornecedores
+	 */
 	public String listarProdutos() {
-		return "todos os produtos ' | ' \\ de todos os fornecedores" + " fornecedor - toString do produto ' | ' ";
+		return sistemaFornecedor.listaTodosProdutos();
 	}
 
-	public String editarProduto(String nome, String descricao) {
-		return "";
+	/**
+	 * Altera o preco de um produto de um fornecedor
+	 * 
+	 * @param nomeFornecedor nome e identificador do fornecedor
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 * @param preco          novo preco do produto
+	 */
+	public void editarProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+		sistemaFornecedor.editaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
-	public String deletarProduto(String nome, String descricao) {
-		return "";
+	/**
+	 * deleta certo produto de certo fornecedor
+	 * 
+	 * @param nomeFornecedor nome do fornecedor do produto
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 */
+	public void deletarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 }

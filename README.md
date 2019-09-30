@@ -3,6 +3,6 @@
 #### 1. Primeira parte: Sistema completo com os casos de uso 1-3, 02/10/2019
 - [X] CRUD de Clientes;
 - [X] CRUD de Fornecedores;
-- [ ] CRUD de Produtos;
+- [X] CRUD de Produtos;
 #### 2. Segunda parte: Sistema completo com os casos de uso 1-6, 14/10/2019
 #### 3. Terceira parte: Sistema completo com os casos de uso 1-8, 23/10/2019

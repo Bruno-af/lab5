@@ -27,10 +27,45 @@ public class Cliente {
 	 * @param localizacao local de trabalho do cliente
 	 */
 	public Cliente(String cpf, String nome, String email, String localizacao) {
+		validaDado(cpf, nome, email, localizacao);
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 		this.localizacao = localizacao;
+	}
+
+	/**
+	 * verifica a validade dos dados passados
+	 * @param cpf cpf a ser analisado
+	 * @param nome nome a ser analisado
+	 * @param email email a ser analisado
+	 * @param localizacao localizacao a ser analisada
+	 */
+	private void validaDado(String cpf, String nome, String email, String localizacao) {
+		if (cpf.equals("")) {
+			throw new IllegalArgumentException("cpf invalido");
+		}
+		if (cpf == null) {
+			throw new NullPointerException("cpf não pode ser nulo");
+		}
+		if (nome.equals("")) {
+			throw new IllegalArgumentException("nome invalido");
+		}
+		if (nome == null) {
+			throw new NullPointerException("nome não pode ser nulo");
+		}
+		if (email.equals("")) {
+			throw new IllegalArgumentException("email invalido");
+		}
+		if (email == null) {
+			throw new NullPointerException("email não pode ser nulo");
+		}
+		if (localizacao.equals("")) {
+			throw new IllegalArgumentException("localizacao invalida");
+		}
+		if (localizacao == null) {
+			throw new NullPointerException("localizacao não pode ser nula");
+		}
 	}
 
 	/**
