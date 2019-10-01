@@ -46,25 +46,25 @@ public class Cliente {
 			throw new IllegalArgumentException("cpf invalido");
 		}
 		if (cpf == null) {
-			throw new NullPointerException("cpf não pode ser nulo");
+			throw new NullPointerException("cpf nï¿½o pode ser nulo");
 		}
 		if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
 		}
 		if (nome == null) {
-			throw new NullPointerException("nome não pode ser nulo");
+			throw new NullPointerException("nome nï¿½o pode ser nulo");
 		}
 		if (email.equals("")) {
 			throw new IllegalArgumentException("email invalido");
 		}
 		if (email == null) {
-			throw new NullPointerException("email não pode ser nulo");
+			throw new NullPointerException("email nï¿½o pode ser nulo");
 		}
 		if (localizacao.equals("")) {
 			throw new IllegalArgumentException("localizacao invalida");
 		}
 		if (localizacao == null) {
-			throw new NullPointerException("localizacao não pode ser nula");
+			throw new NullPointerException("localizacao nï¿½o pode ser nula");
 		}
 	}
 

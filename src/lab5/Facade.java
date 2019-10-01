@@ -179,13 +179,13 @@ public class Facade {
 	}
 
 	/**
-	 * deleta certo produto de certo fornecedor
-	 * 
-	 * @param nomeFornecedor nome do fornecedor do produto
-	 * @param nomeProduto    nome do produto
-	 * @param descricao      descricao do produto
+	 * @see CrudFornecedor#deletaProduto(String, String, String)
 	 */
 	public void deletarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
+	}
+	
+	public static void main(String[] args) {
+		args = new String[] {"Facade", "Testes/use_case_1.txt","Testes/use_case_2.txt","Testes/use_case_3.txt" };
 	}
 }
