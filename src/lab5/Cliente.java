@@ -1,6 +1,7 @@
 package lab5;
 
 public class Cliente {
+
 	/**
 	 * cpf e identificador unico de um cliente
 	 */
@@ -36,35 +37,32 @@ public class Cliente {
 
 	/**
 	 * verifica a validade dos dados passados
-	 * @param cpf cpf a ser analisado
-	 * @param nome nome a ser analisado
-	 * @param email email a ser analisado
+	 * 
+	 * @param cpf         cpf a ser analisado
+	 * @param nome        nome a ser analisado
+	 * @param email       email a ser analisado
 	 * @param localizacao localizacao a ser analisada
 	 */
 	private void validaDado(String cpf, String nome, String email, String localizacao) {
 		if (cpf.equals("")) {
 			throw new IllegalArgumentException("cpf invalido");
-		}
-		if (cpf == null) {
-			throw new NullPointerException("cpf nï¿½o pode ser nulo");
+		} else if (cpf == null) {
+			throw new NullPointerException("cpf não pode ser nulo");
 		}
 		if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
-		}
-		if (nome == null) {
-			throw new NullPointerException("nome nï¿½o pode ser nulo");
+		} else if (nome == null) {
+			throw new NullPointerException("nome não pode ser nulo");
 		}
 		if (email.equals("")) {
 			throw new IllegalArgumentException("email invalido");
-		}
-		if (email == null) {
-			throw new NullPointerException("email nï¿½o pode ser nulo");
+		} else if (email == null) {
+			throw new NullPointerException("email não pode ser nulo");
 		}
 		if (localizacao.equals("")) {
 			throw new IllegalArgumentException("localizacao invalida");
-		}
-		if (localizacao == null) {
-			throw new NullPointerException("localizacao nï¿½o pode ser nula");
+		} else if (localizacao == null) {
+			throw new NullPointerException("localizacao não pode ser nula");
 		}
 	}
 
@@ -81,6 +79,42 @@ public class Cliente {
 		this.localizacao = localizacao;
 	}
 
+	/**
+	 * retorna nome do cliente
+	 * 
+	 * @return nome do cliente
+	 */
+	public String getNome() {
+		return this.nome;
+	}
+
+	/**
+	 * retorna email do cliente
+	 * 
+	 * @return email do cliente
+	 */
+	public String getemail() {
+		return this.email;
+	}
+
+	/**
+	 * retorna localizacao do cliente
+	 * 
+	 * @return localizacao do cliente
+	 */
+	public String getLocalizacao() {
+		return this.localizacao;
+	}
+
+	/**
+	 * retorna cpf do cliente
+	 * 
+	 * @return cpf do cliente
+	 */
+	public String getCpf() {
+		return this.cpf;
+	}
+
 	@Override
 	/**
 	 * representacao textual padrao de um cliente no formato: nome - local de
@@ -88,5 +122,36 @@ public class Cliente {
 	 */
 	public String toString() {
 		return this.nome + " - " + this.localizacao + " - " + this.email;
+	}
+
+	@Override
+	/**
+	 * cria codigo unico de um cliente
+	 */
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		return result;
+	}
+
+	@Override
+	/**
+	 * compara dois clientes, inclusive pelo seu cpf
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		return true;
 	}
 }

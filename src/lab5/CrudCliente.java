@@ -40,6 +40,9 @@ public class CrudCliente {
 	 * @return representacao textual padrao de um cliente
 	 */
 	public String RepresentacaoCliente(String cpf) {
+		if (!haCliente(cpf)) {
+			throw new NullPointerException("Cliente nao cadastrado");
+		}
 		return clientesCadastrados.get(cpf).toString();
 	}
 
@@ -53,7 +56,10 @@ public class CrudCliente {
 		for (Cliente cliente : clientesCadastrados.values()) {
 			saida += cliente.toString() + " | ";
 		}
-		return saida.substring(0, saida.length() - 4);
+		if(saida.contentEquals("")) {
+			throw new NullPointerException("Nao ha clientes cadastrados");
+		}
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	/**
@@ -65,7 +71,11 @@ public class CrudCliente {
 	 * @param localizacao novo local de trabalho do cliente
 	 */
 	public void editarCliente(String cpf, String nome, String email, String localizacao) {
-		clientesCadastrados.get(cpf).editaCliente(nome, email, localizacao);
+		if(haCliente(cpf)) {
+			clientesCadastrados.get(cpf).editaCliente(nome, email, localizacao);			
+		} else {
+			throw new NullPointerException("Cliente nao cadastrado");
+		}
 	}
 
 	/**
@@ -73,7 +83,11 @@ public class CrudCliente {
 	 * @param cpf
 	 */
 	public void deletarCliente(String cpf) {
-		clientesCadastrados.remove(cpf);
+		if(haCliente(cpf)) {
+			clientesCadastrados.remove(cpf);			
+		} else {
+			throw new NullPointerException("Cliente nao cadastrado");
+		}
 	}
 
 	/**

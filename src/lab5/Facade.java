@@ -16,12 +16,8 @@ public class Facade {
 	 *         IllegalArgumentException
 	 */
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
-		try {
-			sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
-			return cpf;
-		} catch (Exception e) {
-			throw e;
-		}
+		sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
+		return cpf;
 	}
 
 	/**
@@ -184,8 +180,8 @@ public class Facade {
 	public void deletarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
-	
+
 	public static void main(String[] args) {
-		args = new String[] {"Facade", "Testes/use_case_1.txt","Testes/use_case_2.txt","Testes/use_case_3.txt" };
+		args = new String[] { "Facade", "Testes/use_case_1.txt", "Testes/use_case_2.txt", "Testes/use_case_3.txt" };
 	}
 }

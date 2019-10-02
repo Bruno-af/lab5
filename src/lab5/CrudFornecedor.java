@@ -28,7 +28,7 @@ public class CrudFornecedor {
 		if (haFornecedor(nome)) {
 			throw new IllegalArgumentException("Fornecedor ja cadastrado");
 		}
-		fornecedores.put(nome, new Fornecedor(nome, email, telefone));
+		fornecedores.put(nome.toLowerCase(), new Fornecedor(nome, email, telefone));
 		return nome;
 	}
 
@@ -39,7 +39,11 @@ public class CrudFornecedor {
 	 * @return representacao textual do fornecedor
 	 */
 	public String retornaFornecedor(String nome) {
-		return fornecedores.get(nome).toString();
+		if (haFornecedor(nome)) {
+			return fornecedores.get(nome.toLowerCase()).toString();
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	/**
@@ -49,7 +53,7 @@ public class CrudFornecedor {
 	 * @return true se ja houver um fornecedor com o dado nome, falso caso contrario
 	 */
 	private boolean haFornecedor(String nome) {
-		if (fornecedores.containsKey(nome)) {
+		if (fornecedores.containsKey(nome.toLowerCase())) {
 			return true;
 		}
 		return false;
@@ -65,7 +69,11 @@ public class CrudFornecedor {
 		for (Fornecedor fornecedor : fornecedores.values()) {
 			saida += fornecedor.toString() + " | ";
 		}
-		return saida.substring(0, saida.length() - 4);
+		if (!saida.equals("")) {
+			return saida.substring(0, saida.length() - 3);
+		} else {
+			throw new NullPointerException("nao ha fornecedores cadastrados");
+		}
 	}
 
 	/**
@@ -76,7 +84,11 @@ public class CrudFornecedor {
 	 * @param telefone novo telefone do fornecedor
 	 */
 	public void editaFornecedor(String nome, String email, String telefone) {
-		fornecedores.get(nome).editaFornecedor(email, telefone);
+		if (haFornecedor(nome)) {
+			fornecedores.get(nome.toLowerCase()).editaFornecedor(email, telefone);
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	/**
@@ -85,7 +97,11 @@ public class CrudFornecedor {
 	 * @param nome identificador do fornecedor
 	 */
 	public void deletaFornecedor(String nome) {
-		fornecedores.remove(nome);
+		if (haFornecedor(nome)) {
+			fornecedores.remove(nome.toLowerCase());
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	// metodos para manipular produtos
@@ -99,7 +115,11 @@ public class CrudFornecedor {
 	 * @param preco          preco do produto
 	 */
 	public void cadastraProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		fornecedores.get(nomeFornecedor).cadastraProduto(nomeProduto, descricao, preco);
+		if (haFornecedor(nomeFornecedor)) {
+			fornecedores.get(nomeFornecedor.toLowerCase()).cadastraProduto(nomeProduto, descricao, preco);
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	/**
@@ -111,7 +131,11 @@ public class CrudFornecedor {
 	 * @return retorna uma representacao textual do produto
 	 */
 	public String consultaProduto(String nomeFornecedor, String nomeProduto, String descricao) {
-		return fornecedores.get(nomeFornecedor).consultaProduto(nomeProduto, descricao);
+		if (haFornecedor(nomeFornecedor)) {
+			return fornecedores.get(nomeFornecedor.toLowerCase()).consultaProduto(nomeProduto, descricao);
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	/**
@@ -121,7 +145,11 @@ public class CrudFornecedor {
 	 * @return listagem da representacao textual de todos os produtos
 	 */
 	public String listaProdutos(String nomeFornecedor) {
-		return fornecedores.get(nomeFornecedor).listaProdutos();
+		if (haFornecedor(nomeFornecedor)) {
+			return fornecedores.get(nomeFornecedor.toLowerCase()).listaProdutos();
+		} else {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
 	}
 
 	/**
@@ -134,7 +162,10 @@ public class CrudFornecedor {
 		for (Fornecedor fornecedor : fornecedores.values()) {
 			saida += fornecedor.listagemProdutos();
 		}
-		return saida.substring(0, saida.length() - 4);
+		if (saida.equals("")) {
+			throw new NullPointerException("nenhum produto cadastrado");
+		}
+		return saida;
 	}
 
 	/**
@@ -146,7 +177,10 @@ public class CrudFornecedor {
 	 * @param preco          novo preco do produto
 	 */
 	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		fornecedores.get(nomeFornecedor).editaProduto(nomeProduto, descricao, preco);
+		if (!haFornecedor(nomeFornecedor)) {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
+		fornecedores.get(nomeFornecedor.toLowerCase()).editaProduto(nomeProduto, descricao, preco);
 	}
 
 	/**
@@ -157,6 +191,9 @@ public class CrudFornecedor {
 	 * @param descricao      descricao do produto
 	 */
 	public void deletaProduto(String nomeFornecedor, String nomeProduto, String descricao) {
-		fornecedores.get(nomeFornecedor).deletaProduto(nomeProduto, descricao);
+		if(!haFornecedor(nomeFornecedor)) {
+			throw new NullPointerException("fornecedor nao cadastrado");
+		}
+		fornecedores.get(nomeFornecedor.toLowerCase()).deletaProduto(nomeProduto, descricao);
 	}
 }

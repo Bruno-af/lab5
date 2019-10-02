@@ -22,18 +22,13 @@ public class Produto {
 	private void validaDados(String nome, String descricao, Double preco) {
 		if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
-		}
-		if (nome == null) {
+		} else if (nome == null) {
 			throw new NullPointerException("nome n�o pode ser nulo");
 		}
 		if (descricao.equals("")) {
 			throw new IllegalArgumentException("descricao invalido");
-		}
-		if (descricao == null) {
+		}else if (descricao == null) {
 			throw new NullPointerException("descricao n�o pode ser nulo");
-		}
-		if (preco == null) {
-			throw new NullPointerException("preco n�o pode ser nulo");
 		}
 	}
 
@@ -42,7 +37,7 @@ public class Produto {
 	 * Representacao textual de um produto
 	 */
 	public String toString() {
-		return this.nome + " - " + this.descricao + " - R$" + this.preco;
+		return String.format("%s - %s - R$%.2f",this.nome, this.descricao, this.preco);
 	}
 
 	/**

@@ -18,7 +18,7 @@ public class Fornecedor {
 	/**
 	 * colecao de produtos de um fornecedor
 	 */
-	private HashMap<IdProduto, Produto> produtos;
+	private HashMap<String, Produto> produtos;
 
 	/**
 	 * constroi o fornecedor
@@ -45,20 +45,17 @@ public class Fornecedor {
 	private void validaDados(String nome, String email, String telefone) {
 		if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
-		}
-		if (nome == null) {
+		} else if (nome == null) {
 			throw new NullPointerException("nome não pode ser nulo");
 		}
 		if (email.equals("")) {
 			throw new IllegalArgumentException("email invalido");
-		}
-		if (email == null) {
+		} else if (email == null) {
 			throw new NullPointerException("email não pode ser nulo");
 		}
 		if (telefone.equals("")) {
 			throw new IllegalArgumentException("telefone invalido");
-		}
-		if (telefone == null) {
+		} else if (telefone == null) {
 			throw new NullPointerException("telefone não pode ser nulo");
 		}
 	}
@@ -78,8 +75,10 @@ public class Fornecedor {
 	 * @param novoTelefone novo telefone do fornecedor
 	 */
 	public void editaFornecedor(String novoEmail, String novoTelefone) {
+		validaDados("nomevalido", novoEmail, novoTelefone);
 		this.email = novoEmail;
 		this.telefone = novoTelefone;
+
 	}
 
 	// metodos de manipulacao dos produtos
@@ -92,8 +91,11 @@ public class Fornecedor {
 	 * @param preco     preco do produto
 	 */
 	public void cadastraProduto(String nome, String descricao, double preco) {
-		if (!produtos.containsKey(new IdProduto(nome, descricao))) {
-			produtos.put(new IdProduto(nome, descricao), new Produto(nome, descricao, preco));
+		IdProduto id = new IdProduto(nome, descricao);
+		if (!produtos.containsKey(id.retornaId())) {
+			produtos.put(id.retornaId(), new Produto(nome, descricao, preco));
+		} else {
+			throw new IllegalArgumentException("Produto ja cadastrado");
 		}
 	}
 
@@ -105,7 +107,12 @@ public class Fornecedor {
 	 * @return retorna a representacao textual do produto
 	 */
 	public String consultaProduto(String nomeProduto, String descricao) {
-		return produtos.get(new IdProduto(nomeProduto, descricao)).toString();
+		IdProduto id = new IdProduto(nomeProduto, descricao);
+		if (produtos.containsKey(id.retornaId())) {
+			return this.produtos.get(id.retornaId()).toString();
+		} else {
+			throw new NullPointerException("Produto inexistente");
+		}
 	}
 
 	/**
@@ -114,11 +121,14 @@ public class Fornecedor {
 	 * @return listagem da representacao textual de todos os produtos
 	 */
 	public String listaProdutos() {
+		if (produtos.isEmpty()) {
+			throw new NullPointerException("Nao ha produtos cadastrados");
+		}
 		String saida = "";
 		for (Produto produto : produtos.values()) {
 			saida += produto.toString() + " | ";
 		}
-		return saida.substring(0, saida.length() - 4);
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	/**
@@ -128,11 +138,14 @@ public class Fornecedor {
 	 * @return
 	 */
 	public String listagemProdutos() {
+		if (produtos.isEmpty()) {
+			throw new NullPointerException("Nao ha produtos cadastrados");
+		}
 		String saida = "";
 		for (Produto produto : produtos.values()) {
 			saida += this.nome + " - " + produto.toString() + " | ";
 		}
-		return saida;
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	/**
@@ -143,7 +156,12 @@ public class Fornecedor {
 	 * @param preco       novo preco do produto
 	 */
 	public void editaProduto(String nomeProduto, String descricao, double preco) {
-		produtos.get(new IdProduto(nomeProduto, descricao)).alteraPreco(preco);
+		IdProduto key = new IdProduto(nomeProduto, descricao);
+		if (produtos.containsKey(key.retornaId())) {
+			produtos.get(key.retornaId()).alteraPreco(preco);
+		} else {
+			throw new NullPointerException("Produto nao cadastrado");
+		}
 	}
 
 	/**
@@ -153,7 +171,12 @@ public class Fornecedor {
 	 * @param descricao   descricao do produto a ser deletado
 	 */
 	public void deletaProduto(String nomeProduto, String descricao) {
-		produtos.remove(new IdProduto(nomeProduto, descricao));
+		String key = new IdProduto(nomeProduto, descricao).retornaId();
+		if (produtos.containsKey(key)) {
+			produtos.remove(key);
+		} else {
+			throw new NullPointerException("Produto nao cadastrado");
+		}
 	}
 
 }
