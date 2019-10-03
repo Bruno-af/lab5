@@ -146,7 +146,7 @@ public class Facade {
 	/**
 	 * lista todos os produtos cadastrados de certo fornecedor
 	 * 
-	 * @param nomeFornecedor
+	 * @param nomeFornecedor nome do fornecedor do produto
 	 * @return listagem da representacao textual de todos os produtos
 	 */
 	public String listarProdutosFornecedor(String nomeFornecedor) {
@@ -175,7 +175,11 @@ public class Facade {
 	}
 
 	/**
-	 * @see CrudFornecedor#deletaProduto(String, String, String)
+	 * deleta um dado produto do sistema de um fornecedor
+	 * 
+	 * @param nomeFornecedor nome do fornecedor
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
 	 */
 	public void deletarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);

@@ -135,7 +135,7 @@ public class Fornecedor {
 	 * lista todos os produtos cadastrados no formato: fornecedor - nome do produto
 	 * - descricao do produto - preco do produto
 	 * 
-	 * @return
+	 * @return listagem das representacoes textuais dos produtos com seu fornecedor
 	 */
 	public String listagemProdutos() {
 		if (produtos.isEmpty()) {

@@ -80,7 +80,7 @@ public class CrudCliente {
 
 	/**
 	 * deleta o cliente que possui o cpf recebido
-	 * @param cpf
+	 * @param cpf cpf do cliente
 	 */
 	public void deletarCliente(String cpf) {
 		if(haCliente(cpf)) {
