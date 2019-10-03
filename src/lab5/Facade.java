@@ -1,5 +1,7 @@
 package lab5;
 
+import easyaccept.EasyAccept;
+
 public class Facade {
 	private CrudCliente sistemaCliente = new CrudCliente();
 	private CrudFornecedor sistemaFornecedor = new CrudFornecedor();
@@ -15,7 +17,7 @@ public class Facade {
 	 * @return cpf do cliente, caso o cadastro funcione, caso contrario, lanca-se um
 	 *         IllegalArgumentException
 	 */
-	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
+	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
 		return cpf;
 	}
@@ -26,7 +28,7 @@ public class Facade {
 	 * @param cpf identificador do cliente
 	 * @return representacao textual de um cliente de dado cpf
 	 */
-	public String recuperaCliente(String cpf) {
+	public String exibeCliente(String cpf) {
 		return sistemaCliente.RepresentacaoCliente(cpf);
 	}
 
@@ -47,8 +49,8 @@ public class Facade {
 	 * @param email       novo email do cliente
 	 * @param localizacao novo local de trabalho do cliente
 	 */
-	public void editaCliente(String cpf, String nome, String email, String localizacao) {
-		sistemaCliente.editarCliente(cpf, nome, email, localizacao);
+	public void editaCliente(String cpf, String atributo, String novoValor) {
+		sistemaCliente.editaCliente(cpf, atributo, novoValor);
 	}
 
 	/**
@@ -186,6 +188,7 @@ public class Facade {
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "Facade", "Testes/use_case_1.txt", "Testes/use_case_2.txt", "Testes/use_case_3.txt" };
+		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt", "Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt", "Testes_aceitacao/use_case_6.txt"};
+		EasyAccept.main(args);
 	}
 }

@@ -1,7 +1,7 @@
 package lab5;
 
 /**
- * Laboratório de Programação 2 - Lab 1
+ * Laboratï¿½rio de Programaï¿½ï¿½o 2 - Lab 1
  * 
  * @author Bruno Andrade Fernandes - 119110378
  */
@@ -37,15 +37,15 @@ public class IdProduto {
 	 *         true
 	 */
 	private boolean validaDado(String nome, String descricao) {
-		if (nome.equals("")) {
-			throw new IllegalArgumentException("nome nao pode ser vazio");
-		} else if (nome == null) {
+		if (nome == null) {
 			throw new NullPointerException("nome nao pode ser nulo");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("nome nao pode ser vazio");
 		}
-		if (descricao.equals("")) {
-			throw new IllegalArgumentException("descricao nao pode ser vazia");
-		} else if (descricao == null) {
+		if (descricao == null) {
 			throw new NullPointerException("descricao nao pode ser nula");
+		} else if (descricao.equals("")) {
+			throw new IllegalArgumentException("descricao nao pode ser vazia");
 		}
 		return true;
 	}

@@ -43,20 +43,20 @@ public class Fornecedor {
 	 * @param telefone telefone a ser verificado
 	 */
 	private void validaDados(String nome, String email, String telefone) {
-		if (nome.equals("")) {
+		if (nome == null) {
+			throw new NullPointerException("nome nï¿½o pode ser nulo");
+		} else if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
-		} else if (nome == null) {
-			throw new NullPointerException("nome não pode ser nulo");
 		}
-		if (email.equals("")) {
+		if (email == null) {
+			throw new NullPointerException("email nï¿½o pode ser nulo");
+		} else if (email.equals("")) {
 			throw new IllegalArgumentException("email invalido");
-		} else if (email == null) {
-			throw new NullPointerException("email não pode ser nulo");
 		}
-		if (telefone.equals("")) {
+		if (telefone == null) {
+			throw new NullPointerException("telefone nï¿½o pode ser nulo");
+		} else if (telefone.equals("")) {
 			throw new IllegalArgumentException("telefone invalido");
-		} else if (telefone == null) {
-			throw new NullPointerException("telefone não pode ser nulo");
 		}
 	}
 

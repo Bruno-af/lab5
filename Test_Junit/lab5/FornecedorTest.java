@@ -1,13 +1,13 @@
 package lab5;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Laboratório de Programação 2 - Lab 1
+ * Laboratï¿½rio de Programaï¿½ï¿½o 2 - Lab 1
  * 
  * @author Bruno Andrade Fernandes - 119110378
  */
@@ -170,7 +170,7 @@ class FornecedorTest {
 	void testListaProdutosInexistentes() {
 		try {
 			fornecedorSemProdutos.listaProdutos();
-			fail(); // nao é possivel listar produtos inexistentes
+			fail(); // nao ï¿½ possivel listar produtos inexistentes
 		} catch (NullPointerException npe) {
 			assertEquals("Nao ha produtos cadastrados", npe.getMessage());
 		}
@@ -185,7 +185,7 @@ class FornecedorTest {
 	void testListagemProdutosInexistentes() {
 		try {
 			fornecedorSemProdutos.listagemProdutos();
-			fail(); // nao é possivel listar produtos inexistentes
+			fail(); // nao ï¿½ possivel listar produtos inexistentes
 		} catch (NullPointerException npe) {
 		}
 	}

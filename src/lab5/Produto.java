@@ -20,15 +20,15 @@ public class Produto {
 	}
 
 	private void validaDados(String nome, String descricao, Double preco) {
-		if (nome.equals("")) {
-			throw new IllegalArgumentException("nome invalido");
-		} else if (nome == null) {
+		if (nome == null) {
 			throw new NullPointerException("nome n�o pode ser nulo");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("nome invalido");
 		}
-		if (descricao.equals("")) {
-			throw new IllegalArgumentException("descricao invalido");
-		}else if (descricao == null) {
+		if (descricao == null) {
 			throw new NullPointerException("descricao n�o pode ser nulo");
+		}else if (descricao.equals("")) {
+			throw new IllegalArgumentException("descricao invalido");
 		}
 	}
 

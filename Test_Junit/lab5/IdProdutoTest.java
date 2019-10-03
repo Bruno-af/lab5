@@ -1,11 +1,12 @@
 	package lab5;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 /**
-	* Laboratório de Programação 2 - Lab 5
+	* Laboratï¿½rio de Programaï¿½ï¿½o 2 - Lab 5
 	* 
 	* @author Bruno Andrade Fernandes - 119110378
 	*/

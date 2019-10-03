@@ -16,7 +16,7 @@ public class CrudCliente {
 	}
 
 	/**
-	 * Cadastra um cliente caso não cadastrado, caso contrario lanca um erro
+	 * Cadastra um cliente caso nï¿½o cadastrado, caso contrario lanca um erro
 	 * 
 	 * @param cpf         identificador do cliente
 	 * @param nome        nome do cliente
@@ -27,7 +27,7 @@ public class CrudCliente {
 	 */
 	public String cadastraCliente(String cpf, String nome, String email, String localizacao) {
 		if (haCliente(cpf)) {
-			throw new IllegalArgumentException("Cliente ja cadastrado");
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cliente ja existe.");
 		}
 		clientesCadastrados.put(cpf, new Cliente(cpf, nome, email, localizacao));
 		return cpf;
@@ -40,8 +40,10 @@ public class CrudCliente {
 	 * @return representacao textual padrao de um cliente
 	 */
 	public String RepresentacaoCliente(String cpf) {
-		if (!haCliente(cpf)) {
-			throw new NullPointerException("Cliente nao cadastrado");
+		if (cpf == null || cpf.equals("")) {
+			throw new IllegalAccessError("Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.");
+		} else if (!haCliente(cpf)) {
+			throw new NullPointerException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 		return clientesCadastrados.get(cpf).toString();
 	}
@@ -56,7 +58,7 @@ public class CrudCliente {
 		for (Cliente cliente : clientesCadastrados.values()) {
 			saida += cliente.toString() + " | ";
 		}
-		if(saida.contentEquals("")) {
+		if (saida.contentEquals("")) {
 			throw new NullPointerException("Nao ha clientes cadastrados");
 		}
 		return saida.substring(0, saida.length() - 3);
@@ -70,9 +72,12 @@ public class CrudCliente {
 	 * @param email       novo email do cliente
 	 * @param localizacao novo local de trabalho do cliente
 	 */
-	public void editarCliente(String cpf, String nome, String email, String localizacao) {
+	public void editaCliente(String cpf, String atributo, String novoValor) {
+		if(cpf == null) {
+			throw new NullPointerException("CrudCliente editacliente");
+		}
 		if(haCliente(cpf)) {
-			clientesCadastrados.get(cpf).editaCliente(nome, email, localizacao);			
+			clientesCadastrados.get(cpf).editaCliente(atributo, novoValor);			
 		} else {
 			throw new NullPointerException("Cliente nao cadastrado");
 		}
@@ -80,11 +85,12 @@ public class CrudCliente {
 
 	/**
 	 * deleta o cliente que possui o cpf recebido
+	 * 
 	 * @param cpf cpf do cliente
 	 */
 	public void deletarCliente(String cpf) {
-		if(haCliente(cpf)) {
-			clientesCadastrados.remove(cpf);			
+		if (haCliente(cpf)) {
+			clientesCadastrados.remove(cpf);
 		} else {
 			throw new NullPointerException("Cliente nao cadastrado");
 		}
@@ -94,7 +100,7 @@ public class CrudCliente {
 	 * metodo que verifica a existencia de um cliente no sistema
 	 * 
 	 * @param cpf identificador do cliente
-	 * @return se o cliente estiver cadastrado, true, senão, false
+	 * @return se o cliente estiver cadastrado, true, senï¿½o, false
 	 */
 	private boolean haCliente(String cpf) {
 		if (clientesCadastrados.containsKey(cpf)) {

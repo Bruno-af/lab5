@@ -44,25 +44,28 @@ public class Cliente {
 	 * @param localizacao localizacao a ser analisada
 	 */
 	private void validaDado(String cpf, String nome, String email, String localizacao) {
-		if (cpf.equals("")) {
-			throw new IllegalArgumentException("cpf invalido");
-		} else if (cpf == null) {
-			throw new NullPointerException("cpf não pode ser nulo");
+		if (cpf == null) {
+			throw new NullPointerException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
+		} else if (cpf.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
 		}
-		if (nome.equals("")) {
-			throw new IllegalArgumentException("nome invalido");
-		} else if (nome == null) {
-			throw new NullPointerException("nome não pode ser nulo");
+		if (nome == null) {
+			throw new NullPointerException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
 		}
-		if (email.equals("")) {
-			throw new IllegalArgumentException("email invalido");
-		} else if (email == null) {
-			throw new NullPointerException("email não pode ser nulo");
+		if (email == null) {
+			throw new NullPointerException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
+		} else if (email.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
 		}
-		if (localizacao.equals("")) {
-			throw new IllegalArgumentException("localizacao invalida");
-		} else if (localizacao == null) {
-			throw new NullPointerException("localizacao não pode ser nula");
+		if (localizacao == null) {
+			throw new NullPointerException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
+		} else if (localizacao.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
+		}
+		if(cpf.length()!= 11) {
+			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
 		}
 	}
 
@@ -73,10 +76,32 @@ public class Cliente {
 	 * @param email       novo email do cliente
 	 * @param localizacao novo localizacao do cliente
 	 */
-	public void editaCliente(String nome, String email, String localizacao) {
-		this.nome = nome;
-		this.email = email;
-		this.localizacao = localizacao;
+	public void editaCliente(String atributo, String novoValor) {
+		if(atributo.equals("nome")) {
+			setNome(novoValor);
+		} else if(atributo.equals("email")) {
+			setEmail(novoValor);
+		} else if(atributo.equals("cpf")) {
+			throw new IllegalAccessError("Erro na edicao do cliente: cpf nao pode ser editado.");
+		}
+	}
+
+	/**
+	 * edita o email do cliente
+	 * 
+	 * @param novoValor novo email associado
+	 */
+	private void setEmail(String novoValor) {
+		this.email = novoValor;
+	}
+
+	/**
+	 * edita o nome do cliente
+	 * 
+	 * @param novoValor novo nome associado
+	 */
+	private void setNome(String novoValor) {
+		this.nome = novoValor;
 	}
 
 	/**
@@ -121,7 +146,7 @@ public class Cliente {
 	 * trabalho - email
 	 */
 	public String toString() {
-		return this.nome + " - " + this.localizacao + " - " + this.email;
+		return getNome() + " - " + getLocalizacao() + " - " + getemail();
 	}
 
 	@Override
