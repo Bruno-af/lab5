@@ -17,7 +17,7 @@ class CrudClienteTest {
 	@BeforeEach
 	public void ControntroiControlador() {
 		sistemaClientes = new CrudCliente();
-		sistemaClientes.cadastraCliente("119110378", "brunao", "email de bruno", "Lcc3");
+		sistemaClientes.cadastraCliente("11911037811", "brunao", "email de bruno", "Lcc3");
 		sistemaVazio = new CrudCliente();
 	}
 	
@@ -28,13 +28,13 @@ class CrudClienteTest {
 
 	@Test
 	void testCadastraCliente() {
-		sistemaClientes.cadastraCliente("cpf", "nome", "email", "localizacao");
+		sistemaClientes.cadastraCliente("11911911911", "nome", "email", "localizacao");
 	}
 	
 	@Test
 	void testCadastraClienteCadastrado() {
 		try {
-			sistemaClientes.cadastraCliente("119110378", "brunao", "email de bruno", "Lcc3");
+			sistemaClientes.cadastraCliente("11911037811", "brunao", "email de bruno", "Lcc3");
 			fail(); //nao deve construir
 		} catch (IllegalArgumentException iae) {
 			iae.getMessage().equals("Cliente ja cadastrado");
@@ -43,13 +43,13 @@ class CrudClienteTest {
 
 	@Test
 	void testRepresentacaoClienteCadastrado() {
-		assertEquals(sistemaClientes.RepresentacaoCliente("119110378"),"brunao - Lcc3 - email de bruno");
+		assertEquals(sistemaClientes.RepresentacaoCliente("11911037811"),"brunao - Lcc3 - email de bruno");
 	}
 	
 	@Test
 	void testRepresentacaoClienteInexistente() {
 		try {
-			sistemaClientes.RepresentacaoCliente("40028922");
+			sistemaClientes.RepresentacaoCliente("22911257811");
 			fail(); //nao deve ser capaz de acessar um cliente inexistente
 		} catch (NullPointerException npe) {
 		}
@@ -72,28 +72,27 @@ class CrudClienteTest {
 
 	@Test
 	void testEditarClienteExistente() {
-		sistemaClientes.editarCliente("119110378", "nome", "email", "localizacao");
+		sistemaClientes.editaCliente("11911037811", "nome", "brenda");
 	}
 	
 	@Test
 	void testEditarClienteInexistente() {
 		try {
-			sistemaClientes.editarCliente("cpf inexistente", "nome", "email", "localizacao");
+			sistemaClientes.editaCliente("00000000000", "email", "superEmail@gmail.com");
 			fail(); // nao deve ser possivel editar algo inexistente
 		} catch(NullPointerException npe) {
-			
 		}
 	}
 
 	@Test
 	void testDeletarClienteExistente() {
-		sistemaClientes.deletarCliente("119110378");
+		sistemaClientes.deletarCliente("11911037811");
 	}
 	
 	@Test
 	void testDeletarClienteInexistente() {
 		try {
-			sistemaClientes.deletarCliente("cpf inexistente");
+			sistemaClientes.deletarCliente("00000000000");
 			fail(); // nao se deleta algo inexistente
 		} catch(NullPointerException npe) {
 			

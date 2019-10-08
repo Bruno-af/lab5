@@ -16,17 +16,28 @@ public class CrudFornecedor {
 	}
 
 	/**
-	 * cadastra um fornecedor no sistema de armazenamento
+	 * cadastra um fornecedor no sistema
 	 * 
 	 * @param nome     nome e identificador do fornecedor
 	 * @param email    email do fornecedor
 	 * @param telefone telefone do fornecedor
-	 * @return o nome do fornecedor, caso bem sucedido, ou lanca um erro
-	 *         IllegalArgumentException caso ja tenha sido cadastrado
+	 * @return o nome do fornecedor, caso bem sucedido, ou lanca um erro, caso nao
 	 */
 	public String cadastraFornecedor(String nome, String email, String telefone) {
-		if (haFornecedor(nome)) {
-			throw new IllegalArgumentException("Fornecedor ja cadastrado");
+		if (nome == null) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: nome nao pode ser vazio ou nulo.");
+		} else if (email == null) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+		} else if (email.equals("")) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: email nao pode ser vazio ou nulo.");
+		} else if (telefone == null) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
+		} else if (telefone.equals("")) {
+			throw new NullPointerException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
+		} else if (haFornecedor(nome.toLowerCase())) {
+			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
 		}
 		fornecedores.put(nome.toLowerCase(), new Fornecedor(nome, email, telefone));
 		return nome;
@@ -39,10 +50,15 @@ public class CrudFornecedor {
 	 * @return representacao textual do fornecedor
 	 */
 	public String retornaFornecedor(String nome) {
+		if (nome == null) {
+			throw new NullPointerException("Erro na exibicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		}
 		if (haFornecedor(nome)) {
 			return fornecedores.get(nome.toLowerCase()).toString();
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new NullPointerException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
 	}
 
@@ -50,7 +66,8 @@ public class CrudFornecedor {
 	 * verifica a existencia previa de algum fornecedor
 	 * 
 	 * @param nome identificador do fornecedor
-	 * @return true se ja houver um fornecedor com o dado nome, falso caso contrario
+	 * @return true se houver um fornecedor cadastrado com o dado nome, falso caso
+	 *         contrario
 	 */
 	private boolean haFornecedor(String nome) {
 		if (fornecedores.containsKey(nome.toLowerCase())) {
@@ -60,7 +77,7 @@ public class CrudFornecedor {
 	}
 
 	/**
-	 * lista a representacao textual de todos os fornecedores cadastrados
+	 * lista todos os fornecedores cadastrados
 	 * 
 	 * @return representacao textual da listagem dos fornecedores
 	 */
@@ -77,17 +94,38 @@ public class CrudFornecedor {
 	}
 
 	/**
-	 * edita dados do fornecedor
+	 * edita dados de um fornecedor
 	 * 
-	 * @param nome     identificador imutavel do fornecedor
-	 * @param email    novo email do fornecedor
-	 * @param telefone novo telefone do fornecedor
+	 * @param nome      identificador imutavel do fornecedor
+	 * @param atributo  atributo que se deseja alterar
+	 * @param novoValor equivalente ao novo atributo
 	 */
-	public void editaFornecedor(String nome, String email, String telefone) {
-		if (haFornecedor(nome)) {
-			fornecedores.get(nome.toLowerCase()).editaFornecedor(email, telefone);
+	public void editaFornecedor(String nome, String atributo, String novoValor) {
+		if (nome == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
+		} 
+		if (novoValor == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
+		} else if (novoValor.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
+		}
+		if (atributo == null) {
+			throw new NullPointerException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		} else if (atributo.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao pode ser vazio ou nulo.");
+		} else if (atributo.equals("email")) {
+		} else if (atributo.equals("telefone")) {
+		} else if (atributo.equals("nome")) {
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser editado.");
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
+		}
+		if (haFornecedor(nome)) {
+			fornecedores.get(nome.toLowerCase()).editaFornecedor(atributo, novoValor);
+		} else {
+			throw new NullPointerException("Erro na edicao do fornecedor: fornecedor nao existe.");
 		}
 	}
 
@@ -97,10 +135,17 @@ public class CrudFornecedor {
 	 * @param nome identificador do fornecedor
 	 */
 	public void deletaFornecedor(String nome) {
+		if (nome == null) {
+			throw new NullPointerException(
+					"Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException(
+					"Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio ou nulo.");
+		}
 		if (haFornecedor(nome)) {
 			fornecedores.remove(nome.toLowerCase());
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new NullPointerException("Erro na remocao do fornecedor: fornecedor nao existe.");
 		}
 	}
 
@@ -115,10 +160,23 @@ public class CrudFornecedor {
 	 * @param preco          preco do produto
 	 */
 	public void cadastraProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+		if (nomeFornecedor == null) {
+			throw new NullPointerException("Erro no cadastro de produto: fornecedor nao pode ser vazio ou nulo.");
+		} else if (nomeFornecedor.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (nomeProduto == null) {
+			throw new NullPointerException("Erro no cadastro de produto: nome nao pode ser vazio ou nulo.");
+		} else if (nomeProduto.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: nome nao pode ser vazio ou nulo.");
+		}
+		if (preco < 0) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: preco invalido.");
+		}
 		if (haFornecedor(nomeFornecedor)) {
 			fornecedores.get(nomeFornecedor.toLowerCase()).cadastraProduto(nomeProduto, descricao, preco);
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new NullPointerException("Erro no cadastro de produto: fornecedor nao existe.");
 		}
 	}
 
@@ -131,10 +189,15 @@ public class CrudFornecedor {
 	 * @return retorna uma representacao textual do produto
 	 */
 	public String consultaProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+		if (nomeFornecedor == null) {
+			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		} else if (nomeFornecedor.equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
 		if (haFornecedor(nomeFornecedor)) {
 			return fornecedores.get(nomeFornecedor.toLowerCase()).consultaProduto(nomeProduto, descricao);
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao existe.");
 		}
 	}
 
@@ -145,7 +208,7 @@ public class CrudFornecedor {
 	 * @return listagem da representacao textual de todos os produtos
 	 */
 	public String listaProdutos(String nomeFornecedor) {
-		if (haFornecedor(nomeFornecedor)) {
+		if (haFornecedor(nomeFornecedor.toLowerCase())) {
 			return fornecedores.get(nomeFornecedor.toLowerCase()).listaProdutos();
 		} else {
 			throw new NullPointerException("fornecedor nao cadastrado");
@@ -177,8 +240,13 @@ public class CrudFornecedor {
 	 * @param preco          novo preco do produto
 	 */
 	public void editaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		if (!haFornecedor(nomeFornecedor)) {
-			throw new NullPointerException("fornecedor nao cadastrado");
+		if (nomeFornecedor == null) {
+			throw new NullPointerException("Erro na edicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		} else if (nomeFornecedor.equals("")) {
+			throw new NullPointerException("Erro na edicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (!haFornecedor(nomeFornecedor.toLowerCase())) {
+			throw new NullPointerException("Erro na edicao de produto: fornecedor nao existe.");
 		}
 		fornecedores.get(nomeFornecedor.toLowerCase()).editaProduto(nomeProduto, descricao, preco);
 	}
@@ -191,8 +259,13 @@ public class CrudFornecedor {
 	 * @param descricao      descricao do produto
 	 */
 	public void deletaProduto(String nomeFornecedor, String nomeProduto, String descricao) {
-		if(!haFornecedor(nomeFornecedor)) {
-			throw new NullPointerException("fornecedor nao cadastrado");
+		if (nomeFornecedor == null) {
+			throw new NullPointerException("Erro na remocao de produto: fornecedor nao pode ser vazio ou nulo.");
+		} else if (nomeFornecedor.equals("")) {
+			throw new NullPointerException("Erro na remocao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if (!haFornecedor(nomeFornecedor)) {
+			throw new NullPointerException("Erro na remocao de produto: fornecedor nao existe.");
 		}
 		fornecedores.get(nomeFornecedor.toLowerCase()).deletaProduto(nomeProduto, descricao);
 	}

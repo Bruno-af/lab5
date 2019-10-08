@@ -90,8 +90,8 @@ class FornecedorTest {
 
 	@Test
 	void testEditaFornecedorValido() {
-		bencola.editaFornecedor("Bencola2.0@hotmail.com", "4002-8922");
-		assertEquals(bencola.toString(), "pastelaria do bencola - Bencola2.0@hotmail.com - 4002-8922");
+		bencola.editaFornecedor("email", "Bencola2.0@hotmail.com");
+		assertEquals(bencola.toString(), "pastelaria do bencola - Bencola2.0@hotmail.com - 40028922");
 	}
 	
 	@Test

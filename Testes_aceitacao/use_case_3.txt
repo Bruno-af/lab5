@@ -41,7 +41,7 @@ expect "X-frango - Hamburguer de frango com queijo e calabresa - R$3,50" exibePr
 expect "Rubacao - Feijao com arroz e queijo coalho - R$17,00" exibeProduto nome="Rubacao" descricao="Feijao com arroz e queijo coalho" fornecedor="Dona Alba"
 
 expectError "Erro na edicao de produto: fornecedor nao existe." editaProduto nome="X-frango" descricao="Hamburguer de frango com queijo" fornecedor="Helhao" novoPreco=5.50
-expectError "Erro na edicao de produto: preco invalido." editaProduto nome="X-frango" descricao="Hamburguer de frango com queijo" fornecedor="Seu Olavo" novoPreco=-1
+expectError "Erro na edicao de produto: preco invalido." editaProduto nome="X-frango" descricao="Hamburguer de frango com queijo e calabresa" fornecedor="Seu Olavo" novoPreco=-1
 expectError "Erro na edicao de produto: descricao nao pode ser vazia ou nula." editaProduto nome="X-frango" descricao="" fornecedor="Seu Olavo" novoPreco=3.00
 expectError "Erro na edicao de produto: descricao nao pode ser vazia ou nula." editaProduto nome="X-frango" descricao= fornecedor="Seu Olavo" novoPreco=3.00
 expectError "Erro na edicao de produto: nome nao pode ser vazio ou nulo." editaProduto nome="" descricao="Hamburguer de frango com queijo" fornecedor="Seu Olavo" novoPreco=3.00

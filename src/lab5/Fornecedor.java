@@ -71,14 +71,33 @@ public class Fornecedor {
 	/**
 	 * edita o email e o telefone do fornecedor
 	 * 
-	 * @param novoEmail    novo email do fornecedor
-	 * @param novoTelefone novo telefone do fornecedor
+	 * @param atributo  atributo que se deseja mudar
+	 * @param novoValor novo valor associado
 	 */
-	public void editaFornecedor(String novoEmail, String novoTelefone) {
-		validaDados("nomevalido", novoEmail, novoTelefone);
-		this.email = novoEmail;
-		this.telefone = novoTelefone;
+	public void editaFornecedor(String atributo, String novoValor) {
+		if (atributo.equals("email")) {
+			setEmail(novoValor);
+		} else if (atributo.equals("telefone")) {
+			setTelefone(novoValor);
+		}
+	}
 
+	/**
+	 * atualiza o telefone cadastrado
+	 * 
+	 * @param novoValor novo telefone associado
+	 */
+	private void setTelefone(String novoValor) {
+		this.telefone = novoValor;
+	}
+
+	/**
+	 * atualiza o email acadastrado
+	 * 
+	 * @param novoValor novo email associado
+	 */
+	private void setEmail(String novoValor) {
+		this.email = novoValor;
 	}
 
 	// metodos de manipulacao dos produtos
@@ -91,11 +110,21 @@ public class Fornecedor {
 	 * @param preco     preco do produto
 	 */
 	public void cadastraProduto(String nome, String descricao, double preco) {
+		if (nome == null) { //////
+			throw new NullPointerException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
+		}
+		if (descricao == null) {
+			throw new NullPointerException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
+		} else if (descricao.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
+		}
 		IdProduto id = new IdProduto(nome, descricao);
 		if (!produtos.containsKey(id.retornaId())) {
 			produtos.put(id.retornaId(), new Produto(nome, descricao, preco));
 		} else {
-			throw new IllegalArgumentException("Produto ja cadastrado");
+			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
 	}
 
@@ -107,11 +136,21 @@ public class Fornecedor {
 	 * @return retorna a representacao textual do produto
 	 */
 	public String consultaProduto(String nomeProduto, String descricao) {
+		if(descricao == null) {
+			throw new NullPointerException("Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
+		} else if(descricao.equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
+		}
+		if(nomeProduto == null) {
+			throw new NullPointerException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
+		} else if(nomeProduto.equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
+		}
 		IdProduto id = new IdProduto(nomeProduto, descricao);
 		if (produtos.containsKey(id.retornaId())) {
 			return this.produtos.get(id.retornaId()).toString();
 		} else {
-			throw new NullPointerException("Produto inexistente");
+			throw new NullPointerException("Erro na exibicao de produto: produto nao existe.");
 		}
 	}
 
@@ -156,11 +195,21 @@ public class Fornecedor {
 	 * @param preco       novo preco do produto
 	 */
 	public void editaProduto(String nomeProduto, String descricao, double preco) {
+		if (nomeProduto == null) { //////
+			throw new NullPointerException("Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
+		} else if (nomeProduto.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de produto: nome nao pode ser vazio ou nulo.");
+		}
+		if (descricao == null) {
+			throw new NullPointerException("Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
+		} else if (descricao.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de produto: descricao nao pode ser vazia ou nula.");
+		}
 		IdProduto key = new IdProduto(nomeProduto, descricao);
 		if (produtos.containsKey(key.retornaId())) {
 			produtos.get(key.retornaId()).alteraPreco(preco);
 		} else {
-			throw new NullPointerException("Produto nao cadastrado");
+			throw new NullPointerException("Erro na edicao de produto: produto nao existe.");
 		}
 	}
 
@@ -171,11 +220,21 @@ public class Fornecedor {
 	 * @param descricao   descricao do produto a ser deletado
 	 */
 	public void deletaProduto(String nomeProduto, String descricao) {
+		if(nomeProduto == null) {
+			throw new NullPointerException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
+		} else if (nomeProduto.equals("")) {
+			throw new IllegalArgumentException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
+		}
+		if(descricao == null) {
+			throw new NullPointerException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
+		} else if (descricao.equals("")) {
+			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
+		}
 		String key = new IdProduto(nomeProduto, descricao).retornaId();
 		if (produtos.containsKey(key)) {
 			produtos.remove(key);
 		} else {
-			throw new NullPointerException("Produto nao cadastrado");
+			throw new NullPointerException("Erro na remocao de produto: produto nao existe.");
 		}
 	}
 

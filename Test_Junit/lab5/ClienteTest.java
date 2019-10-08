@@ -17,13 +17,13 @@ class ClienteTest {
 
 	@BeforeEach
 	public void criaClientes() {
-		cliente1 = new Cliente("119110378", "bruno", "bruno.fernandes@ccc.ufcg.edu.br", "Lcc3");
-		cliente2 = new Cliente("123114578", "breno", "bruno.fernandes@ccc.ufcg.edu.br", "Lcc3");
+		cliente1 = new Cliente("11911037811", "bruno", "bruno.fernandes@ccc.ufcg.edu.br", "Lcc3");
+		cliente2 = new Cliente("12311457811", "breno", "bruno.fernandes@ccc.ufcg.edu.br", "Lcc3");
 	}
 
 	@Test
 	void testClienteValido() {
-		Cliente voce = new Cliente("119113372", "voce", "voce.monitor@ccc.ufcg.edu.br", "Lcc2");
+		Cliente voce = new Cliente("11911337211", "voce", "voce.monitor@ccc.ufcg.edu.br", "Lcc2");
 	}
 
 	@Test
@@ -47,7 +47,7 @@ class ClienteTest {
 	@Test
 	void testClienteNomeVazio() {
 		try {
-			Cliente nomeVazio = new Cliente("40028922", "", "emailDeNinguem@ccc.ufcg.edu.br", "Lugar Nenhum");
+			Cliente nomeVazio = new Cliente("4002892211", "", "emailDeNinguem@ccc.ufcg.edu.br", "Lugar Nenhum");
 			fail(); // nao deve ser construido na pratica
 		} catch (IllegalArgumentException iae) {
 		}
@@ -56,7 +56,7 @@ class ClienteTest {
 	@Test
 	void testClienteNomeNulo() {
 		try {
-			Cliente nomeNulo = new Cliente("32472882", null, "Gaudencio.Lenda@ccc.ufcg.edu.br", "Lcc3");
+			Cliente nomeNulo = new Cliente("3247288211", null, "Gaudencio.Lenda@ccc.ufcg.edu.br", "Lcc3");
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 		}
@@ -65,7 +65,7 @@ class ClienteTest {
 	@Test
 	void testClienteEmailVazio() {
 		try {
-			Cliente nomeVazio = new Cliente("40028922", "jaba", "", "Em um lugar bem distante");
+			Cliente nomeVazio = new Cliente("4002892211", "jaba", "", "Em um lugar bem distante");
 			fail(); // nao deve ser construido na pratica
 		} catch (IllegalArgumentException iae) {
 		}
@@ -74,7 +74,7 @@ class ClienteTest {
 	@Test
 	void testClienteEmailNulo() {
 		try {
-			Cliente emailNulo = new Cliente("32472882", "nome incrivel", null, "Lcc3");
+			Cliente emailNulo = new Cliente("3247288211", "nome incrivel", null, "Lcc3");
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 			
@@ -84,7 +84,7 @@ class ClienteTest {
 	@Test
 	void testClienteLocVazia() {
 		try {
-			Cliente localizacaoVazia = new Cliente("40028922", "luke", "agmcc@hotmail.com", "");
+			Cliente localizacaoVazia = new Cliente("4002892211", "luke", "agmcc@hotmail.com", "");
 			fail(); // nao deve ser construido na pratica
 		} catch (IllegalArgumentException iae) {
 		}
@@ -93,7 +93,7 @@ class ClienteTest {
 	@Test
 	void testClienteLocNulo() {
 		try {
-			Cliente locNulo = new Cliente("32472882", "nome do cara", "email do cara", null);
+			Cliente locNulo = new Cliente("3247288211", "nome do cara", "email do cara", null);
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 		}
@@ -106,8 +106,8 @@ class ClienteTest {
 
 	@Test
 	void testEditaCliente() {
-		cliente1.editaCliente("nome", "email", "localizacao");
-		assertEquals(cliente1.toString(), "nome - localizacao - email");
+		cliente1.editaCliente("nome","beto");
+		assertEquals(cliente1.toString(), "beto - Lcc3 - bruno.fernandes@ccc.ufcg.edu.br");
 	}
 
 	@Test
@@ -117,7 +117,7 @@ class ClienteTest {
 
 	@Test
 	void testGetEmail() {
-		assertEquals(cliente1.getemail(), "bruno.fernandes@ccc.ufcg.edu.br");
+		assertEquals(cliente1.getEmail(), "bruno.fernandes@ccc.ufcg.edu.br");
 	}
 
 	@Test
@@ -127,7 +127,7 @@ class ClienteTest {
 
 	@Test
 	void testGetCpf() {
-		assertEquals(cliente1.getCpf(), "119110378");
+		assertEquals(cliente1.getCpf(), "11911037811");
 	}
 
 	@Test
@@ -138,7 +138,7 @@ class ClienteTest {
 	@Test
 	void testEqualsMesmoCpf() {
 		Cliente cliente2 = cliente1;
-		cliente2.editaCliente("nome", "email", "localizacao");
+		cliente2.editaCliente("nome", "nome");
 		assertTrue(cliente2.equals(cliente1));
 	}
 	
@@ -159,18 +159,18 @@ class ClienteTest {
 	
 	@Test
 	void testEqualsCpfsIguais() {
-		assertTrue(cliente1.equals(new Cliente("119110378", "nome", "email", "localizacao")));
+		assertTrue(cliente1.equals(new Cliente("11911037811", "nome", "email", "localizacao")));
 	}
 	
 	@Test
 	void testHashCodeIguais() {
-		Cliente mesmoCpf = new Cliente("119110378", "nome", "email", "localizacao");
+		Cliente mesmoCpf = new Cliente("11911037811", "nome", "email", "localizacao");
 		assertTrue(cliente1.hashCode() == mesmoCpf.hashCode());
 	}
 	
 	@Test
 	void testHashCodeDiferentes() {
-		Cliente cpfDiferente = new Cliente("matriculaDiferente", "nome", "email", "localizacao");
+		Cliente cpfDiferente = new Cliente("11210007810", "nome", "email", "localizacao");
 		assertFalse(cliente1.hashCode() == cpfDiferente.hashCode());
 	}
 	

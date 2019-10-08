@@ -64,7 +64,7 @@ public class Cliente {
 		} else if (localizacao.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
 		}
-		if(cpf.length()!= 11) {
+		if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
 		}
 	}
@@ -77,13 +77,35 @@ public class Cliente {
 	 * @param localizacao novo localizacao do cliente
 	 */
 	public void editaCliente(String atributo, String novoValor) {
-		if(atributo.equals("nome")) {
-			setNome(novoValor);
-		} else if(atributo.equals("email")) {
-			setEmail(novoValor);
-		} else if(atributo.equals("cpf")) {
-			throw new IllegalAccessError("Erro na edicao do cliente: cpf nao pode ser editado.");
+		if (atributo == null) {
+			throw new NullPointerException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		} else if (atributo.equals("")) {
+			throw new IllegalAccessError("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
+		} else if (novoValor == null) {
+			throw new NullPointerException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
+		} else if (novoValor.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
 		}
+		else if (atributo.equals("nome")) {
+			setNome(novoValor);
+		} else if (atributo.equals("email")) {
+			setEmail(novoValor);
+		} else if (atributo.equals("localizacao")) {
+			setLocalizacao(novoValor);
+		} else if (atributo.equals("cpf")) {
+			throw new IllegalAccessError("Erro na edicao do cliente: cpf nao pode ser editado.");
+		} else {
+			throw new IllegalArgumentException("Erro na edicao do cliente: atributo nao existe.");
+		}
+	}
+
+	/**
+	 * edita o local de trabalho do cliente
+	 * 
+	 * @param novoValor nova local agregado
+	 */
+	private void setLocalizacao(String novoValor) {
+		this.localizacao = novoValor;
 	}
 
 	/**
@@ -118,7 +140,7 @@ public class Cliente {
 	 * 
 	 * @return email do cliente
 	 */
-	public String getemail() {
+	public String getEmail() {
 		return this.email;
 	}
 
@@ -146,7 +168,7 @@ public class Cliente {
 	 * trabalho - email
 	 */
 	public String toString() {
-		return getNome() + " - " + getLocalizacao() + " - " + getemail();
+		return getNome() + " - " + getLocalizacao() + " - " + getEmail();
 	}
 
 	@Override

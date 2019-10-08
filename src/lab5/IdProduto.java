@@ -22,10 +22,9 @@ public class IdProduto {
 	 * @param descricao descricao do porduto
 	 */
 	public IdProduto(String nome, String descricao) {
-		if (validaDado(nome, descricao)) {
-			this.nome = nome;
-			this.descricao = descricao;
-		}
+		validaDado(nome, descricao);
+		this.nome = nome;
+		this.descricao = descricao;
 	}
 
 	/**
@@ -38,14 +37,14 @@ public class IdProduto {
 	 */
 	private boolean validaDado(String nome, String descricao) {
 		if (nome == null) {
-			throw new NullPointerException("nome nao pode ser nulo");
+			throw new NullPointerException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
 		} else if (nome.equals("")) {
-			throw new IllegalArgumentException("nome nao pode ser vazio");
+			throw new IllegalArgumentException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
 		}
 		if (descricao == null) {
-			throw new NullPointerException("descricao nao pode ser nula");
+			throw new NullPointerException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
 		} else if (descricao.equals("")) {
-			throw new IllegalArgumentException("descricao nao pode ser vazia");
+			throw new IllegalArgumentException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
 		}
 		return true;
 	}

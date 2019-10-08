@@ -3,8 +3,13 @@ package lab5;
 import easyaccept.EasyAccept;
 
 public class Facade {
-	private CrudCliente sistemaCliente = new CrudCliente();
-	private CrudFornecedor sistemaFornecedor = new CrudFornecedor();
+	private CrudCliente sistemaCliente;
+	private CrudFornecedor sistemaFornecedor;
+
+	public Facade() {
+		sistemaCliente = new CrudCliente();
+		sistemaFornecedor = new CrudFornecedor();
+	}
 
 	// comandos administrador/cliente
 	/**
@@ -13,9 +18,9 @@ public class Facade {
 	 * @param cpf         identificador do cliente
 	 * @param nome        nome do cliente
 	 * @param email       email do cliente
-	 * @param localizacao localizacao do cliente
-	 * @return cpf do cliente, caso o cadastro funcione, caso contrario, lanca-se um
-	 *         IllegalArgumentException
+	 * @param localizacao local de trabalho do cliente
+	 * @return cpf do cliente, caso o cadastro funcione, caso contrario, lanca-se o
+	 *         devido erro
 	 */
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
@@ -42,12 +47,11 @@ public class Facade {
 	}
 
 	/**
-	 * edita dados de certo cliente
+	 * edita certo atributo de certo cliente
 	 * 
-	 * @param cpf         identificador do cliente
-	 * @param nome        novo nome do cliente
-	 * @param email       novo email do cliente
-	 * @param localizacao novo local de trabalho do cliente
+	 * @param cpf       identificador do cliente
+	 * @param atributo  atributo que se deseja alterar
+	 * @param novoValor equivalente ao novo atributo
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
 		sistemaCliente.editaCliente(cpf, atributo, novoValor);
@@ -58,7 +62,7 @@ public class Facade {
 	 * 
 	 * @param cpf identificador do cliente
 	 */
-	public void deletaCliente(String cpf) {
+	public void removeCliente(String cpf) {
 		sistemaCliente.deletarCliente(cpf);
 	}
 
@@ -66,13 +70,13 @@ public class Facade {
 	/**
 	 * Cadastra um fornecedor
 	 * 
-	 * @param nome     nome e identificador do fornecedor
+	 * @param nome     nome do fornecedor
 	 * @param email    email do fornecedor
 	 * @param telefone telefone do fornecedor
 	 * @return nome do fornecedor caso o cadastro seja bem sucedido, senao, lanca-se
 	 *         um erro IllegalArgumentException
 	 */
-	public String cadastraFornecedor(String nome, String email, String telefone) {
+	public String adicionaFornecedor(String nome, String email, String telefone) {
 		try {
 			sistemaFornecedor.cadastraFornecedor(nome, email, telefone);
 			return nome;
@@ -84,10 +88,10 @@ public class Facade {
 	/**
 	 * retorna a representacao textual de um dado fornecedor
 	 * 
-	 * @param nome nome e identificador do fornecedor
+	 * @param nome nome do fornecedor
 	 * @return representacao textual do fornecedor
 	 */
-	public String recuperaFornecedor(String nome) {
+	public String exibeFornecedor(String nome) {
 		return sistemaFornecedor.retornaFornecedor(nome);
 	}
 
@@ -103,20 +107,20 @@ public class Facade {
 	/**
 	 * edita fornecedor
 	 * 
-	 * @param nome     identificador imutavel do fornecedor
-	 * @param email    novo email do fornecedor
-	 * @param telefone novo telefone do fornecedor
+	 * @param nome      identificador imutavel do fornecedor
+	 * @param atributo  atributo que se deseja editar
+	 * @param novoValor novo valor associado
 	 */
-	public void editaFornecedor(String nome, String email, String telefone) {
-		sistemaFornecedor.editaFornecedor(nome, email, telefone);
+	public void editaFornecedor(String nome, String atributo, String novoValor) {
+		sistemaFornecedor.editaFornecedor(nome, atributo, novoValor);
 	}
 
 	/**
 	 * deleta um fornecedor do sistema
 	 * 
-	 * @param nome identificador do fornecedor
+	 * @param nome nome do fornecedor
 	 */
-	public void deletaFornecedor(String nome) {
+	public void removeFornecedor(String nome) {
 		sistemaFornecedor.deletaFornecedor(nome);
 	}
 
@@ -129,19 +133,19 @@ public class Facade {
 	 * @param descricao      descricao do produto
 	 * @param preco          preco do produto
 	 */
-	public void cadastraProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		sistemaFornecedor.cadastraProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
 	/**
-	 * consulta um produto em forma de texto
+	 * consulta um produto cadastrado
 	 * 
 	 * @param nomeFornecedor nome do fornecedor do produto
 	 * @param nomeProduto    nome do produto
 	 * @param descricao      descricao do produto
 	 * @return representacao textual do produto
 	 */
-	public String consultarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		return sistemaFornecedor.consultaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
@@ -149,9 +153,9 @@ public class Facade {
 	 * lista todos os produtos cadastrados de certo fornecedor
 	 * 
 	 * @param nomeFornecedor nome do fornecedor do produto
-	 * @return listagem da representacao textual de todos os produtos
+	 * @return listagem da representacao textual de todos os produtos do fornecedor
 	 */
-	public String listarProdutosFornecedor(String nomeFornecedor) {
+	public String ProdutosFornecedor(String nomeFornecedor) {
 		return sistemaFornecedor.listaProdutos(nomeFornecedor);
 	}
 
@@ -172,7 +176,7 @@ public class Facade {
 	 * @param descricao      descricao do produto
 	 * @param preco          novo preco do produto
 	 */
-	public void editarProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
+	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double preco) {
 		sistemaFornecedor.editaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
@@ -183,12 +187,14 @@ public class Facade {
 	 * @param nomeProduto    nome do produto
 	 * @param descricao      descricao do produto
 	 */
-	public void deletarProduto(String nomeFornecedor, String nomeProduto, String descricao) {
+	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
 	public static void main(String[] args) {
-		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt", "Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt", "Testes_aceitacao/use_case_6.txt"};
+		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
+				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt",
+				"Testes_aceitacao/use_case_6.txt" };
 		EasyAccept.main(args);
 	}
 }

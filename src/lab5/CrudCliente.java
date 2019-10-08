@@ -74,12 +74,15 @@ public class CrudCliente {
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
 		if(cpf == null) {
-			throw new NullPointerException("CrudCliente editacliente");
+			throw new NullPointerException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
+		}
+		if(cpf.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
 		}
 		if(haCliente(cpf)) {
 			clientesCadastrados.get(cpf).editaCliente(atributo, novoValor);			
 		} else {
-			throw new NullPointerException("Cliente nao cadastrado");
+			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
 	}
 
@@ -89,10 +92,14 @@ public class CrudCliente {
 	 * @param cpf cpf do cliente
 	 */
 	public void deletarCliente(String cpf) {
-		if (haCliente(cpf)) {
+		if(cpf == null) {
+			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo"); 
+		} else if(cpf.equals("")) {
+			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		} else if (haCliente(cpf)) {
 			clientesCadastrados.remove(cpf);
 		} else {
-			throw new NullPointerException("Cliente nao cadastrado");
+			throw new NullPointerException("Erro na remocao do cliente: cliente nao existe.");
 		}
 	}
 

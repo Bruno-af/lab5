@@ -46,7 +46,9 @@ public class Produto {
 	 * @param novoPreco novo preco a ser incoporado
 	 */
 	public void alteraPreco(double novoPreco) {
+		if(novoPreco<0) {
+			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
+		}
 		this.preco = novoPreco;
-
 	}
 }

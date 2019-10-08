@@ -72,16 +72,16 @@ class CrudFornecedorTest {
 	}
 
 	@Test
-	void testEditaFornecedorExistente() {
-		sistemaFornecedores.editaFornecedor("cafe com monitor", "GatissimosDMAIS@gamil.com", "0000-1234");
+	void testEditaFornecedorExistenteEmail() {
+		sistemaFornecedores.editaFornecedor("cafe com monitor", "email", "GatissimosDMAIS@gamil.com");
 		assertEquals(sistemaFornecedores.listaFornecedores(),
-				"cafe com monitor - GatissimosDMAIS@gamil.com - 0000-1234");
+				"cafe com monitor - GatissimosDMAIS@gamil.com - 4002-8922");
 	}
 
 	@Test
-	void testEditaFornecedorInexistente() {
+	void testEditaFornecedorInexistenteEmail() {
 		try {
-			sistemaVazio.editaFornecedor("cafe com monitor", "GatissimosDMAIS@gamil.com", "0000-1234");
+			sistemaVazio.editaFornecedor("cafe com monitor", "email", "GatissimosDMAIS@gamil.com");
 			fail();
 		}catch(NullPointerException npe) {
 		}
