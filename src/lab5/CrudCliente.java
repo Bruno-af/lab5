@@ -1,6 +1,9 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class CrudCliente {
 	/**
@@ -55,8 +58,10 @@ public class CrudCliente {
 	 */
 	public String listaClientes() {
 		String saida = "";
-		for (Cliente cliente : clientesCadastrados.values()) {
-			saida += cliente.toString() + " | ";
+		List<Cliente> clientesOrdenados = new ArrayList<>(this.clientesCadastrados.values());
+		Collections.sort(clientesOrdenados);
+		for (Cliente atual : clientesOrdenados ) {
+			saida += atual.toString() + " | ";
 		}
 		if (saida.contentEquals("")) {
 			throw new NullPointerException("Nao ha clientes cadastrados");

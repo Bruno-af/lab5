@@ -1,6 +1,6 @@
 package lab5;
 
-public class Produto {
+public class Produto implements Comparable<Produto> {
 	private double preco;
 	private String nome;
 	private String descricao;
@@ -21,7 +21,7 @@ public class Produto {
 
 	private void validaDados(String nome, String descricao, Double preco) {
 		if (nome == null) {
-			throw new NullPointerException("nome nï¿½o pode ser nulo");
+			throw new NullPointerException("nome não pode ser nulo");
 		} else if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
 		}
@@ -50,5 +50,14 @@ public class Produto {
 			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
 		this.preco = novoPreco;
+	}
+
+	@Override
+	public int compareTo(Produto o) {
+		return (this.nome + this.descricao).compareTo(o.nome + o.descricao);
+	}
+
+	public double getPreco() {
+		return this.preco;
 	}
 }

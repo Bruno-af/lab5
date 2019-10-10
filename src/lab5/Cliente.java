@@ -1,6 +1,6 @@
 package lab5;
 
-public class Cliente {
+public class Cliente implements Comparable<Cliente> {
 
 	/**
 	 * cpf e identificador unico de um cliente
@@ -85,8 +85,7 @@ public class Cliente {
 			throw new NullPointerException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
 		} else if (novoValor.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
-		}
-		else if (atributo.equals("nome")) {
+		} else if (atributo.equals("nome")) {
 			setNome(novoValor);
 		} else if (atributo.equals("email")) {
 			setEmail(novoValor);
@@ -201,4 +200,13 @@ public class Cliente {
 			return false;
 		return true;
 	}
+
+	@Override
+	/**
+	 * compara dois clientes alfabeticamente
+	 */
+	public int compareTo(Cliente outro) {
+		return this.getNome().compareTo(outro.getNome());
+	}
+
 }

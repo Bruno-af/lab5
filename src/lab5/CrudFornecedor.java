@@ -1,19 +1,24 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class CrudFornecedor {
 	/**
 	 * colecao de armazenamento dos fornecedores cadastrados
 	 */
-	private HashMap<String, Fornecedor> fornecedores;
+	private HashMap<String, Fornecedor> fornecedoresCadastrados;
 
 	/**
 	 * Constroi sistema de fornecedores
 	 */
 	public CrudFornecedor() {
-		this.fornecedores = new HashMap<>();
+		this.fornecedoresCadastrados = new HashMap<>();
 	}
+
+	// metodos para manipular fornecedores
 
 	/**
 	 * cadastra um fornecedor no sistema
@@ -39,7 +44,7 @@ public class CrudFornecedor {
 		} else if (haFornecedor(nome.toLowerCase())) {
 			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
 		}
-		fornecedores.put(nome.toLowerCase(), new Fornecedor(nome, email, telefone));
+		fornecedoresCadastrados.put(nome.toLowerCase(), new Fornecedor(nome, email, telefone));
 		return nome;
 	}
 
@@ -56,7 +61,7 @@ public class CrudFornecedor {
 			throw new IllegalArgumentException("Erro na exibicao do fornecedor: nome nao pode ser vazio ou nulo.");
 		}
 		if (haFornecedor(nome)) {
-			return fornecedores.get(nome.toLowerCase()).toString();
+			return getFornecedor(nome).toString();
 		} else {
 			throw new NullPointerException("Erro na exibicao do fornecedor: fornecedor nao existe.");
 		}
@@ -70,7 +75,7 @@ public class CrudFornecedor {
 	 *         contrario
 	 */
 	private boolean haFornecedor(String nome) {
-		if (fornecedores.containsKey(nome.toLowerCase())) {
+		if (fornecedoresCadastrados.containsKey(nome.toLowerCase())) {
 			return true;
 		}
 		return false;
@@ -83,7 +88,8 @@ public class CrudFornecedor {
 	 */
 	public String listaFornecedores() {
 		String saida = "";
-		for (Fornecedor fornecedor : fornecedores.values()) {
+		List<Fornecedor> listaOrdenada = ordenaFornecedores();
+		for (Fornecedor fornecedor : listaOrdenada) {
 			saida += fornecedor.toString() + " | ";
 		}
 		if (!saida.equals("")) {
@@ -91,6 +97,17 @@ public class CrudFornecedor {
 		} else {
 			throw new NullPointerException("nao ha fornecedores cadastrados");
 		}
+	}
+
+	/**
+	 * ordena os fornecedores até entao cadastrados em uma lista
+	 * 
+	 * @return lista ordenada de fornecedores
+	 */
+	private List<Fornecedor> ordenaFornecedores() {
+		List<Fornecedor> fornecedoresOrdenados = new ArrayList<>(this.fornecedoresCadastrados.values());
+		Collections.sort(fornecedoresOrdenados);
+		return fornecedoresOrdenados;
 	}
 
 	/**
@@ -105,7 +122,7 @@ public class CrudFornecedor {
 			throw new NullPointerException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
 		} else if (nome.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao do fornecedor: nome nao pode ser vazio ou nulo.");
-		} 
+		}
 		if (novoValor == null) {
 			throw new NullPointerException("Erro na edicao do fornecedor: novo valor nao pode ser vazio ou nulo.");
 		} else if (novoValor.equals("")) {
@@ -123,7 +140,7 @@ public class CrudFornecedor {
 			throw new IllegalArgumentException("Erro na edicao do fornecedor: atributo nao existe.");
 		}
 		if (haFornecedor(nome)) {
-			fornecedores.get(nome.toLowerCase()).editaFornecedor(atributo, novoValor);
+			getFornecedor(nome).editaFornecedor(atributo, novoValor);
 		} else {
 			throw new NullPointerException("Erro na edicao do fornecedor: fornecedor nao existe.");
 		}
@@ -143,10 +160,20 @@ public class CrudFornecedor {
 					"Erro na remocao do fornecedor: nome do fornecedor nao pode ser vazio ou nulo.");
 		}
 		if (haFornecedor(nome)) {
-			fornecedores.remove(nome.toLowerCase());
+			fornecedoresCadastrados.remove(nome.toLowerCase());
 		} else {
 			throw new NullPointerException("Erro na remocao do fornecedor: fornecedor nao existe.");
 		}
+	}
+
+	/**
+	 * retorna um fornecedor
+	 * 
+	 * @param nome nome e identificador do fornecedor
+	 * @return o dado fornecedor
+	 */
+	public Fornecedor getFornecedor(String nome) {
+		return fornecedoresCadastrados.get(nome.toLowerCase());
 	}
 
 	// metodos para manipular produtos
@@ -174,7 +201,7 @@ public class CrudFornecedor {
 			throw new IllegalArgumentException("Erro no cadastro de produto: preco invalido.");
 		}
 		if (haFornecedor(nomeFornecedor)) {
-			fornecedores.get(nomeFornecedor.toLowerCase()).cadastraProduto(nomeProduto, descricao, preco);
+			getFornecedor(nomeFornecedor).cadastraProduto(nomeProduto, descricao, preco);
 		} else {
 			throw new NullPointerException("Erro no cadastro de produto: fornecedor nao existe.");
 		}
@@ -195,7 +222,7 @@ public class CrudFornecedor {
 			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
 		if (haFornecedor(nomeFornecedor)) {
-			return fornecedores.get(nomeFornecedor.toLowerCase()).consultaProduto(nomeProduto, descricao);
+			return getFornecedor(nomeFornecedor).consultaProduto(nomeProduto, descricao);
 		} else {
 			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao existe.");
 		}
@@ -208,10 +235,15 @@ public class CrudFornecedor {
 	 * @return listagem da representacao textual de todos os produtos
 	 */
 	public String listaProdutos(String nomeFornecedor) {
+		if (nomeFornecedor == null) {
+			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		} else if (nomeFornecedor.equals("")) {
+			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
+		}
 		if (haFornecedor(nomeFornecedor.toLowerCase())) {
-			return fornecedores.get(nomeFornecedor.toLowerCase()).listaProdutos();
+			return getFornecedor(nomeFornecedor).listagemProdutos();
 		} else {
-			throw new NullPointerException("fornecedor nao cadastrado");
+			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao existe.");
 		}
 	}
 
@@ -222,13 +254,14 @@ public class CrudFornecedor {
 	 */
 	public String listaTodosProdutos() {
 		String saida = "";
-		for (Fornecedor fornecedor : fornecedores.values()) {
-			saida += fornecedor.listagemProdutos();
+		List<Fornecedor> listaOrdenada = ordenaFornecedores();
+		for (Fornecedor fornecedor : listaOrdenada) {
+			saida += fornecedor.listagemProdutos() + " | ";
 		}
 		if (saida.equals("")) {
 			throw new NullPointerException("nenhum produto cadastrado");
 		}
-		return saida;
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	/**
@@ -248,7 +281,7 @@ public class CrudFornecedor {
 		if (!haFornecedor(nomeFornecedor.toLowerCase())) {
 			throw new NullPointerException("Erro na edicao de produto: fornecedor nao existe.");
 		}
-		fornecedores.get(nomeFornecedor.toLowerCase()).editaProduto(nomeProduto, descricao, preco);
+		getFornecedor(nomeFornecedor).editaProduto(nomeProduto, descricao, preco);
 	}
 
 	/**
@@ -267,6 +300,48 @@ public class CrudFornecedor {
 		if (!haFornecedor(nomeFornecedor)) {
 			throw new NullPointerException("Erro na remocao de produto: fornecedor nao existe.");
 		}
-		fornecedores.get(nomeFornecedor.toLowerCase()).deletaProduto(nomeProduto, descricao);
+		getFornecedor(nomeFornecedor).deletaProduto(nomeProduto, descricao);
+	}
+
+	// metodos para manipular vendas
+
+	/**
+	 * cadastra compra em um certo fornecedor
+	 * 
+	 * @param cpf               cpf do cliente consumidor
+	 * @param fornecedor        fornecedor do produto
+	 * @param data              data da compra
+	 * @param nome_produto      nome do produto comprado
+	 * @param descrição_produto descricao do produto comprado
+	 */
+	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
+			String descricao_produto) {
+		if (fornecedor == null) {
+			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
+		}
+		if (haFornecedor(fornecedor)) {
+			getFornecedor(fornecedor).cadastraCompra(cpf, data, nome_produto, descricao_produto);
+		} else {
+			throw new IllegalArgumentException("crud fornecedor 317");
+		}
+	}
+
+	public double getDebito(String cpf, String fornecedor) {
+		if (fornecedor == null) {
+			throw new NullPointerException("crud fornecedor get debito310");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("crud fornecedor get debito 312");
+		}
+		return fornecedoresCadastrados.get(fornecedor).getDebito(cpf);
+	}
+
+	public String toStringConta(String cpf, String fornecedor) {
+		return "";
+	}
+
+	public String listaContas(String cpf) {
+		return "";
 	}
 }

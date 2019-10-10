@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import lab5.Fornecedor;
+
 /**
  * Laborat�rio de Programa��o 2 - Lab 1
  * 

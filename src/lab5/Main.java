@@ -10,5 +10,6 @@ public class Main {
 		Facade a = new Facade();
 		a.adicionaCliente("11111111111", "nome", "email", "localizacao");
 		a.exibeCliente("11111111111");
+		a.listaClientes();
 	}
 }

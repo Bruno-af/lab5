@@ -5,10 +5,12 @@ import easyaccept.EasyAccept;
 public class Facade {
 	private CrudCliente sistemaCliente;
 	private CrudFornecedor sistemaFornecedor;
+	private ControllerCompras sistemaCompras;
 
 	public Facade() {
 		sistemaCliente = new CrudCliente();
 		sistemaFornecedor = new CrudFornecedor();
+		sistemaCompras = new ControllerCompras();
 	}
 
 	// comandos administrador/cliente
@@ -42,7 +44,7 @@ public class Facade {
 	 * 
 	 * @return listagem de todos os clientes cadastrados
 	 */
-	public String listaClientes() {
+	public String exibeClientes() {
 		return sistemaCliente.listaClientes();
 	}
 
@@ -100,7 +102,7 @@ public class Facade {
 	 * 
 	 * @return retorna em forma de texto a lista de todos os fornecedores
 	 */
-	public String listaFornecedores() {
+	public String exibeFornecedores() {
 		return sistemaFornecedor.listaFornecedores();
 	}
 
@@ -155,7 +157,7 @@ public class Facade {
 	 * @param nomeFornecedor nome do fornecedor do produto
 	 * @return listagem da representacao textual de todos os produtos do fornecedor
 	 */
-	public String ProdutosFornecedor(String nomeFornecedor) {
+	public String exibeProdutosFornecedor(String nomeFornecedor) {
 		return sistemaFornecedor.listaProdutos(nomeFornecedor);
 	}
 
@@ -164,7 +166,7 @@ public class Facade {
 	 * 
 	 * @return representacao textual de todos os produtos de todos os fornecedores
 	 */
-	public String listarProdutos() {
+	public String exibeProdutos() {
 		return sistemaFornecedor.listaTodosProdutos();
 	}
 
@@ -191,7 +193,25 @@ public class Facade {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
-	public static void main(String[] args) {
+	// comandos administrador/Compras
+	
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto, String descricao_produto) {
+		sistemaFornecedor.CadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
+	}
+	
+	public double getDebito(String cpf, String fornecedor) {
+		return sistemaFornecedor.getDebito(cpf, fornecedor);
+	}
+	
+	public String toStringConta(String cpf, String fornecedor) {
+		return "";
+	}
+	
+	public String listaContas(String cpf) {
+		return "";
+	}
+	
+ 	public static void main(String[] args) {
 		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
 				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt",
 				"Testes_aceitacao/use_case_6.txt" };

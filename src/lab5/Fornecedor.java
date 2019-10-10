@@ -1,12 +1,15 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
-public class Fornecedor {
+public class Fornecedor implements Comparable<Fornecedor> {
 	/**
 	 * nome do fornecedor
 	 */
-	private String nome;
+	private String nomeFornecedor;
 	/**
 	 * email do fornecedor
 	 */
@@ -19,6 +22,10 @@ public class Fornecedor {
 	 * colecao de produtos de um fornecedor
 	 */
 	private HashMap<String, Produto> produtos;
+	/**
+	 * colecao de contas de clientes de um fornecedor
+	 */
+	private HashMap<String, Conta> contas;
 
 	/**
 	 * constroi o fornecedor
@@ -29,7 +36,7 @@ public class Fornecedor {
 	 */
 	public Fornecedor(String nome, String email, String telefone) {
 		validaDados(nome, email, telefone);
-		this.nome = nome;
+		this.nomeFornecedor = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.produtos = new HashMap<>();
@@ -65,7 +72,16 @@ public class Fornecedor {
 	 * representacao textual do fornecedor no formato: nome - email - telefone
 	 */
 	public String toString() {
-		return this.nome + " - " + this.email + " - " + this.telefone;
+		return this.getNomeFornecedor() + " - " + this.email + " - " + this.telefone;
+	}
+
+	/**
+	 * retorna o nome do fornecedor
+	 * 
+	 * @return nome do fornecedor
+	 */
+	private String getNomeFornecedor() {
+		return this.nomeFornecedor;
 	}
 
 	/**
@@ -136,14 +152,14 @@ public class Fornecedor {
 	 * @return retorna a representacao textual do produto
 	 */
 	public String consultaProduto(String nomeProduto, String descricao) {
-		if(descricao == null) {
+		if (descricao == null) {
 			throw new NullPointerException("Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
-		} else if(descricao.equals("")) {
+		} else if (descricao.equals("")) {
 			throw new IllegalArgumentException("Erro na exibicao de produto: descricao nao pode ser vazia ou nula.");
 		}
-		if(nomeProduto == null) {
+		if (nomeProduto == null) {
 			throw new NullPointerException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
-		} else if(nomeProduto.equals("")) {
+		} else if (nomeProduto.equals("")) {
 			throw new IllegalArgumentException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
 		}
 		IdProduto id = new IdProduto(nomeProduto, descricao);
@@ -177,14 +193,22 @@ public class Fornecedor {
 	 * @return listagem das representacoes textuais dos produtos com seu fornecedor
 	 */
 	public String listagemProdutos() {
-		if (produtos.isEmpty()) {
-			throw new NullPointerException("Nao ha produtos cadastrados");
+		if (!produtos.isEmpty()) {
+			List<Produto> listaOrdenadaProdutos = ordenaProdutos();
+			String saida = "";
+			for (Produto produto : listaOrdenadaProdutos) {
+				saida += this.nomeFornecedor + " - " + produto.toString() + " | ";
+			}
+			return saida.substring(0, saida.length() - 3);
+		} else {
+			return this.nomeFornecedor + " -";
 		}
-		String saida = "";
-		for (Produto produto : produtos.values()) {
-			saida += this.nome + " - " + produto.toString() + " | ";
-		}
-		return saida.substring(0, saida.length() - 3);
+	}
+
+	private List<Produto> ordenaProdutos() {
+		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
+		Collections.sort(produtosOrdenados);
+		return produtosOrdenados;
 	}
 
 	/**
@@ -220,12 +244,12 @@ public class Fornecedor {
 	 * @param descricao   descricao do produto a ser deletado
 	 */
 	public void deletaProduto(String nomeProduto, String descricao) {
-		if(nomeProduto == null) {
+		if (nomeProduto == null) {
 			throw new NullPointerException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
 		} else if (nomeProduto.equals("")) {
 			throw new IllegalArgumentException("Erro na remocao de produto: nome nao pode ser vazio ou nulo.");
 		}
-		if(descricao == null) {
+		if (descricao == null) {
 			throw new NullPointerException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		} else if (descricao.equals("")) {
 			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
@@ -238,4 +262,75 @@ public class Fornecedor {
 		}
 	}
 
+	/**
+	 * retorna o preco de um produto
+	 * 
+	 * @param nomeProduto       nome do produto
+	 * @param descricao_produto descricao do produto
+	 * @return preco do produto
+	 */
+	public double getPreco(String nomeProduto, String descricao_produto) {
+		IdProduto key = new IdProduto(nomeProduto, descricao_produto);
+		return produtos.get(key.retornaId()).getPreco();
+	}
+
+	@Override
+	/**
+	 * compara dois fornecedores alfabeticamente
+	 */
+	public int compareTo(Fornecedor o) {
+		return this.getNomeFornecedor().compareTo(o.getNomeFornecedor());
+	}
+
+	// metodos para manipular vendas
+
+	public void cadastraCompra(String cpf, String data, String nome_produto, String descricao_produto) {
+		if (cpf == null) {
+			throw new NullPointerException("fornecedor cadastracompra cpf nul");
+		} else if (cpf.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
+		}
+		if (nome_produto == null) {
+			throw new NullPointerException("fornecedor cadastracompra nome nul");
+		} else if (nome_produto.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra nome vazi");
+		}
+		if (descricao_produto == null) {
+			throw new NullPointerException("fornecedor cadastracompra descri nul");
+		} else if (descricao_produto.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra descri vazi");
+		}
+		if (haConta(cpf)) {
+			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
+		} else {
+			contas.put(cpf, new Conta(data, nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto)));
+			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
+		}
+	}
+
+	/**
+	 * verifica a existencia da conta de um cliente
+	 * 
+	 * @param cpf cpf e identificador do cliente
+	 * @return true caso o cliente possua uma conta, false caso o contrario
+	 */
+	private boolean haConta(String cpf) {
+		if (contas.containsKey(cpf)) {
+			return true;
+		}
+		return false;
+	}
+
+	public double getDebito(String cpf) {
+		if (cpf == null) {
+			throw new NullPointerException("fornecedor getdebito cpf nul");
+		} else if (cpf.equals("")) {
+			throw new IllegalArgumentException("fornecedor getdebito cpf vazi");
+		}
+		if (haConta(cpf)) {
+			return contas.get(cpf).getDebito();			
+		} else {
+			throw new NullPointerException("getDebito n ha conta");
+		}
+	}
 }
