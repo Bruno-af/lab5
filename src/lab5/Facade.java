@@ -3,14 +3,10 @@ package lab5;
 import easyaccept.EasyAccept;
 
 public class Facade {
-	private CrudCliente sistemaCliente;
-	private CrudFornecedor sistemaFornecedor;
-	private ControllerCompras sistemaCompras;
+	private ControllerGeral sistema;
 
 	public Facade() {
-		sistemaCliente = new CrudCliente();
-		sistemaFornecedor = new CrudFornecedor();
-		sistemaCompras = new ControllerCompras();
+		sistema = new ControllerGeral();
 	}
 
 	// comandos administrador/cliente
@@ -25,7 +21,7 @@ public class Facade {
 	 *         devido erro
 	 */
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
-		sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
+		sistema.adicionaCliente(cpf, nome, email, localizacao);
 		return cpf;
 	}
 
@@ -36,7 +32,7 @@ public class Facade {
 	 * @return representacao textual de um cliente de dado cpf
 	 */
 	public String exibeCliente(String cpf) {
-		return sistemaCliente.RepresentacaoCliente(cpf);
+		return sistema.exibeCliente(cpf);
 	}
 
 	/**
@@ -45,7 +41,7 @@ public class Facade {
 	 * @return listagem de todos os clientes cadastrados
 	 */
 	public String exibeClientes() {
-		return sistemaCliente.listaClientes();
+		return sistema.exibeClientes();
 	}
 
 	/**
@@ -56,7 +52,7 @@ public class Facade {
 	 * @param novoValor equivalente ao novo atributo
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
-		sistemaCliente.editaCliente(cpf, atributo, novoValor);
+		sistema.editaCliente(cpf, atributo, novoValor);
 	}
 
 	/**
@@ -65,7 +61,7 @@ public class Facade {
 	 * @param cpf identificador do cliente
 	 */
 	public void removeCliente(String cpf) {
-		sistemaCliente.deletarCliente(cpf);
+		sistema.removeCliente(cpf);
 	}
 
 	// comando administrador/fornecedor
@@ -80,7 +76,7 @@ public class Facade {
 	 */
 	public String adicionaFornecedor(String nome, String email, String telefone) {
 		try {
-			sistemaFornecedor.cadastraFornecedor(nome, email, telefone);
+			sistema.adicionaFornecedor(nome, email, telefone);
 			return nome;
 		} catch (Exception e) {
 			throw e;
@@ -94,7 +90,7 @@ public class Facade {
 	 * @return representacao textual do fornecedor
 	 */
 	public String exibeFornecedor(String nome) {
-		return sistemaFornecedor.retornaFornecedor(nome);
+		return sistema.exibeFornecedor(nome);
 	}
 
 	/**
@@ -103,7 +99,7 @@ public class Facade {
 	 * @return retorna em forma de texto a lista de todos os fornecedores
 	 */
 	public String exibeFornecedores() {
-		return sistemaFornecedor.listaFornecedores();
+		return sistema.exibeFornecedores();
 	}
 
 	/**
@@ -114,7 +110,7 @@ public class Facade {
 	 * @param novoValor novo valor associado
 	 */
 	public void editaFornecedor(String nome, String atributo, String novoValor) {
-		sistemaFornecedor.editaFornecedor(nome, atributo, novoValor);
+		sistema.editaFornecedor(nome, atributo, novoValor);
 	}
 
 	/**
@@ -123,7 +119,7 @@ public class Facade {
 	 * @param nome nome do fornecedor
 	 */
 	public void removeFornecedor(String nome) {
-		sistemaFornecedor.deletaFornecedor(nome);
+		sistema.removeFornecedor(nome);
 	}
 
 	// comandos administrador/produtos(pelos fornecedores)
@@ -136,7 +132,7 @@ public class Facade {
 	 * @param preco          preco do produto
 	 */
 	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
-		sistemaFornecedor.cadastraProduto(nomeFornecedor, nomeProduto, descricao, preco);
+		sistema.adicionaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
 	/**
@@ -148,7 +144,7 @@ public class Facade {
 	 * @return representacao textual do produto
 	 */
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		return sistemaFornecedor.consultaProduto(nomeFornecedor, nomeProduto, descricao);
+		return sistema.exibeProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
 	/**
@@ -158,7 +154,7 @@ public class Facade {
 	 * @return listagem da representacao textual de todos os produtos do fornecedor
 	 */
 	public String exibeProdutosFornecedor(String nomeFornecedor) {
-		return sistemaFornecedor.listaProdutos(nomeFornecedor);
+		return sistema.exibeProdutosFornecedor(nomeFornecedor);
 	}
 
 	/**
@@ -167,7 +163,7 @@ public class Facade {
 	 * @return representacao textual de todos os produtos de todos os fornecedores
 	 */
 	public String exibeProdutos() {
-		return sistemaFornecedor.listaTodosProdutos();
+		return sistema.exibeProdutos();
 	}
 
 	/**
@@ -179,28 +175,28 @@ public class Facade {
 	 * @param preco          novo preco do produto
 	 */
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double preco) {
-		sistemaFornecedor.editaProduto(nomeFornecedor, nomeProduto, descricao, preco);
+		sistema.editaProduto(nomeFornecedor, nomeProduto, descricao, preco);
 	}
 
 	/**
-	 * deleta um dado produto do sistema de um fornecedor
+	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
 	 * 
 	 * @param nomeFornecedor nome do fornecedor
 	 * @param nomeProduto    nome do produto
 	 * @param descricao      descricao do produto
 	 */
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
+		sistema.removeProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
 	// comandos administrador/Compras
 	
 	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto, String descricao_produto) {
-		sistemaFornecedor.CadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
+		sistema.adicionaCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
 	}
 	
 	public double getDebito(String cpf, String fornecedor) {
-		return sistemaFornecedor.getDebito(cpf, fornecedor);
+		return sistema.getDebito(cpf, fornecedor);
 	}
 	
 	public String toStringConta(String cpf, String fornecedor) {

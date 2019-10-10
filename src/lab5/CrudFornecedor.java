@@ -100,7 +100,7 @@ public class CrudFornecedor {
 	}
 
 	/**
-	 * ordena os fornecedores até entao cadastrados em uma lista
+	 * ordena os fornecedores atï¿½ entao cadastrados em uma lista
 	 * 
 	 * @return lista ordenada de fornecedores
 	 */
@@ -303,45 +303,45 @@ public class CrudFornecedor {
 		getFornecedor(nomeFornecedor).deletaProduto(nomeProduto, descricao);
 	}
 
-	// metodos para manipular vendas
-
-	/**
-	 * cadastra compra em um certo fornecedor
-	 * 
-	 * @param cpf               cpf do cliente consumidor
-	 * @param fornecedor        fornecedor do produto
-	 * @param data              data da compra
-	 * @param nome_produto      nome do produto comprado
-	 * @param descrição_produto descricao do produto comprado
-	 */
-	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
-			String descricao_produto) {
-		if (fornecedor == null) {
-			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
-		} else if (fornecedor.equals("")) {
-			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
-		}
-		if (haFornecedor(fornecedor)) {
-			getFornecedor(fornecedor).cadastraCompra(cpf, data, nome_produto, descricao_produto);
-		} else {
-			throw new IllegalArgumentException("crud fornecedor 317");
-		}
-	}
-
-	public double getDebito(String cpf, String fornecedor) {
-		if (fornecedor == null) {
-			throw new NullPointerException("crud fornecedor get debito310");
-		} else if (fornecedor.equals("")) {
-			throw new IllegalArgumentException("crud fornecedor get debito 312");
-		}
-		return fornecedoresCadastrados.get(fornecedor).getDebito(cpf);
-	}
-
-	public String toStringConta(String cpf, String fornecedor) {
-		return "";
-	}
-
-	public String listaContas(String cpf) {
-		return "";
-	}
+//	// metodos para manipular vendas
+//
+//	/**
+//	 * cadastra compra em um certo fornecedor
+//	 * 
+//	 * @param cpf               cpf do cliente consumidor
+//	 * @param fornecedor        fornecedor do produto
+//	 * @param data              data da compra
+//	 * @param nome_produto      nome do produto comprado
+//	 * @param descricao_produto descricao do produto comprado
+//	 */
+//	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
+//			String descricao_produto) {
+//		if (fornecedor == null) {
+//			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
+//		} else if (fornecedor.equals("")) {
+//			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
+//		}
+//		if (haFornecedor(fornecedor)) {
+//			getFornecedor(fornecedor).cadastraCompra(cpf, data, nome_produto, descricao_produto);
+//		} else {
+//			throw new IllegalArgumentException("crud fornecedor 317");
+//		}
+//	}
+//
+//	public double getDebito(String cpf, String fornecedor) {
+//		if (fornecedor == null) {
+//			throw new NullPointerException("crud fornecedor get debito310");
+//		} else if (fornecedor.equals("")) {
+//			throw new IllegalArgumentException("crud fornecedor get debito 312");
+//		}
+//		return fornecedoresCadastrados.get(fornecedor).getDebito(cpf);
+//	}
+//
+//	public String toStringConta(String cpf, String fornecedor) {
+//		return "";
+//	}
+//
+//	public String listaContas(String cpf) {
+//		return "";
+//	}
 }

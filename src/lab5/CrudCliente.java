@@ -60,7 +60,7 @@ public class CrudCliente {
 		String saida = "";
 		List<Cliente> clientesOrdenados = new ArrayList<>(this.clientesCadastrados.values());
 		Collections.sort(clientesOrdenados);
-		for (Cliente atual : clientesOrdenados ) {
+		for (Cliente atual : clientesOrdenados) {
 			saida += atual.toString() + " | ";
 		}
 		if (saida.contentEquals("")) {
@@ -78,14 +78,14 @@ public class CrudCliente {
 	 * @param localizacao novo local de trabalho do cliente
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
-		if(cpf == null) {
+		if (cpf == null) {
 			throw new NullPointerException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
 		}
-		if(cpf.equals("")) {
+		if (cpf.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
 		}
-		if(haCliente(cpf)) {
-			clientesCadastrados.get(cpf).editaCliente(atributo, novoValor);			
+		if (haCliente(cpf)) {
+			clientesCadastrados.get(cpf).editaCliente(atributo, novoValor);
 		} else {
 			throw new NullPointerException("Erro na edicao do cliente: cliente nao existe.");
 		}
@@ -97,9 +97,9 @@ public class CrudCliente {
 	 * @param cpf cpf do cliente
 	 */
 	public void deletarCliente(String cpf) {
-		if(cpf == null) {
-			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo"); 
-		} else if(cpf.equals("")) {
+		if (cpf == null) {
+			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
+		} else if (cpf.equals("")) {
 			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
 		} else if (haCliente(cpf)) {
 			clientesCadastrados.remove(cpf);
@@ -120,6 +120,58 @@ public class CrudCliente {
 		} else {
 			return false;
 		}
+	}
+
+	// metodos para manipular vendas
+
+	/**
+	 * cadastra compra em um certo fornecedor
+	 * 
+	 * @param cpf               cpf do cliente consumidor
+	 * @param fornecedor        fornecedor do produto
+	 * @param data              data da compra
+	 * @param nome_produto      nome do produto comprado
+	 * @param descricao_produto descricao do produto comprado
+	 */
+	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
+			String descricao_produto) {
+		if (fornecedor == null) {
+			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
+		}
+		if (haCliente(cpf)) {
+			getCliente(cpf).cadastraCompra(cpf, data, nome_produto, descricao_produto);
+		} else {
+			throw new IllegalArgumentException("crud fornecedor 317");
+		}
+	}
+
+	/**
+	 * retorna um dado cliente
+	 * 
+	 * @param cpf cpf e identificador do cliente
+	 * @return cliente com dado cpf
+	 */
+	private Cliente getCliente(String cpf) {
+		return clientesCadastrados.get(cpf);
+	}
+
+	public double getDebito(String cpf, String fornecedor) {
+		if (fornecedor == null) {
+			throw new NullPointerException("crud fornecedor get debito310");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("crud fornecedor get debito 312");
+		}
+		return clientesCadastrados.get(fornecedor).getDebito(cpf);
+	}
+
+	public String toStringConta(String cpf, String fornecedor) {
+		return "";
+	}
+
+	public String listaContas(String cpf) {
+		return "";
 	}
 
 }

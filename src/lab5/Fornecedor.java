@@ -25,7 +25,6 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	/**
 	 * colecao de contas de clientes de um fornecedor
 	 */
-	private HashMap<String, Conta> contas;
 
 	/**
 	 * constroi o fornecedor
@@ -284,53 +283,53 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 	// metodos para manipular vendas
 
-	public void cadastraCompra(String cpf, String data, String nome_produto, String descricao_produto) {
-		if (cpf == null) {
-			throw new NullPointerException("fornecedor cadastracompra cpf nul");
-		} else if (cpf.equals("")) {
-			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
-		}
-		if (nome_produto == null) {
-			throw new NullPointerException("fornecedor cadastracompra nome nul");
-		} else if (nome_produto.equals("")) {
-			throw new IllegalArgumentException("fornecedor cadastracompra nome vazi");
-		}
-		if (descricao_produto == null) {
-			throw new NullPointerException("fornecedor cadastracompra descri nul");
-		} else if (descricao_produto.equals("")) {
-			throw new IllegalArgumentException("fornecedor cadastracompra descri vazi");
-		}
-		if (haConta(cpf)) {
-			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
-		} else {
-			contas.put(cpf, new Conta(data, nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto)));
-			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
-		}
-	}
-
-	/**
-	 * verifica a existencia da conta de um cliente
-	 * 
-	 * @param cpf cpf e identificador do cliente
-	 * @return true caso o cliente possua uma conta, false caso o contrario
-	 */
-	private boolean haConta(String cpf) {
-		if (contas.containsKey(cpf)) {
-			return true;
-		}
-		return false;
-	}
-
-	public double getDebito(String cpf) {
-		if (cpf == null) {
-			throw new NullPointerException("fornecedor getdebito cpf nul");
-		} else if (cpf.equals("")) {
-			throw new IllegalArgumentException("fornecedor getdebito cpf vazi");
-		}
-		if (haConta(cpf)) {
-			return contas.get(cpf).getDebito();			
-		} else {
-			throw new NullPointerException("getDebito n ha conta");
-		}
-	}
+//	public void cadastraCompra(String cpf, String data, String nome_produto, String descricao_produto) {
+//		if (cpf == null) {
+//			throw new NullPointerException("fornecedor cadastracompra cpf nul");
+//		} else if (cpf.equals("")) {
+//			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
+//		}
+//		if (nome_produto == null) {
+//			throw new NullPointerException("fornecedor cadastracompra nome nul");
+//		} else if (nome_produto.equals("")) {
+//			throw new IllegalArgumentException("fornecedor cadastracompra nome vazi");
+//		}
+//		if (descricao_produto == null) {
+//			throw new NullPointerException("fornecedor cadastracompra descri nul");
+//		} else if (descricao_produto.equals("")) {
+//			throw new IllegalArgumentException("fornecedor cadastracompra descri vazi");
+//		}
+//		if (haConta(cpf)) {
+//			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
+//		} else {
+//			contas.put(cpf, new Conta(data, nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto)));
+//			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
+//		}
+//	}
+//
+//	/**
+//	 * verifica a existencia da conta de um cliente
+//	 * 
+//	 * @param cpf cpf e identificador do cliente
+//	 * @return true caso o cliente possua uma conta, false caso o contrario
+//	 */
+//	private boolean haConta(String cpf) {
+//		if (contas.containsKey(cpf)) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	public double getDebito(String cpf) {
+//		if (cpf == null) {
+//			throw new NullPointerException("fornecedor getdebito cpf nul");
+//		} else if (cpf.equals("")) {
+//			throw new IllegalArgumentException("fornecedor getdebito cpf vazi");
+//		}
+//		if (haConta(cpf)) {
+//			return contas.get(cpf).getDebito();			
+//		} else {
+//			throw new NullPointerException("getDebito n ha conta");
+//		}
+//	}
 }
