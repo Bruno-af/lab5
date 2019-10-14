@@ -1,17 +1,20 @@
 package lab5;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class ControllerGeral {
 	private CrudCliente sistemaCliente;
 	private CrudFornecedor sistemaFornecedor;
-	private ControllerCompras sistemaCompras;
+	private HashMap<String, ArrayList<Conta>> contasCadastradas;
 
 	public ControllerGeral() {
-		sistemaCliente = new CrudCliente();
-		sistemaFornecedor = new CrudFornecedor();
-		sistemaCompras = new ControllerCompras();
+		this.sistemaCliente = new CrudCliente();
+		this.sistemaFornecedor = new CrudFornecedor();
+		this.contasCadastradas = new HashMap<String, ArrayList<Conta>>();
 	}
 
-	// comandos administrador/cliente
+	// US1 comandos administrador/cliente
 	/**
 	 * cadastra cliente
 	 * 
@@ -24,6 +27,7 @@ public class ControllerGeral {
 	 */
 	public String adicionaCliente(String cpf, String nome, String email, String localizacao) {
 		sistemaCliente.cadastraCliente(cpf, nome, email, localizacao);
+		contasCadastradas.put(cpf, new ArrayList<Conta>());
 		return cpf;
 	}
 
@@ -66,7 +70,7 @@ public class ControllerGeral {
 		sistemaCliente.deletarCliente(cpf);
 	}
 
-	// comando administrador/fornecedor
+	// US2 comando administrador/fornecedor
 	/**
 	 * Cadastra um fornecedor
 	 * 
@@ -124,7 +128,7 @@ public class ControllerGeral {
 		sistemaFornecedor.deletaFornecedor(nome);
 	}
 
-	// comandos administrador/produtos(pelos fornecedores)
+	// US3 comandos administrador/produtos(pelos fornecedores)
 	/**
 	 * cadastra produto ainda nao cadastrado de um dado fornecedor
 	 * 
@@ -191,22 +195,125 @@ public class ControllerGeral {
 		sistemaFornecedor.deletaProduto(nomeFornecedor, nomeProduto, descricao);
 	}
 
-	// comandos administrador/Compras
-	
-	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto, String descricao_produto) {
-		sistemaFornecedor.CadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
+	// US5 metodos para manipular vendas
+
+	public void cadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
+			String descricao_produto) {
+		if (cpf == null) {
+			throw new NullPointerException("fornecedor cadastracompra cpf nul");
+		} else if (cpf.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
+		} else if(cpf.length() != 11) {
+			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf invalido.");
+		}
+		if (fornecedor == null) {
+			throw new NullPointerException("fornecedor cadastracompra fornecedor nul");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra fornecedor vazio");
+		}
+		if (nome_produto == null) {
+			throw new NullPointerException("fornecedor cadastracompra nome nul");
+		} else if (nome_produto.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra nome vazi");
+		}
+		if (descricao_produto == null) {
+			throw new NullPointerException("fornecedor cadastracompra descri nul");
+		} else if (descricao_produto.equals("")) {
+			throw new IllegalArgumentException("fornecedor cadastracompra descri vazi");
+		}
+		if (haContaCliente(cpf)) {
+			if (haContaFornecedor(fornecedor, cpf)) {
+				cadastraCompraLista(cpf, data, nome_produto, descricao_produto,
+						sistemaFornecedor.getPreco(fornecedor, nome_produto, descricao_produto), fornecedor);
+			} else {
+				criaConta(cpf, data, nome_produto, descricao_produto);
+				cadastraCompraLista(cpf, data, nome_produto, descricao_produto,
+						sistemaFornecedor.getPreco(fornecedor, nome_produto, descricao_produto), fornecedor);
+			}
+		} else {
+			throw new NullPointerException("Erro ao cadastrar compra: cliente nao existe.");
+		}
 	}
-	
+
+	private void cadastraCompraLista(String cpf, String data, String nome_produto, String descricao_produto,
+			double preco, String fornecedor) {
+		for (Conta conta : contasCadastradas.get(cpf)) {
+			if (conta.getFornecedor().equals(fornecedor)) {
+				conta.cadastraCompra(data, nome_produto, descricao_produto, preco);
+			}
+		}
+	}
+
+	/**
+	 * verifica se ha um fornecedor
+	 * 
+	 * @param fornecedor fornecedor da conta
+	 * @param cpf        cpf e identificador do cliente
+	 * @return se torna a veracidade da existencia do cliente no cadastro
+	 */
+	private boolean haContaFornecedor(String fornecedor, String cpf) {
+		for (Conta conta : contasCadastradas.get(cpf)) {
+			if (conta.getFornecedor().equals(fornecedor)) {
+				return true;
+			}
+		}
+		return false;
+	}
+//
+//	private void cadastraCompraLista(String cpf, String data, String nome_produto, String descricao_produto, double preco, String fornecedor) {
+//		contasCadastradas.get(cpf).add();
+//	}
+
+	private void criaConta(String cpf, String data, String nome_produto, String descricao_produto) {
+		contasCadastradas.get(cpf).add(new Conta(data, nome_produto, descricao_produto, cpf));
+	}
+//
+//	private Cliente getCliente(String cpf, String nome_produto, String descricao_produto) {
+//		return sistemaCliente.getCliente(cpf);
+//	}
+
+	/**
+	 * verifica a existencia da conta de um cliente
+	 * 
+	 * @param cpf cpf e identificador do cliente
+	 * @return true caso o cliente possua uma conta, false caso o contrario
+	 */
+	private boolean haContaCliente(String cpf) {
+		if (contasCadastradas.containsKey(cpf)) {
+			return true;
+		}
+		return false;
+	}
+
 	public double getDebito(String cpf, String fornecedor) {
-		return sistemaFornecedor.getDebito(cpf, fornecedor);
+		double debitoTotal = 0.0;
+		if (cpf == null) {
+			throw new NullPointerException("fornecedor getdebito cpf nul");
+		} else if (cpf.equals("")) {
+			throw new IllegalArgumentException("fornecedor getdebito cpf vazi");
+		}
+		if (fornecedor == null) {
+			throw new NullPointerException("fornecedor getdebito fornecedor nul");
+		} else if (fornecedor.equals("")) {
+			throw new IllegalArgumentException("fornecedor getdebito fornecedor vazi");
+		}
+		if (haContaCliente(cpf)) {
+			for (Conta conta : contasCadastradas.get(cpf)) {
+				if (conta.getFornecedor().equals(fornecedor)) {
+					debitoTotal = conta.getDebito();
+				}
+			}
+			return debitoTotal;
+		} else {
+			throw new NullPointerException("getDebito n ha conta");
+		}
 	}
-	
-	public String toStringConta(String cpf, String fornecedor) {
-		return "";
+
+	// US6 metodos para combos
+
+	public void cadastraCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
+			String produtos) {
+		sistemaFornecedor.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
 	}
-	
-	public String listaContas(String cpf) {
-		return "";
-	}
-	
+
 }

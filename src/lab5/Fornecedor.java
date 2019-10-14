@@ -23,8 +23,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 */
 	private HashMap<String, Produto> produtos;
 	/**
-	 * colecao de contas de clientes de um fornecedor
+	 * colecao de combos
 	 */
+	private HashMap<String, Combo> combos;
+
+	// metodos de um fornecedor
 
 	/**
 	 * constroi o fornecedor
@@ -39,6 +42,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		this.email = email;
 		this.telefone = telefone;
 		this.produtos = new HashMap<>();
+		this.combos = new HashMap<String, Combo>();
 	}
 
 	/**
@@ -204,6 +208,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		}
 	}
 
+	/**
+	 * Ordena produtos
+	 * 
+	 * @return lista ordenada alfabeticamente de produtos
+	 */
 	private List<Produto> ordenaProdutos() {
 		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
 		Collections.sort(produtosOrdenados);
@@ -270,7 +279,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 */
 	public double getPreco(String nomeProduto, String descricao_produto) {
 		IdProduto key = new IdProduto(nomeProduto, descricao_produto);
-		return produtos.get(key.retornaId()).getPreco();
+		if (produtos.containsKey(key)) {
+			return produtos.get(key.retornaId()).getPreco();
+		} else {
+			throw new NullPointerException("getpreco fornecedor n ha produto");
+		}
 	}
 
 	@Override
@@ -281,55 +294,52 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		return this.getNomeFornecedor().compareTo(o.getNomeFornecedor());
 	}
 
-	// metodos para manipular vendas
+	// metodo de combos
 
-//	public void cadastraCompra(String cpf, String data, String nome_produto, String descricao_produto) {
-//		if (cpf == null) {
-//			throw new NullPointerException("fornecedor cadastracompra cpf nul");
-//		} else if (cpf.equals("")) {
-//			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
-//		}
-//		if (nome_produto == null) {
-//			throw new NullPointerException("fornecedor cadastracompra nome nul");
-//		} else if (nome_produto.equals("")) {
-//			throw new IllegalArgumentException("fornecedor cadastracompra nome vazi");
-//		}
-//		if (descricao_produto == null) {
-//			throw new NullPointerException("fornecedor cadastracompra descri nul");
-//		} else if (descricao_produto.equals("")) {
-//			throw new IllegalArgumentException("fornecedor cadastracompra descri vazi");
-//		}
-//		if (haConta(cpf)) {
-//			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
-//		} else {
-//			contas.put(cpf, new Conta(data, nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto)));
-//			contas.get(cpf).cadastraCompra(data,nome_produto, descricao_produto, getPreco(nome_produto, descricao_produto));
-//		}
-//	}
-//
-//	/**
-//	 * verifica a existencia da conta de um cliente
-//	 * 
-//	 * @param cpf cpf e identificador do cliente
-//	 * @return true caso o cliente possua uma conta, false caso o contrario
-//	 */
-//	private boolean haConta(String cpf) {
-//		if (contas.containsKey(cpf)) {
-//			return true;
-//		}
-//		return false;
-//	}
-//
-//	public double getDebito(String cpf) {
-//		if (cpf == null) {
-//			throw new NullPointerException("fornecedor getdebito cpf nul");
-//		} else if (cpf.equals("")) {
-//			throw new IllegalArgumentException("fornecedor getdebito cpf vazi");
-//		}
-//		if (haConta(cpf)) {
-//			return contas.get(cpf).getDebito();			
-//		} else {
-//			throw new NullPointerException("getDebito n ha conta");
-//		}
-//	}
+	public void cadastraCombo(String nome_combo, String descricao_combo, double fator, String produtos2) {
+		if (hacombo(nome_combo)) {
+			throw new IllegalAccessError("Erro no cadastro de combo: combo ja existe.");
+		}
+		if(nome_combo == null) {
+			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		} else if(nome_combo.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if (produtos2 == null) {
+			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
+		} else if (produtos2.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
+		}
+		combos.put(nome_combo.toLowerCase(),new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2)));
+	}
+
+	/**
+	 * verifica se ha o cadastro do combo
+	 * 
+	 * @param nome_combo nome do combo
+	 * @return se ha ou nao combo
+	 */
+	private boolean hacombo(String nome_combo) {
+		return combos.containsKey(nome_combo);
+	}
+
+	/**
+	 * acessa o preco total sem desconto
+	 * 
+	 * @param produtos string com os produtos do combo
+	 * @return preco total do combo sem desconto
+	 */
+	private double pegaPreco(String produtos) {
+		String ArrayList[] = produtos.split(",");
+		double preco = 0.0;
+		for (String produto : ArrayList) {
+			IdProduto id = new IdProduto(produto.split(" - ")[0], produto.split(" - ")[1]);
+			if (this.produtos.containsKey(id.retornaId())) {
+				preco = this.produtos.get(id.retornaId()).getPreco();
+			} else {
+				throw new NullPointerException("Erro no cadastro de combo: produto nao existe.");
+			}
+		}
+		return preco;
+	}
 }

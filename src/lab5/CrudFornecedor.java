@@ -303,45 +303,27 @@ public class CrudFornecedor {
 		getFornecedor(nomeFornecedor).deletaProduto(nomeProduto, descricao);
 	}
 
-//	// metodos para manipular vendas
-//
-//	/**
-//	 * cadastra compra em um certo fornecedor
-//	 * 
-//	 * @param cpf               cpf do cliente consumidor
-//	 * @param fornecedor        fornecedor do produto
-//	 * @param data              data da compra
-//	 * @param nome_produto      nome do produto comprado
-//	 * @param descricao_produto descricao do produto comprado
-//	 */
-//	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
-//			String descricao_produto) {
-//		if (fornecedor == null) {
-//			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
-//		} else if (fornecedor.equals("")) {
-//			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
-//		}
-//		if (haFornecedor(fornecedor)) {
-//			getFornecedor(fornecedor).cadastraCompra(cpf, data, nome_produto, descricao_produto);
-//		} else {
-//			throw new IllegalArgumentException("crud fornecedor 317");
-//		}
-//	}
-//
-//	public double getDebito(String cpf, String fornecedor) {
-//		if (fornecedor == null) {
-//			throw new NullPointerException("crud fornecedor get debito310");
-//		} else if (fornecedor.equals("")) {
-//			throw new IllegalArgumentException("crud fornecedor get debito 312");
-//		}
-//		return fornecedoresCadastrados.get(fornecedor).getDebito(cpf);
-//	}
-//
-//	public String toStringConta(String cpf, String fornecedor) {
-//		return "";
-//	}
-//
-//	public String listaContas(String cpf) {
-//		return "";
-//	}
+	public double getPreco(String fornecedor, String nome_produto, String descricao_produto) {
+		if(haFornecedor(fornecedor)) {
+			return (double) fornecedoresCadastrados.get(fornecedor).getPreco(nome_produto, descricao_produto);
+		} else {
+			throw new NullPointerException("getpreco crud fornecedor n ha forn");
+		}
+	}
+
+	// Combos
+	
+	public void cadastraCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
+			String produtos) {
+		if(nome_fornecedor == null) {
+			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		} else if(nome_fornecedor.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		if(haFornecedor(nome_fornecedor)) {
+			fornecedoresCadastrados.get(nome_fornecedor.toLowerCase()).cadastraCombo(nome_combo, descricao_combo, fator, produtos);
+		} else {
+			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
+		}
+	}
 }

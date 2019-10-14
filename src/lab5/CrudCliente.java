@@ -122,56 +122,19 @@ public class CrudCliente {
 		}
 	}
 
-	// metodos para manipular vendas
-
 	/**
-	 * cadastra compra em um certo fornecedor
+	 * pega um cliente cadastrado
 	 * 
-	 * @param cpf               cpf do cliente consumidor
-	 * @param fornecedor        fornecedor do produto
-	 * @param data              data da compra
-	 * @param nome_produto      nome do produto comprado
-	 * @param descricao_produto descricao do produto comprado
+	 * @param cpf identificador e cpf do cliente
+	 * @return cliente que possui o cpf
 	 */
-	public void CadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
-			String descricao_produto) {
-		if (fornecedor == null) {
-			throw new NullPointerException("crud fornecedor  cadastraCOmpra 310");
-		} else if (fornecedor.equals("")) {
-			throw new IllegalArgumentException("crud fornecedor cadastra compra 312");
-		}
-		if (haCliente(cpf)) {
-			getCliente(cpf).cadastraCompra(cpf, data, nome_produto, descricao_produto);
+	public Cliente getCliente(String cpf) {
+		if (clientesCadastrados.containsKey(cpf)) {
+			return clientesCadastrados.get(cpf);
 		} else {
-			throw new IllegalArgumentException("crud fornecedor 317");
+			throw new NullPointerException("CrudCliente get cliente");
 		}
-	}
 
-	/**
-	 * retorna um dado cliente
-	 * 
-	 * @param cpf cpf e identificador do cliente
-	 * @return cliente com dado cpf
-	 */
-	private Cliente getCliente(String cpf) {
-		return clientesCadastrados.get(cpf);
-	}
-
-	public double getDebito(String cpf, String fornecedor) {
-		if (fornecedor == null) {
-			throw new NullPointerException("crud fornecedor get debito310");
-		} else if (fornecedor.equals("")) {
-			throw new IllegalArgumentException("crud fornecedor get debito 312");
-		}
-		return clientesCadastrados.get(fornecedor).getDebito(cpf);
-	}
-
-	public String toStringConta(String cpf, String fornecedor) {
-		return "";
-	}
-
-	public String listaContas(String cpf) {
-		return "";
 	}
 
 }

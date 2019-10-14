@@ -144,7 +144,7 @@ public class Facade {
 	 * @return representacao textual do produto
 	 */
 	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		return sistema.exibeProduto(nomeFornecedor, nomeProduto, descricao);
+		return sistema.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class Facade {
 	 * @param preco          novo preco do produto
 	 */
 	public void editaProduto(String nomeProduto, String descricao, String nomeFornecedor, double preco) {
-		sistema.editaProduto(nomeFornecedor, nomeProduto, descricao, preco);
+		sistema.editaProduto(nomeProduto, descricao, nomeFornecedor, preco);
 	}
 
 	/**
@@ -186,28 +186,40 @@ public class Facade {
 	 * @param descricao      descricao do produto
 	 */
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		sistema.removeProduto(nomeFornecedor, nomeProduto, descricao);
+		sistema.removeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
 	// comandos administrador/Compras
-	
-	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto, String descricao_produto) {
-		sistema.adicionaCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
+
+	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto,
+			String descricao_produto) {
+		sistema.cadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
 	}
-	
+
 	public double getDebito(String cpf, String fornecedor) {
 		return sistema.getDebito(cpf, fornecedor);
 	}
-	
+
 	public String toStringConta(String cpf, String fornecedor) {
 		return "";
 	}
-	
+
 	public String listaContas(String cpf) {
 		return "";
 	}
+
+	// comandos administrador/ combos
 	
- 	public static void main(String[] args) {
+ 	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator, String produtos) {
+ 		sistema.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
+ 	}
+ 	
+// 	public String exibeCombo(String fornecedor,) {
+// 		//<nome_fornecedor, nome_prod, descrição_prod><preço>:
+// 		return "";
+// 	}
+
+	public static void main(String[] args) {
 		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
 				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt",
 				"Testes_aceitacao/use_case_6.txt" };
