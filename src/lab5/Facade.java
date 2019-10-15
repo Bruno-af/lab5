@@ -10,6 +10,7 @@ public class Facade {
 	}
 
 	// comandos administrador/cliente
+	
 	/**
 	 * cadastra cliente
 	 * 
@@ -65,6 +66,7 @@ public class Facade {
 	}
 
 	// comando administrador/fornecedor
+	
 	/**
 	 * Cadastra um fornecedor
 	 * 
@@ -122,7 +124,8 @@ public class Facade {
 		sistema.removeFornecedor(nome);
 	}
 
-	// comandos administrador/produtos(pelos fornecedores)
+	// comandos unicos administrador/produtos(pelos fornecedores)
+	
 	/**
 	 * cadastra produto ainda nao cadastrado de um dado fornecedor
 	 * 
@@ -133,18 +136,6 @@ public class Facade {
 	 */
 	public void adicionaProduto(String nomeFornecedor, String nomeProduto, String descricao, double preco) {
 		sistema.adicionaProduto(nomeFornecedor, nomeProduto, descricao, preco);
-	}
-
-	/**
-	 * consulta um produto cadastrado
-	 * 
-	 * @param nomeFornecedor nome do fornecedor do produto
-	 * @param nomeProduto    nome do produto
-	 * @param descricao      descricao do produto
-	 * @return representacao textual do produto
-	 */
-	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		return sistema.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
 	/**
@@ -178,6 +169,20 @@ public class Facade {
 		sistema.editaProduto(nomeProduto, descricao, nomeFornecedor, preco);
 	}
 
+	// comandos repetidos entra produto/combo
+
+	/**
+	 * consulta um produto cadastrado
+	 * 
+	 * @param nomeFornecedor nome do fornecedor do produto
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 * @return representacao textual do produto
+	 */
+	public String exibeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+		return sistema.exibeProduto(nomeProduto, descricao, nomeFornecedor);
+	}
+
 	/**
 	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
 	 * 
@@ -187,6 +192,34 @@ public class Facade {
 	 */
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		sistema.removeProduto(nomeProduto, descricao, nomeFornecedor);
+	}
+	
+	// comandos unicos de administrador/ combos
+
+	/**
+	 * adiciona um combo
+	 * 
+	 * @param nome_fornecedor nome do fornecedor
+	 * @param nome_combo      nome do combo
+	 * @param descricao_combo descricao do combo
+	 * @param fator           porcentagem do preco original cobrado no combo
+	 * @param produtos        produtos que fazem parte do combo
+	 */
+	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
+			String produtos) {
+		sistema.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
+	}
+
+	/**
+	 * edita o desconto de um combo
+	 * 
+	 * @param nome       nome do combo
+	 * @param descricao  descricao do combo
+	 * @param fornecedor fornecedor do combo
+	 * @param novoFator  novo fator do preco do combo
+	 */
+	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		sistema.editaCombo(nome, descricao, fornecedor, novoFator);
 	}
 
 	// comandos administrador/Compras
@@ -217,43 +250,12 @@ public class Facade {
 		return "";
 	}
 
-	// comandos administrador/ combos
-
-	/**
-	 * adiciona um combo
-	 * 
-	 * @param nome_fornecedor nome do fornecedor
-	 * @param nome_combo      nome do combo
-	 * @param descricao_combo descricao do combo
-	 * @param fator           porcentagem do preco original cobrado no combo
-	 * @param produtos        produtos que fazem parte do combo
-	 */
-	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
-			String produtos) {
-		sistema.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
-	}
-
-	/**
-	 * edita o desconto de um combo
-	 * 
-	 * @param nome       nome do combo
-	 * @param descricao  descricao do combo
-	 * @param fornecedor fornecedor do combo
-	 * @param novoFator  novo fator do preco do combo
-	 */
-	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
-		sistema.editaCombo(nome, descricao, fornecedor, novoFator);
-	}
-
-// 	public String exibeProduto(String fornecedor,) {
-// 		//<nome_fornecedor, nome_prod, descrição_prod><preço>:
-// 		return "";
-// 	}
-
+	// public main de testes de aceitacao
+	
 	public static void main(String[] args) {
 		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
-				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_5.txt",
-				"Testes_aceitacao/use_case_6.txt" };
+				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_6.txt",
+				"Testes_aceitacao/use_case_5.txt" };
 		EasyAccept.main(args);
 	}
 }
