@@ -197,13 +197,22 @@ public class ControllerGeral {
 
 	// US5 metodos para manipular vendas
 
+	/**
+	 * cadastra compra
+	 * 
+	 * @param cpf               cpf e identificador do cliente
+	 * @param fornecedor        nome do fornecedor do produto
+	 * @param data              data da compra
+	 * @param nome_produto      nome do produto comprado
+	 * @param descricao_produto descricao do produto comprado
+	 */
 	public void cadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
 			String descricao_produto) {
 		if (cpf == null) {
 			throw new NullPointerException("fornecedor cadastracompra cpf nul");
 		} else if (cpf.equals("")) {
 			throw new IllegalArgumentException("fornecedor cadastracompra cpf vazi");
-		} else if(cpf.length() != 11) {
+		} else if (cpf.length() != 11) {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: cpf invalido.");
 		}
 		if (fornecedor == null) {
@@ -311,9 +320,30 @@ public class ControllerGeral {
 
 	// US6 metodos para combos
 
+	/**
+	 * adiciona um combo
+	 * 
+	 * @param nome_fornecedor nome do fornecedor
+	 * @param nome_combo      nome do combo
+	 * @param descricao_combo descricao do combo
+	 * @param fator           porcentagem do preco original cobrado no combo
+	 * @param produtos        produtos que fazem parte do combo
+	 */
 	public void cadastraCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
 			String produtos) {
 		sistemaFornecedor.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
+	}
+
+	/**
+	 * edita o desconto de um combo
+	 * 
+	 * @param nome       nome do combo
+	 * @param descricao  descricao do combo
+	 * @param fornecedor fornecedor do combo
+	 * @param novoFator  novo fator do preco do combo
+	 */
+	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		sistemaFornecedor.editaCombo(nome, descricao, fornecedor, novoFator);
 	}
 
 }

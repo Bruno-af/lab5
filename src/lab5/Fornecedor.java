@@ -296,21 +296,26 @@ public class Fornecedor implements Comparable<Fornecedor> {
 
 	// metodo de combos
 
-	public void cadastraCombo(String nome_combo, String descricao_combo, double fator, String produtos2) {
+	public void cadastraCombo(String nome_combo, String descricao_combo, double fator, String produtos2, String fornecedor) {
+		if (nome_combo == null) {
+			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		} else if (nome_combo.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		}
 		if (hacombo(nome_combo)) {
 			throw new IllegalAccessError("Erro no cadastro de combo: combo ja existe.");
 		}
-		if(nome_combo == null) {
-			throw new NullPointerException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
-		} else if(nome_combo.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
+		if(descricao_combo == null) {
+			throw new NullPointerException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		} else if(descricao_combo.equals("")) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
 		}
 		if (produtos2 == null) {
 			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
 		} else if (produtos2.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
 		}
-		combos.put(nome_combo.toLowerCase(),new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2)));
+		combos.put(nome_combo.toLowerCase(), new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2), fornecedor));
 	}
 
 	/**
@@ -320,7 +325,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 * @return se ha ou nao combo
 	 */
 	private boolean hacombo(String nome_combo) {
-		return combos.containsKey(nome_combo);
+		return combos.containsKey(nome_combo.toLowerCase());
 	}
 
 	/**
@@ -336,10 +341,25 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			IdProduto id = new IdProduto(produto.split(" - ")[0], produto.split(" - ")[1]);
 			if (this.produtos.containsKey(id.retornaId())) {
 				preco = this.produtos.get(id.retornaId()).getPreco();
-			} else {
-				throw new NullPointerException("Erro no cadastro de combo: produto nao existe.");
+			} else if(combos.containsKey(produto.split(" - ")[0].toLowerCase())) {
+				//Coxao de Frango - Coxao de frango com cheddar, Refrigerante - Refrigerante (lata)
+				throw new NullPointerException("Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
 			}
 		}
 		return preco;
+	}
+
+	public void editaCombo(String nome, String descricao, double novoFator) {
+		if (nome == null) {
+			throw new NullPointerException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		} else if (nome.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: nome nao pode ser vazio ou nulo.");
+		}
+		if (descricao == null) {
+			throw new NullPointerException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		} else if (descricao.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
+		}
+		combos.get(nome).editaCombo(novoFator);
 	}
 }

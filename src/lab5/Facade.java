@@ -191,6 +191,15 @@ public class Facade {
 
 	// comandos administrador/Compras
 
+	/**
+	 * cadastra compra
+	 * 
+	 * @param cpf               cpf e identificador do cliente
+	 * @param fornecedor        nome do fornecedor do produto
+	 * @param data              data da compra
+	 * @param nome_produto      nome do produto comprado
+	 * @param descricao_produto descricao do produto comprado
+	 */
 	public void adicionaCompra(String cpf, String fornecedor, String data, String nome_produto,
 			String descricao_produto) {
 		sistema.cadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
@@ -209,12 +218,34 @@ public class Facade {
 	}
 
 	// comandos administrador/ combos
-	
- 	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator, String produtos) {
- 		sistema.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
- 	}
- 	
-// 	public String exibeCombo(String fornecedor,) {
+
+	/**
+	 * adiciona um combo
+	 * 
+	 * @param nome_fornecedor nome do fornecedor
+	 * @param nome_combo      nome do combo
+	 * @param descricao_combo descricao do combo
+	 * @param fator           porcentagem do preco original cobrado no combo
+	 * @param produtos        produtos que fazem parte do combo
+	 */
+	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
+			String produtos) {
+		sistema.cadastraCombo(nome_fornecedor, nome_combo, descricao_combo, fator, produtos);
+	}
+
+	/**
+	 * edita o desconto de um combo
+	 * 
+	 * @param nome       nome do combo
+	 * @param descricao  descricao do combo
+	 * @param fornecedor fornecedor do combo
+	 * @param novoFator  novo fator do preco do combo
+	 */
+	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		sistema.editaCombo(nome, descricao, fornecedor, novoFator);
+	}
+
+// 	public String exibeProduto(String fornecedor,) {
 // 		//<nome_fornecedor, nome_prod, descrição_prod><preço>:
 // 		return "";
 // 	}

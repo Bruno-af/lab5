@@ -9,9 +9,10 @@ public class Combo {
 	private String descricao;
 	private double fator;
 	private double precoOriginal;
+	private String fornecedor;
 	
-		public Combo(String nome_combo, String descricao_combo, double fator, double precoOriginal) {
-			if(1 < fator | fator < 0) {
+		public Combo(String nome_combo, String descricao_combo, double fator, double precoOriginal, String fornecedor) {
+			if(1 <= fator | fator < 0) {
 				throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
 			}
 			if(nome_combo == null) {
@@ -23,9 +24,22 @@ public class Combo {
 			this.descricao = descricao_combo;
 			this.fator = fator;
 			this.precoOriginal = precoOriginal;
+			this.fornecedor = fornecedor;
 		}
 
 		public double getPreco(){
 			return fator * precoOriginal;
+		}
+
+		public void editaCombo(double novoFator) {
+			if(novoFator > 0 && novoFator < 1) {
+				this.fator = novoFator;
+			} else {
+				throw new IllegalArgumentException("Erro na edicao de combo: fator invalido.");
+			}
+		}
+		
+		public String toString() {
+			return fornecedor + nome + descricao + getPreco();
 		}
 }

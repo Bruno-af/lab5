@@ -321,9 +321,18 @@ public class CrudFornecedor {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
 		if(haFornecedor(nome_fornecedor)) {
-			fornecedoresCadastrados.get(nome_fornecedor.toLowerCase()).cadastraCombo(nome_combo, descricao_combo, fator, produtos);
+			fornecedoresCadastrados.get(nome_fornecedor.toLowerCase()).cadastraCombo(nome_combo, descricao_combo, fator, produtos, nome_fornecedor);
 		} else {
 			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
+	}
+
+	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
+		if(fornecedor == null) {
+			throw new NullPointerException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		} else if(fornecedor.equals("")) {
+			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
+		}
+		fornecedoresCadastrados.get(fornecedor).editaCombo(nome, descricao, novoFator);
 	}
 }
