@@ -12,7 +12,7 @@ public class Combo {
 	private String fornecedor;
 	
 		public Combo(String nome_combo, String descricao_combo, double fator, double precoOriginal, String fornecedor) {
-			if(1 <= fator | fator < 0) {
+			if(1 <= fator || fator <= 0) {
 				throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
 			}
 			if(nome_combo == null) {
@@ -28,7 +28,8 @@ public class Combo {
 		}
 
 		public double getPreco(){
-			return fator * precoOriginal;
+			//System.out.println(precoOriginal + "  " + fator);
+			return precoOriginal - (precoOriginal * fator); 
 		}
 
 		public void editaCombo(double novoFator) {
@@ -40,6 +41,7 @@ public class Combo {
 		}
 		
 		public String toString() {
-			return fornecedor + nome + descricao + getPreco();
+			return String.format("%s - %s - R$%.2f", nome, descricao, getPreco());
+			// precisa formatar o preco para duas casas decimais
 		}
 }

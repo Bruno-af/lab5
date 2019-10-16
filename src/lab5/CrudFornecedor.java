@@ -333,6 +333,10 @@ public class CrudFornecedor {
 		} else if(fornecedor.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
-		fornecedoresCadastrados.get(fornecedor).editaCombo(nome, descricao, novoFator);
+		if(fornecedoresCadastrados.containsKey(fornecedor.toLowerCase())) {
+			fornecedoresCadastrados.get(fornecedor.toLowerCase()).editaCombo(nome, descricao, novoFator);
+		} else {
+			throw new NullPointerException("Erro na edicao de combo: fornecedor nao existe.");
+		}
 	}
 }

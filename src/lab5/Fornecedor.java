@@ -140,8 +140,8 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
 		}
 		IdProduto id = new IdProduto(nome, descricao);
-		if (!produtos.containsKey(id.retornaId())) {
-			produtos.put(id.retornaId(), new Produto(nome, descricao, preco));
+		if (!this.produtos.containsKey(id.retornaId())) {
+			this.produtos.put(id.retornaId(), new Produto(nome, descricao, preco));
 		} else {
 			throw new IllegalArgumentException("Erro no cadastro de produto: produto ja existe.");
 		}
@@ -166,7 +166,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
 		}
 		IdProduto id = new IdProduto(nomeProduto, descricao);
-		if (produtos.containsKey(id.retornaId())) {
+		if(combos.containsKey(nomeProduto.toLowerCase())) {
+			return this.combos.get(nomeProduto.toLowerCase()).toString();
+		}else if (produtos.containsKey(id.retornaId())) {
 			return this.produtos.get(id.retornaId()).toString();
 		} else {
 			throw new NullPointerException("Erro na exibicao de produto: produto nao existe.");
@@ -263,7 +265,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		}
 		String key = new IdProduto(nomeProduto, descricao).retornaId();
-		if (produtos.containsKey(key)) {
+		if(combos.containsKey(nomeProduto.toLowerCase())) {
+			combos.remove(nomeProduto.toLowerCase());
+		}else if (produtos.containsKey(key)) {
 			produtos.remove(key);
 		} else {
 			throw new NullPointerException("Erro na remocao de produto: produto nao existe.");
@@ -316,9 +320,13 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		} else if (produtos2.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: combo deve ter produtos.");
 		}
-		verificaProdutos(produtos2);
-		combos.put(nome_combo.toLowerCase(),
-				new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2), fornecedor));
+		if(fator <= 0 | fator >= 1) {
+			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
+		}
+		if(verificaProdutos(produtos2)) {
+			combos.put(nome_combo.toLowerCase(),
+					new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2), fornecedor));
+		}
 	}
 
 	/**
@@ -341,9 +349,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		double preco = 0.0;
 		String[] listaProdutosLocal = produtos.split(",");
 		for (String produto : listaProdutosLocal) {
-			IdProduto id = new IdProduto(produto.split(" - ")[0], produto.split(" - ")[1]);
+			IdProduto id = new IdProduto(produto.split(" - ")[0].strip(), produto.split(" - ")[1]);
 			if (this.produtos.containsKey(id.retornaId())) {
-				preco = this.produtos.get(id.retornaId()).getPreco();
+				preco += this.produtos.get(id.retornaId()).getPreco();
 			} else if (combos.containsKey(produto.split(" - ")[0].toLowerCase())) {
 				// Coxao de Frango - Coxao de frango com cheddar, Refrigerante - Refrigerante
 				// (lata)
@@ -354,14 +362,18 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		return preco;
 	}
 
-	private void verificaProdutos(String produtosEntrada) {
-		String[] listaProdutosLocal = produtosEntrada.split(","); // separa os produtos diferentes
+	private boolean verificaProdutos(String produtosEntrada) {
+		String[] listaProdutosLocal = produtosEntrada.split(", "); // separa os produtos diferentes
 		for (String produto : listaProdutosLocal) {
 			IdProduto id = new IdProduto(produto.split(" - ")[0], produto.split(" - ")[1]); // separa nome/descricao de cada produto
+			if(combos.containsKey(produto.split(" - ")[0].toLowerCase())) {
+				throw new IllegalArgumentException("Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
+			}
 			if(!this.produtos.containsKey(id.retornaId())) {
 				throw new NullPointerException("Erro no cadastro de combo: produto nao existe.");
 			}
 		}
+		return true;
 		//Coxao de Frango - Coxao de frango com cheddar, Refrigerante - Refrigerante (lata)
 	}
 
@@ -376,6 +388,10 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		} else if (descricao.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
 		}
-		combos.get(nome).editaCombo(novoFator);
+		if(combos.containsKey(nome.toLowerCase())) {
+			combos.get(nome.toLowerCase()).editaCombo(novoFator);
+		} else {
+			throw new NullPointerException("Erro na edicao de combo: produto nao existe.");
+		}
 	}
 }
