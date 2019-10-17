@@ -199,9 +199,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 */
 	public String listagemProdutos() {
 		if (!produtos.isEmpty()) {
-			List<Produto> listaOrdenadaProdutos = ordenaProdutos();
+			List<ProdutoGeral> listaOrdenadaProdutos = ordenaProdutos();
 			String saida = "";
-			for (Produto produto : listaOrdenadaProdutos) {
+			for (ProdutoGeral produto : listaOrdenadaProdutos) {
 				saida += this.nomeFornecedor + " - " + produto.toString() + " | ";
 			}
 			return saida.substring(0, saida.length() - 3);
@@ -215,8 +215,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 * 
 	 * @return lista ordenada alfabeticamente de produtos
 	 */
-	private List<Produto> ordenaProdutos() {
-		List<Produto> produtosOrdenados = new ArrayList<>(produtos.values());
+	private List<ProdutoGeral> ordenaProdutos() {
+		List<ProdutoGeral> produtosOrdenados = new ArrayList<>(produtos.values());
+		produtosOrdenados.addAll(combos.values());
 		Collections.sort(produtosOrdenados);
 		return produtosOrdenados;
 	}
@@ -349,7 +350,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		double preco = 0.0;
 		String[] listaProdutosLocal = produtos.split(",");
 		for (String produto : listaProdutosLocal) {
-			IdProduto id = new IdProduto(produto.split(" - ")[0].strip(), produto.split(" - ")[1]);
+			IdProduto id = new IdProduto(produto.split(" - ")[0].trim(), produto.split(" - ")[1]);
 			if (this.produtos.containsKey(id.retornaId())) {
 				preco += this.produtos.get(id.retornaId()).getPreco();
 			} else if (combos.containsKey(produto.split(" - ")[0].toLowerCase())) {

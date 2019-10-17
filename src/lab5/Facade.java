@@ -124,6 +124,17 @@ public class Facade {
 		sistema.removeFornecedor(nome);
 	}
 
+	/**
+	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
+	 * 
+	 * @param nomeFornecedor nome do fornecedor
+	 * @param nomeProduto    nome do produto
+	 * @param descricao      descricao do produto
+	 */
+	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
+		sistema.removeProduto(nomeProduto, descricao, nomeFornecedor);
+	}
+	
 	// comandos unicos administrador/produtos(pelos fornecedores)
 	
 	/**
@@ -139,25 +150,6 @@ public class Facade {
 	}
 
 	/**
-	 * lista todos os produtos cadastrados de certo fornecedor
-	 * 
-	 * @param nomeFornecedor nome do fornecedor do produto
-	 * @return listagem da representacao textual de todos os produtos do fornecedor
-	 */
-	public String exibeProdutosFornecedor(String nomeFornecedor) {
-		return sistema.exibeProdutosFornecedor(nomeFornecedor);
-	}
-
-	/**
-	 * lista todos os produtos de todos os fornecedores
-	 * 
-	 * @return representacao textual de todos os produtos de todos os fornecedores
-	 */
-	public String exibeProdutos() {
-		return sistema.exibeProdutos();
-	}
-
-	/**
 	 * Altera o preco de um produto de um fornecedor
 	 * 
 	 * @param nomeFornecedor nome e identificador do fornecedor
@@ -170,6 +162,26 @@ public class Facade {
 	}
 
 	// comandos repetidos entra produto/combo
+	
+
+	/**
+	 * lista todos os produtos de todos os fornecedores
+	 * 
+	 * @return representacao textual de todos os produtos de todos os fornecedores
+	 */
+	public String exibeProdutos() {
+		return sistema.exibeProdutos();
+	}
+	
+	/**
+	 * lista todos os produtos cadastrados de certo fornecedor
+	 * 
+	 * @param nomeFornecedor nome do fornecedor do produto
+	 * @return listagem da representacao textual de todos os produtos do fornecedor
+	 */
+	public String exibeProdutosFornecedor(String nomeFornecedor) {
+		return sistema.exibeProdutosFornecedor(nomeFornecedor);
+	}
 
 	/**
 	 * consulta um produto cadastrado
@@ -183,17 +195,6 @@ public class Facade {
 		return sistema.exibeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
 
-	/**
-	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
-	 * 
-	 * @param nomeFornecedor nome do fornecedor
-	 * @param nomeProduto    nome do produto
-	 * @param descricao      descricao do produto
-	 */
-	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
-		sistema.removeProduto(nomeProduto, descricao, nomeFornecedor);
-	}
-	
 	// comandos unicos de administrador/ combos
 
 	/**

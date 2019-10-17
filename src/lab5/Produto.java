@@ -1,9 +1,6 @@
 package lab5;
 
-public class Produto implements Comparable<Produto> {
-	private double preco;
-	private String nome;
-	private String descricao;
+public class Produto extends ProdutoGeral {
 
 	/**
 	 * cria um produto com os dados recebidos
@@ -13,15 +10,19 @@ public class Produto implements Comparable<Produto> {
 	 * @param preco     preco do produto
 	 */
 	public Produto(String nome, String descricao, double preco) {
+		super(nome, descricao, preco);
 		validaDados(nome, descricao, preco);
-		this.nome = nome;
-		this.descricao = descricao;
-		this.preco = preco;
 	}
 
+	/**
+	 * valida dados passados para a criacao do produto
+	 * @param nome
+	 * @param descricao
+	 * @param preco
+	 */
 	private void validaDados(String nome, String descricao, Double preco) {
 		if (nome == null) {
-			throw new NullPointerException("nome não pode ser nulo");
+			throw new NullPointerException("nome nï¿½o pode ser nulo");
 		} else if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
 		}
@@ -30,14 +31,6 @@ public class Produto implements Comparable<Produto> {
 		}else if (descricao.equals("")) {
 			throw new IllegalArgumentException("descricao invalido");
 		}
-	}
-
-	@Override
-	/**
-	 * Representacao textual de um produto
-	 */
-	public String toString() {
-		return String.format("%s - %s - R$%.2f",this.nome, this.descricao, this.preco);
 	}
 
 	/**
@@ -50,14 +43,5 @@ public class Produto implements Comparable<Produto> {
 			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
 		this.preco = novoPreco;
-	}
-
-	@Override
-	public int compareTo(Produto o) {
-		return (this.nome + this.descricao).compareTo(o.nome + o.descricao);
-	}
-
-	public double getPreco() {
-		return this.preco;
 	}
 }
