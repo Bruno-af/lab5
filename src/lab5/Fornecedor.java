@@ -395,4 +395,13 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new NullPointerException("Erro na edicao de combo: produto nao existe.");
 		}
 	}
+
+	public boolean haProduto(String nome_produto, String descricao) {
+		IdProduto id = new IdProduto(nome_produto, descricao);
+		try {
+			return this.produtos.containsKey(id.retornaId());			
+		} catch (NullPointerException e) {
+			return false;
+		}
+	}
 }

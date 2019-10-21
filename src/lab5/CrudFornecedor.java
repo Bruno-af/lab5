@@ -74,7 +74,7 @@ public class CrudFornecedor {
 	 * @return true se houver um fornecedor cadastrado com o dado nome, falso caso
 	 *         contrario
 	 */
-	private boolean haFornecedor(String nome) {
+	boolean haFornecedor(String nome) {
 		if (fornecedoresCadastrados.containsKey(nome.toLowerCase())) {
 			return true;
 		}
@@ -303,11 +303,15 @@ public class CrudFornecedor {
 		getFornecedor(nomeFornecedor).deletaProduto(nomeProduto, descricao);
 	}
 
+	public boolean haProduto(String nome_produto, String descricao, String fornecedor) {
+		return fornecedoresCadastrados.get(fornecedor).haProduto(nome_produto, descricao);
+	}
+	
 	public double getPreco(String fornecedor, String nome_produto, String descricao_produto) {
 		if(haFornecedor(fornecedor)) {
 			return (double) fornecedoresCadastrados.get(fornecedor).getPreco(nome_produto, descricao_produto);
 		} else {
-			throw new NullPointerException("getpreco crud fornecedor n ha forn");
+			throw new NullPointerException("Erro ao cadastrar compra: fornecedor nao existe.");
 		}
 	}
 

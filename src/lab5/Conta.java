@@ -28,7 +28,9 @@ public class Conta {
 	 * @param descricao_produto descricao do produto comprado
 	 * @param cliente2 
 	 */
-	public Conta(String data, String nome_produto, String descricao_produto, String cpfCliente) {
+	public Conta(String cpfCliente, String fornecedor) {
+		this.cliente = cpfCliente;
+		this.fornecedor = fornecedor;
 		comprasCadastradas = new ArrayList<>();
 	}
 
@@ -57,6 +59,10 @@ public class Conta {
 		return debito;
 	}
 
+	/**
+	 * retorna o fornecedor da conta
+	 * @return
+	 */
 	public String getFornecedor() {
 		return this.fornecedor;
 	}
