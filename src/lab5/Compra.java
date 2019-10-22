@@ -61,4 +61,9 @@ public class Compra {
 	public String getDescricao() {
 		return this.descricaoProduto;
 	}
+
+	@Override
+	public String toString() {
+		return (this.nomeProduto + " - " + this.data).replace("/", "-");
+	}
 }

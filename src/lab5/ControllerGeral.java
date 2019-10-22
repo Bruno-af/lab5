@@ -1,6 +1,7 @@
 package lab5;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -214,7 +215,6 @@ public class ControllerGeral {
 	 */
 	public void cadastraCompra(String cpf, String fornecedor, String data, String nome_produto,
 			String descricao_produto) {
-		ValidaDados validador = new ValidaDados();
 		validador.validaString("Erro ao cadastrar compra: cpf nao pode ser vazio ou nulo.", cpf);
 		validador.validaCpfTamanho("Erro ao cadastrar compra: cpf invalido.", cpf);
 		validador.validaString("Erro ao cadastrar compra: fornecedor nao pode ser vazio ou nulo.", fornecedor);
@@ -264,18 +264,29 @@ public class ControllerGeral {
 		}
 		return false;
 	}
-//
-//	private void cadastraCompraLista(String cpf, String data, String nome_produto, String descricao_produto, double preco, String fornecedor) {
-//		contasCadastradas.get(cpf).add();
-//	}
 
-	private void criaConta(String cpf, String fornecedor) {
-		contasCadastradas.get(cpf).add(new Conta(cpf, fornecedor));
+	public String exibeContas(String cpf, String fornecedor) {
+		validador.validaString("Erro ao exibir conta do cliente: cpf nao pode ser vazio ou nulo.", cpf);
+		validador.validaCpfTamanho("Erro ao exibir conta do cliente: cpf invalido.", cpf);
+		validador.validaString("Erro ao exibir conta do cliente: fornecedor nao pode ser vazio ou nulo.", fornecedor);
+		if (!contasCadastradas.containsKey(cpf)) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao existe.");
+		}
+		if (!haFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro ao exibir conta do cliente: fornecedor nao existe.");
+		}
+		for(Conta conta : contasCadastradas.get(cpf)) {
+			if ((conta.getFornecedor().toLowerCase()).equals(fornecedor.toLowerCase())) {
+				return "Cliente: " + sistemaCliente.getCliente(cpf).getNome() + " | " +conta.toString().substring(0, conta.toString().length() - 3);
+			}
+		}
+		throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
 	}
-//
-//	private Cliente getCliente(String cpf, String nome_produto, String descricao_produto) {
-//		return sistemaCliente.getCliente(cpf);
-//	}
+	
+	private void criaConta(String cpf, String fornecedor) {
+		contasCadastradas.get(cpf).add(new Conta(cpf, fornecedor, sistemaCliente.getCliente(cpf).getNome()));
+	}
+
 
 	/**
 	 * verifica a existencia da conta de um cliente
@@ -301,7 +312,10 @@ public class ControllerGeral {
 			if (!haFornecedor(fornecedor)) {
 				throw new NullPointerException("Erro ao recuperar debito: fornecedor nao existe.");
 			}
-			return String.format("%.2f", debitoTotal);
+			if(debitoTotal == 0) {
+				throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
+			}
+			return String.format("%.2f", debitoTotal).replace(",", ".");
 		} else {
 			throw new NullPointerException("Erro ao recuperar debito: cliente nao existe.");
 		}
@@ -339,4 +353,37 @@ public class ControllerGeral {
 		sistemaFornecedor.editaCombo(nome, descricao, fornecedor, novoFator);
 	}
 
+	public String exibeContasClientes(String cpf) {
+		validador.validaString("Erro ao exibir contas do cliente: cpf nao pode ser vazio ou nulo.", cpf);
+		validador.validaCpfTamanho("Erro ao exibir contas do cliente: cpf invalido.", cpf);
+		if(!contasCadastradas.containsKey(cpf)) {
+			throw new NullPointerException("Erro ao exibir contas do cliente: cliente nao existe.");
+		}
+		if(contasCadastradas.get(cpf).isEmpty()) {
+			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao tem nenhuma conta.");
+		}
+		return listaOrdenado(cpf).substring(0, listaOrdenado(cpf).length() - 3);
+	}
+
+	private String listaOrdenado(String cpf) {
+		String saida = "Cliente: " + sistemaCliente.getCliente(cpf).getNome() + " | ";
+		List<Conta> fornecedoresOrdenados = ordenaFornecedores(cpf);
+		for(Conta conta : fornecedoresOrdenados) {
+			saida += conta.toString();
+		}
+		return saida;
+	}
+	
+	/**
+	 * ordena fornecedores que um cliente possui conta
+	 * 
+	 * @param cpf identificador e cpf do cliente
+	 * @return lista de fornecedores ordenada alfabeticamente
+	 */
+	public List<Conta> ordenaFornecedores(String cpf){
+		List<Conta> contas = new ArrayList<>();
+		contas.addAll(contasCadastradas.get(cpf));
+		Collections.sort(contas);
+		return contas;
+	}
 }

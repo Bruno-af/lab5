@@ -306,9 +306,9 @@ public class CrudFornecedor {
 	public boolean haProduto(String nome_produto, String descricao, String fornecedor) {
 		return fornecedoresCadastrados.get(fornecedor.toLowerCase()).haProduto(nome_produto, descricao);
 	}
-	
+
 	public double getPreco(String fornecedor, String nome_produto, String descricao_produto) {
-		if(haFornecedor(fornecedor)) {
+		if (haFornecedor(fornecedor)) {
 			return fornecedoresCadastrados.get(fornecedor.toLowerCase()).getPreco(nome_produto, descricao_produto);
 		} else {
 			throw new NullPointerException("Erro ao cadastrar compra: fornecedor nao existe.");
@@ -316,28 +316,29 @@ public class CrudFornecedor {
 	}
 
 	// Combos
-	
+
 	public void cadastraCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
 			String produtos) {
-		if(nome_fornecedor == null) {
+		if (nome_fornecedor == null) {
 			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
-		} else if(nome_fornecedor.equals("")) {
+		} else if (nome_fornecedor.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
-		if(haFornecedor(nome_fornecedor)) {
-			fornecedoresCadastrados.get(nome_fornecedor.toLowerCase()).cadastraCombo(nome_combo, descricao_combo, fator, produtos, nome_fornecedor);
+		if (haFornecedor(nome_fornecedor)) {
+			fornecedoresCadastrados.get(nome_fornecedor.toLowerCase()).cadastraCombo(nome_combo, descricao_combo, fator,
+					produtos, nome_fornecedor);
 		} else {
 			throw new NullPointerException("Erro no cadastro de combo: fornecedor nao existe.");
 		}
 	}
 
 	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
-		if(fornecedor == null) {
+		if (fornecedor == null) {
 			throw new NullPointerException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
-		} else if(fornecedor.equals("")) {
+		} else if (fornecedor.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: fornecedor nao pode ser vazio ou nulo.");
 		}
-		if(fornecedoresCadastrados.containsKey(fornecedor.toLowerCase())) {
+		if (fornecedoresCadastrados.containsKey(fornecedor.toLowerCase())) {
 			fornecedoresCadastrados.get(fornecedor.toLowerCase()).editaCombo(nome, descricao, novoFator);
 		} else {
 			throw new NullPointerException("Erro na edicao de combo: fornecedor nao existe.");

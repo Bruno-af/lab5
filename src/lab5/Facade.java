@@ -243,8 +243,12 @@ public class Facade {
 		return sistema.getDebito(cpf, fornecedor);
 	}
 
-	public String toStringConta(String cpf, String fornecedor) {
-		return "";
+	public String exibeContas(String cpf, String fornecedor) {
+		return sistema.exibeContas(cpf, fornecedor);
+	}
+	
+	public String exibeContasClientes(String cpf) {
+		return sistema.exibeContasClientes(cpf);
 	}
 
 	public String listaContas(String cpf) {

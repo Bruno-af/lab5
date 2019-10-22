@@ -8,19 +8,19 @@ import java.util.List;
  * 
  * @author Bruno Andrade Fernandes - 119110378
  */
-public class Conta {
+public class Conta extends Comparador {
 	/**
 	 * lista de compras feitas na conta
 	 */
 	private List<Compra> comprasCadastradas;
 	/**
-	 * fornecedor dos produtos e combos da conta
+	 * cpf do cliente dono da conta
 	 */
-	private String fornecedor;
+	private String cpfCliente;
 	/**
-	 * cliente dono da conta
+	 * nome do cliente dono da conta
 	 */
-	private String cliente;
+	private String nomeCliente;
 
 	/**
 	 * construtor da conta
@@ -28,11 +28,12 @@ public class Conta {
 	 * @param data              data da compra
 	 * @param nome_produto      nome do produto comprado
 	 * @param descricao_produto descricao do produto comprado
-	 * @param cliente2 
+	 * @param cliente2
 	 */
-	public Conta(String cpfCliente, String fornecedor) {
-		this.cliente = cpfCliente;
-		this.fornecedor = fornecedor;
+	public Conta(String cpfCliente, String fornecedor, String nomeCliente) {
+		super(fornecedor);
+		this.cpfCliente = cpfCliente;
+		this.nomeCliente = nomeCliente;
 		comprasCadastradas = new ArrayList<>();
 	}
 
@@ -62,10 +63,38 @@ public class Conta {
 	}
 
 	/**
-	 * retorna o fornecedor da conta
-	 * @return
+	 * retorna o cpf do cliente que possui a conta
+	 * 
+	 * @return cpf do cliente
 	 */
-	public String getFornecedor() {
-		return this.fornecedor;
+	public String getCpfCliente() {
+		return this.cpfCliente;
+	}
+
+	@Override
+	/**
+	 * representacao textual da conta
+	 */
+	public String toString() {
+		// Cliente: Amigao Fernandes | Marcos | Coxao com batata - 03-12-2013 |
+		// Refrigerante - 03-06-2017
+		return super.getFornecedor() + " | " + listaCompras();
+	}
+
+	/**
+	 * representacao textual da lista de compras cadastradas
+	 * 
+	 * @return listagem das compras cadastradas
+	 */
+	public String listaCompras() {
+		String compras = "";
+		for (Compra compra : comprasCadastradas) {
+			compras += compra.toString() + " | ";
+		}
+		return compras;
+	}
+
+	public int compareTo(Conta other) {
+		return this.getFornecedor().compareTo(other.getFornecedor());
 	}
 }
