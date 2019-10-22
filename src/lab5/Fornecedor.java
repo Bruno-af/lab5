@@ -284,15 +284,11 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 */
 	public double getPreco(String nomeProduto, String descricao_produto) {
 		String key = new IdProduto(nomeProduto, descricao_produto).retornaId();
-		System.out.println("aaaaaaaaa");
 		if (haCombo(key)) {
-			System.out.println("bbbbbbbbbbbbbbb");
 			return combos.get(key).getPreco();
 		} else if(produtos.containsKey(key)) {
-			System.out.println("ccccccccccccccc");
 			return produtos.get(key).getPreco();
 		} else {
-			System.out.println("dddddddddddddddd");
 			throw new NullPointerException("Erro ao cadastrar compra: produto nao existe.");
 		}
 	}
@@ -403,11 +399,12 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	}
 
 	public boolean haProduto(String nome_produto, String descricao) {
-		IdProduto id = new IdProduto(nome_produto, descricao);
-		try {
-			return this.produtos.containsKey(id.retornaId());			
-		} catch (NullPointerException e) {
-			return false;
-		}
+		String key = new IdProduto(nome_produto, descricao).retornaId();
+		return produtos.containsKey(key);
+	}
+
+	public boolean haCombo(String nome_produto, String descricao_produto) {
+		String key = new IdProduto(nome_produto, descricao_produto).retornaId();
+		return combos.containsKey(key);
 	}
 }

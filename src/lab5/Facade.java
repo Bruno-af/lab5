@@ -239,7 +239,7 @@ public class Facade {
 		sistema.cadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
 	}
 
-	public double getDebito(String cpf, String fornecedor) {
+	public String getDebito(String cpf, String fornecedor) {
 		return sistema.getDebito(cpf, fornecedor);
 	}
 

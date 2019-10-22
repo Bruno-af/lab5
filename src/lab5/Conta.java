@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Laboratório de Programação 2 - Lab 1
+ * Laboratï¿½rio de Programaï¿½ï¿½o 2 - Lab 1
  * 
  * @author Bruno Andrade Fernandes - 119110378
  */
@@ -14,10 +14,12 @@ public class Conta {
 	 */
 	private List<Compra> comprasCadastradas;
 	/**
-	 * total gasto na conta
+	 * fornecedor dos produtos e combos da conta
 	 */
-	private double debito;
 	private String fornecedor;
+	/**
+	 * cliente dono da conta
+	 */
 	private String cliente;
 
 	/**
@@ -42,8 +44,8 @@ public class Conta {
 	 * @param descricao_produto descricao do produto adquirido
 	 * @param preco             preco da compra
 	 */
-	public void cadastraCompra(String data, String nome_produto, String descricao_produto, Object preco) {
-		comprasCadastradas.add(new Compra(data, nome_produto, descricao_produto, (double) preco));
+	public void cadastraCompra(String data, String nome_produto, String descricao_produto, double preco) {
+		comprasCadastradas.add(new Compra(data, nome_produto, descricao_produto, preco));
 	}
 
 	/**

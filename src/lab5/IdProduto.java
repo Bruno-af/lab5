@@ -56,6 +56,6 @@ public class IdProduto {
 	 * @return id em forma de texto.
 	 */
 	public String retornaId() {
-		return (this.nome + this.descricao).toLowerCase();
+		return ((this.nome + this.descricao).toLowerCase());
 	}
 }

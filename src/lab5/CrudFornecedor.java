@@ -41,7 +41,7 @@ public class CrudFornecedor {
 			throw new NullPointerException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
 		} else if (telefone.equals("")) {
 			throw new NullPointerException("Erro no cadastro do fornecedor: telefone nao pode ser vazio ou nulo.");
-		} else if (haFornecedor(nome.toLowerCase())) {
+		} else if (haFornecedor(nome)) {
 			throw new IllegalArgumentException("Erro no cadastro de fornecedor: fornecedor ja existe.");
 		}
 		fornecedoresCadastrados.put(nome.toLowerCase(), new Fornecedor(nome, email, telefone));
@@ -240,8 +240,8 @@ public class CrudFornecedor {
 		} else if (nomeFornecedor.equals("")) {
 			throw new IllegalArgumentException("Erro na exibicao de produto: fornecedor nao pode ser vazio ou nulo.");
 		}
-		if (haFornecedor(nomeFornecedor.toLowerCase())) {
-			return getFornecedor(nomeFornecedor).listagemProdutos();
+		if (haFornecedor(nomeFornecedor)) {
+			return getFornecedor(nomeFornecedor.toLowerCase()).listagemProdutos();
 		} else {
 			throw new NullPointerException("Erro na exibicao de produto: fornecedor nao existe.");
 		}
@@ -304,11 +304,11 @@ public class CrudFornecedor {
 	}
 
 	public boolean haProduto(String nome_produto, String descricao, String fornecedor) {
-		return fornecedoresCadastrados.get(fornecedor).haProduto(nome_produto, descricao);
+		return fornecedoresCadastrados.get(fornecedor.toLowerCase()).haProduto(nome_produto, descricao);
 	}
 	
 	public double getPreco(String fornecedor, String nome_produto, String descricao_produto) {
-		if(haFornecedor(fornecedor.toLowerCase())) {
+		if(haFornecedor(fornecedor)) {
 			return fornecedoresCadastrados.get(fornecedor.toLowerCase()).getPreco(nome_produto, descricao_produto);
 		} else {
 			throw new NullPointerException("Erro ao cadastrar compra: fornecedor nao existe.");
@@ -342,5 +342,9 @@ public class CrudFornecedor {
 		} else {
 			throw new NullPointerException("Erro na edicao de combo: fornecedor nao existe.");
 		}
+	}
+
+	public boolean haCombo(String nome_produto, String descricao_produto, String fornecedor) {
+		return fornecedoresCadastrados.get(fornecedor.toLowerCase()).haCombo(nome_produto, descricao_produto);
 	}
 }
