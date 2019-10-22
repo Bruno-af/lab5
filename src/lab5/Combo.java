@@ -27,7 +27,6 @@ public class Combo extends ProdutoGeral{
 		 * retorna o preco do produto
 		 */
 		public double getPreco(){
-			//System.out.println(precoOriginal + "  " + fator);
 			return preco - (preco * fator); 
 		}
 

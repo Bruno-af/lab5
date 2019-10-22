@@ -166,8 +166,8 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro na exibicao de produto: nome nao pode ser vazio ou nulo.");
 		}
 		IdProduto id = new IdProduto(nomeProduto, descricao);
-		if(combos.containsKey(nomeProduto.toLowerCase())) {
-			return this.combos.get(nomeProduto.toLowerCase()).toString();
+		if(haCombo(id.retornaId())) {
+			return this.combos.get(id.retornaId()).toString();
 		}else if (produtos.containsKey(id.retornaId())) {
 			return this.produtos.get(id.retornaId()).toString();
 		} else {
@@ -266,8 +266,8 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro na remocao de produto: descricao nao pode ser vazia ou nula.");
 		}
 		String key = new IdProduto(nomeProduto, descricao).retornaId();
-		if(combos.containsKey(nomeProduto.toLowerCase())) {
-			combos.remove(nomeProduto.toLowerCase());
+		if(haCombo(key)) {
+			combos.remove(key);
 		}else if (produtos.containsKey(key)) {
 			produtos.remove(key);
 		} else {
@@ -283,11 +283,17 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 * @return preco do produto
 	 */
 	public double getPreco(String nomeProduto, String descricao_produto) {
-		IdProduto key = new IdProduto(nomeProduto, descricao_produto);
-		if (produtos.containsKey(key)) {
-			return produtos.get(key.retornaId()).getPreco();
+		String key = new IdProduto(nomeProduto, descricao_produto).retornaId();
+		System.out.println("aaaaaaaaa");
+		if (haCombo(key)) {
+			System.out.println("bbbbbbbbbbbbbbb");
+			return combos.get(key).getPreco();
+		} else if(produtos.containsKey(key)) {
+			System.out.println("ccccccccccccccc");
+			return produtos.get(key).getPreco();
 		} else {
-			throw new NullPointerException("getpreco fornecedor n ha produto");
+			System.out.println("dddddddddddddddd");
+			throw new NullPointerException("Erro ao cadastrar compra: produto nao existe.");
 		}
 	}
 
@@ -308,13 +314,14 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		} else if (nome_combo.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: nome nao pode ser vazio ou nulo.");
 		}
-		if (hacombo(nome_combo)) {
-			throw new IllegalAccessError("Erro no cadastro de combo: combo ja existe.");
-		}
 		if (descricao_combo == null) {
 			throw new NullPointerException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
 		} else if (descricao_combo.equals("")) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: descricao nao pode ser vazia ou nula.");
+		}
+		IdProduto key = new IdProduto(nome_combo, descricao_combo);
+		if (haCombo(key.retornaId())) {
+			throw new IllegalAccessError("Erro no cadastro de combo: combo ja existe.");
 		}
 		if (produtos2 == null) {
 			throw new NullPointerException("Erro no cadastro de combo: combo deve ter produtos.");
@@ -325,7 +332,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");
 		}
 		if(verificaProdutos(produtos2)) {
-			combos.put(nome_combo.toLowerCase(),
+			combos.put(key.retornaId(),
 					new Combo(nome_combo, descricao_combo, fator, pegaPreco(produtos2), fornecedor));
 		}
 	}
@@ -336,8 +343,8 @@ public class Fornecedor implements Comparable<Fornecedor> {
 	 * @param nome_combo nome do combo
 	 * @return se ha ou nao combo
 	 */
-	private boolean hacombo(String nome_combo) {
-		return combos.containsKey(nome_combo.toLowerCase());
+	private boolean haCombo(String id_combo) {
+		return this.combos.containsKey(id_combo);
 	}
 
 	/**
@@ -353,9 +360,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 			IdProduto id = new IdProduto(produto.split(" - ")[0].trim(), produto.split(" - ")[1]);
 			if (this.produtos.containsKey(id.retornaId())) {
 				preco += this.produtos.get(id.retornaId()).getPreco();
-			} else if (combos.containsKey(produto.split(" - ")[0].toLowerCase())) {
-				// Coxao de Frango - Coxao de frango com cheddar, Refrigerante - Refrigerante
-				// (lata)
+			} else if (haCombo(id.retornaId())) {
 				throw new NullPointerException(
 						"Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
 			}
@@ -367,7 +372,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		String[] listaProdutosLocal = produtosEntrada.split(", "); // separa os produtos diferentes
 		for (String produto : listaProdutosLocal) {
 			IdProduto id = new IdProduto(produto.split(" - ")[0], produto.split(" - ")[1]); // separa nome/descricao de cada produto
-			if(combos.containsKey(produto.split(" - ")[0].toLowerCase())) {
+			if(haCombo(id.retornaId())) {
 				throw new IllegalArgumentException("Erro no cadastro de combo: um combo nao pode possuir combos na lista de produtos.");
 			}
 			if(!this.produtos.containsKey(id.retornaId())) {
@@ -389,8 +394,9 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		} else if (descricao.equals("")) {
 			throw new IllegalArgumentException("Erro na edicao de combo: descricao nao pode ser vazia ou nula.");
 		}
-		if(combos.containsKey(nome.toLowerCase())) {
-			combos.get(nome.toLowerCase()).editaCombo(novoFator);
+		IdProduto key = new IdProduto(nome, descricao);
+		if(haCombo(key.retornaId())) {
+			combos.get(key.retornaId()).editaCombo(novoFator);
 		} else {
 			throw new NullPointerException("Erro na edicao de combo: produto nao existe.");
 		}

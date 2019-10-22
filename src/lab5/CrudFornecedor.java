@@ -308,8 +308,8 @@ public class CrudFornecedor {
 	}
 	
 	public double getPreco(String fornecedor, String nome_produto, String descricao_produto) {
-		if(haFornecedor(fornecedor)) {
-			return (double) fornecedoresCadastrados.get(fornecedor).getPreco(nome_produto, descricao_produto);
+		if(haFornecedor(fornecedor.toLowerCase())) {
+			return fornecedoresCadastrados.get(fornecedor.toLowerCase()).getPreco(nome_produto, descricao_produto);
 		} else {
 			throw new NullPointerException("Erro ao cadastrar compra: fornecedor nao existe.");
 		}

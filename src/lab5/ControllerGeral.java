@@ -248,15 +248,19 @@ public class ControllerGeral {
 			throw new IllegalArgumentException("Erro ao cadastrar compra: data nao pode ser vazia ou nula.");
 		}
 		if (haContaCliente(cpf)) {
+			double preco = sistemaFornecedor.getPreco(fornecedor, nome_produto, descricao_produto);
 			if (haContaFornecedor(fornecedor, cpf)) {
 				System.out.println("ha fornecedr");
 				cadastraCompraLista(cpf, data, nome_produto, descricao_produto,
-						sistemaFornecedor.getPreco(fornecedor, nome_produto, descricao_produto), fornecedor);
+						preco, fornecedor);
+				System.out.println(cpf + " " + data + " " +nome_produto + " " + descricao_produto + " " + fornecedor);
 			} else {
 				System.out.println("nao ha fornecedr");
 				criaConta(cpf, fornecedor);
+				System.out.println(cpf + " " + data + " " +nome_produto + " " + descricao_produto + " " + fornecedor);
 				cadastraCompraLista(cpf, data, nome_produto, descricao_produto,
-						sistemaFornecedor.getPreco(fornecedor, nome_produto, descricao_produto), fornecedor);
+						preco, fornecedor);
+//				System.out.println(cpf + " " + data + " " +nome_produto + " " + preco + " "+ descricao_produto + " " + fornecedor);
 			}
 		} else {
 			throw new NullPointerException("Erro ao cadastrar compra: cliente nao existe.");
