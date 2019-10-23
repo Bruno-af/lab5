@@ -1,14 +1,24 @@
 package lab5;
 
 /**
- * Laboratório de Programação 2 - Lab 1
- * 
  * @author Bruno Andrade Fernandes - 119110378
  */
 public class Compra {
+	/**
+	 * data da compra
+	 */
 	private String data;
+	/**
+	 * nome do produto ou combo adquirido
+	 */
 	private String nomeProduto;
+	/**
+	 * descricao do produto ou combo adquirido
+	 */
 	private String descricaoProduto;
+	/**
+	 * preco pago na compra
+	 */
 	private double preco;
 
 	/**
@@ -47,7 +57,7 @@ public class Compra {
 	/**
 	 * retorna o nome do produto adquirido
 	 * 
-	 * @return nome do produto da compra
+	 * @return nome do produto adquirido
 	 */
 	public String getNome() {
 		return this.nomeProduto;
@@ -56,13 +66,16 @@ public class Compra {
 	/**
 	 * retorna a descricao do produto adquirido
 	 * 
-	 * @return
+	 * @return descricao do produto adquirido
 	 */
 	public String getDescricao() {
 		return this.descricaoProduto;
 	}
 
 	@Override
+	/**
+	 * representacao textual padrao da compra no formato: nome do produto - data
+	 */
 	public String toString() {
 		return (this.nomeProduto + " - " + this.data).replace("/", "-");
 	}

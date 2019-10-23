@@ -2,8 +2,14 @@ package lab5;
 
 import java.util.HashMap;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class Cliente implements Comparable<Cliente> {
-
+	/**
+	 * validador de dados da classe
+	 */
+	private ValidaDados validador = new ValidaDados();
 	/**
 	 * cpf e identificador unico de um cliente
 	 */
@@ -46,48 +52,23 @@ public class Cliente implements Comparable<Cliente> {
 	 * @param localizacao localizacao a ser analisada
 	 */
 	private void validaDado(String cpf, String nome, String email, String localizacao) {
-		if (cpf == null) {
-			throw new NullPointerException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
-		} else if (cpf.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.");
-		}
-		if (nome == null) {
-			throw new NullPointerException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
-		} else if (nome.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.");
-		}
-		if (email == null) {
-			throw new NullPointerException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
-		} else if (email.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.");
-		}
-		if (localizacao == null) {
-			throw new NullPointerException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
-		} else if (localizacao.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.");
-		}
-		if (cpf.length() != 11) {
-			throw new IllegalArgumentException("Erro no cadastro do cliente: cpf invalido.");
-		}
+		validador.validaString("Erro no cadastro do cliente: cpf nao pode ser vazio ou nulo.", cpf);
+		validador.validaCpfTamanho("Erro no cadastro do cliente: cpf invalido.", cpf);
+		validador.validaString("Erro no cadastro do cliente: nome nao pode ser vazio ou nulo.", nome);
+		validador.validaString("Erro no cadastro do cliente: email nao pode ser vazio ou nulo.", email);
+		validador.validaString("Erro no cadastro do cliente: localizacao nao pode ser vazia ou nula.", localizacao);
 	}
 
 	/**
 	 * Altera os dados do cliente, que nao o cpf
 	 * 
-	 * @param nome        novo nome do cliente
-	 * @param email       novo email do cliente
-	 * @param localizacao novo localizacao do cliente
+	 * @param atributo  atributo que se deseja editar
+	 * @param novoValor novo valor associado
 	 */
 	public void editaCliente(String atributo, String novoValor) {
-		if (atributo == null) {
-			throw new NullPointerException("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
-		} else if (atributo.equals("")) {
-			throw new IllegalAccessError("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.");
-		} else if (novoValor == null) {
-			throw new NullPointerException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
-		} else if (novoValor.equals("")) {
-			throw new IllegalArgumentException("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.");
-		} else if (atributo.equals("nome")) {
+		validador.validaString("Erro na edicao do cliente: atributo nao pode ser vazio ou nulo.", atributo);
+		validador.validaString("Erro na edicao do cliente: novo valor nao pode ser vazio ou nulo.", novoValor);
+		if (atributo.equals("nome")) {
 			setNome(novoValor);
 		} else if (atributo.equals("email")) {
 			setEmail(novoValor);
@@ -146,9 +127,9 @@ public class Cliente implements Comparable<Cliente> {
 	}
 
 	/**
-	 * retorna localizacao do cliente
+	 * retorna o local de trabalho do cliente
 	 * 
-	 * @return localizacao do cliente
+	 * @return o local de trabalho do cliente
 	 */
 	public String getLocalizacao() {
 		return this.localizacao;

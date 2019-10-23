@@ -1,12 +1,18 @@
 package lab5;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class ValidaDados {
 
+	/**
+	 * constroi o validador
+	 */
 	public ValidaDados() {
 	}
 
 	/**
-	 * valida entradas qunato a nulidade e o estado vazio
+	 * valida entradas quanto a nulidade e o estado vazio
 	 * 
 	 * @param msg mensagem de erro possivel
 	 * @param str texto a ser verificado
@@ -20,7 +26,7 @@ public class ValidaDados {
 	}
 
 	/**
-	 * valida o cpf passado
+	 * valida o cpf passado quanto ao tamanho
 	 * 
 	 * @param msg mensagem de erro possivel
 	 * @param cpf cpf a ser verificado

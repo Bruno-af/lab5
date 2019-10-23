@@ -1,7 +1,9 @@
 package lab5;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class Produto extends ProdutoGeral {
-
 	/**
 	 * cria um produto com os dados recebidos
 	 * 
@@ -16,30 +18,31 @@ public class Produto extends ProdutoGeral {
 
 	/**
 	 * valida dados passados para a criacao do produto
-	 * @param nome
-	 * @param descricao
-	 * @param preco
+	 * 
+	 * @param nome      nome do produto
+	 * @param descricao descricao do produto
+	 * @param preco     preco do produto
 	 */
 	private void validaDados(String nome, String descricao, Double preco) {
 		if (nome == null) {
-			throw new NullPointerException("nome n�o pode ser nulo");
+			throw new NullPointerException("nome nao pode ser nulo");
 		} else if (nome.equals("")) {
 			throw new IllegalArgumentException("nome invalido");
 		}
 		if (descricao == null) {
-			throw new NullPointerException("descricao n�o pode ser nulo");
-		}else if (descricao.equals("")) {
+			throw new NullPointerException("descricao nao pode ser nulo");
+		} else if (descricao.equals("")) {
 			throw new IllegalArgumentException("descricao invalido");
 		}
 	}
 
 	/**
-	 * altera o preco do produto
+	 * altera o preco do produto, caso valido
 	 * 
 	 * @param novoPreco novo preco a ser incoporado
 	 */
 	public void alteraPreco(double novoPreco) {
-		if(novoPreco<0) {
+		if (novoPreco < 0) {
 			throw new IllegalArgumentException("Erro na edicao de produto: preco invalido.");
 		}
 		this.preco = novoPreco;

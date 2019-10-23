@@ -2,6 +2,9 @@ package lab5;
 
 import easyaccept.EasyAccept;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class Facade {
 	private ControllerGeral sistema;
 
@@ -9,12 +12,14 @@ public class Facade {
 		sistema = new ControllerGeral();
 	}
 
+	
 	// comandos administrador/cliente
+
 	
 	/**
-	 * cadastra cliente
+	 * cadastra cliente no sistema
 	 * 
-	 * @param cpf         identificador do cliente
+	 * @param cpf         nome e identificador do cliente
 	 * @param nome        nome do cliente
 	 * @param email       email do cliente
 	 * @param localizacao local de trabalho do cliente
@@ -37,16 +42,16 @@ public class Facade {
 	}
 
 	/**
-	 * retorna a listagem da representacao textual de todos os clientes cadastrados
+	 * retorna a representacao textual de um dado cliente
 	 * 
-	 * @return listagem de todos os clientes cadastrados
+	 * @return representacao textual de um cliente de dado cpf
 	 */
 	public String exibeClientes() {
 		return sistema.exibeClientes();
 	}
 
 	/**
-	 * edita certo atributo de certo cliente
+	 * edita certo atributo de dado cliente
 	 * 
 	 * @param cpf       identificador do cliente
 	 * @param atributo  atributo que se deseja alterar
@@ -57,7 +62,7 @@ public class Facade {
 	}
 
 	/**
-	 * deleta cliente que possui cpf cedido
+	 * deleta cliente que possui dado cpf
 	 * 
 	 * @param cpf identificador do cliente
 	 */
@@ -65,7 +70,9 @@ public class Facade {
 		sistema.removeCliente(cpf);
 	}
 
+	
 	// comando administrador/fornecedor
+
 	
 	/**
 	 * Cadastra um fornecedor
@@ -77,12 +84,8 @@ public class Facade {
 	 *         um erro IllegalArgumentException
 	 */
 	public String adicionaFornecedor(String nome, String email, String telefone) {
-		try {
-			sistema.adicionaFornecedor(nome, email, telefone);
-			return nome;
-		} catch (Exception e) {
-			throw e;
-		}
+		sistema.adicionaFornecedor(nome, email, telefone);
+		return nome;
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class Facade {
 	}
 
 	/**
-	 * edita fornecedor
+	 * edita certo atributo de um dado fornecedor
 	 * 
 	 * @param nome      identificador imutavel do fornecedor
 	 * @param atributo  atributo que se deseja editar
@@ -125,7 +128,7 @@ public class Facade {
 	}
 
 	/**
-	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
+	 * remove um dado produto do sistema de um fornecedor
 	 * 
 	 * @param nomeFornecedor nome do fornecedor
 	 * @param nomeProduto    nome do produto
@@ -134,8 +137,10 @@ public class Facade {
 	public void removeProduto(String nomeProduto, String descricao, String nomeFornecedor) {
 		sistema.removeProduto(nomeProduto, descricao, nomeFornecedor);
 	}
+
 	
 	// comandos unicos administrador/produtos(pelos fornecedores)
+
 	
 	/**
 	 * cadastra produto ainda nao cadastrado de um dado fornecedor
@@ -162,7 +167,6 @@ public class Facade {
 	}
 
 	// comandos repetidos entra produto/combo
-	
 
 	/**
 	 * lista todos os produtos de todos os fornecedores
@@ -172,7 +176,7 @@ public class Facade {
 	public String exibeProdutos() {
 		return sistema.exibeProdutos();
 	}
-	
+
 	/**
 	 * lista todos os produtos cadastrados de certo fornecedor
 	 * 
@@ -198,12 +202,12 @@ public class Facade {
 	// comandos unicos de administrador/ combos
 
 	/**
-	 * adiciona um combo
+	 * adiciona um combo no sistema de produtos
 	 * 
 	 * @param nome_fornecedor nome do fornecedor
 	 * @param nome_combo      nome do combo
 	 * @param descricao_combo descricao do combo
-	 * @param fator           porcentagem do preco original cobrado no combo
+	 * @param fator           porcentagem de desconto do preco total
 	 * @param produtos        produtos que fazem parte do combo
 	 */
 	public void adicionaCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
@@ -212,12 +216,12 @@ public class Facade {
 	}
 
 	/**
-	 * edita o desconto de um combo
+	 * edita o fator de desconto de um combo
 	 * 
 	 * @param nome       nome do combo
 	 * @param descricao  descricao do combo
 	 * @param fornecedor fornecedor do combo
-	 * @param novoFator  novo fator do preco do combo
+	 * @param novoFator  novo fator dde desconto do combo
 	 */
 	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
 		sistema.editaCombo(nome, descricao, fornecedor, novoFator);
@@ -226,7 +230,7 @@ public class Facade {
 	// comandos administrador/Compras
 
 	/**
-	 * cadastra compra
+	 * cadastra compra no sistema
 	 * 
 	 * @param cpf               cpf e identificador do cliente
 	 * @param fornecedor        nome do fornecedor do produto
@@ -239,30 +243,61 @@ public class Facade {
 		sistema.cadastraCompra(cpf, fornecedor, data, nome_produto, descricao_produto);
 	}
 
+	/**
+	 * retorna o debito de uma conta
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor
+	 * @return retorna o valor total gasto na conta
+	 */
 	public String getDebito(String cpf, String fornecedor) {
 		return sistema.getDebito(cpf, fornecedor);
 	}
 
+	/**
+	 * exibe a conta de um dado cliente com um fornecedor
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor da conta
+	 * @return nome do cliente + representacao da conta
+	 */
 	public String exibeContas(String cpf, String fornecedor) {
 		return sistema.exibeContas(cpf, fornecedor);
 	}
-	
+
+	/**
+	 * exibe todas as contas de um dado cliente
+	 * 
+	 * @param cpf identificador e cpf do cliente
+	 * @return listagem em texto das contas do cliente
+	 */
 	public String exibeContasClientes(String cpf) {
 		return sistema.exibeContasClientes(cpf);
 	}
+
 	
 	// Comando para o pagamento
+
 	
+	/**
+	 * quita as dividas de um cliente numa dada conta
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor
+	 */
 	public void realizaPagamento(String cpf, String fornecedor) {
 		sistema.realizaPagamento(cpf, fornecedor);
 	}
 
+	
 	// public main de testes de aceitacao
+
 	
 	public static void main(String[] args) {
 		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
 				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_6.txt",
-				"Testes_aceitacao/use_case_5.txt", "Testes_aceitacao/use_case_7.txt", "Testes_aceitacao/use_case_8.txt"};
+				"Testes_aceitacao/use_case_5.txt", "Testes_aceitacao/use_case_7.txt",
+				"Testes_aceitacao/use_case_8.txt" };
 		EasyAccept.main(args);
 	}
 }

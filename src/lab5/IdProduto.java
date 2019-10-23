@@ -1,8 +1,6 @@
 package lab5;
 
 /**
- * Laborat�rio de Programa��o 2 - Lab 1
- * 
  * @author Bruno Andrade Fernandes - 119110378
  */
 public class IdProduto {
@@ -14,6 +12,10 @@ public class IdProduto {
 	 * descricao do produto
 	 */
 	private String descricao;
+	/**
+	 * validador de dados da classe
+	 */
+	private ValidaDados validador = new ValidaDados();
 
 	/**
 	 * cria identificador de um produto
@@ -36,16 +38,8 @@ public class IdProduto {
 	 *         true
 	 */
 	private boolean validaDado(String nome, String descricao) {
-		if (nome == null) {
-			throw new NullPointerException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
-		} else if (nome.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro de produto: nome nao pode ser vazia ou nula.");
-		}
-		if (descricao == null) {
-			throw new NullPointerException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
-		} else if (descricao.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.");
-		}
+		validador.validaString("Erro no cadastro de produto: nome nao pode ser vazia ou nula.", nome);
+		validador.validaString("Erro no cadastro de produto: descricao nao pode ser vazia ou nula.", descricao);
 		return true;
 	}
 
@@ -53,7 +47,7 @@ public class IdProduto {
 	 * cria um id para um dado produto. Lestras maiusculas e minusculas sao
 	 * consideradas iguais
 	 * 
-	 * @return id em forma de texto.
+	 * @return id em forma de texto
 	 */
 	public String retornaId() {
 		return ((this.nome + this.descricao).toLowerCase());

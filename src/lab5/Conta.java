@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Laborat�rio de Programa��o 2 - Lab 1
- * 
  * @author Bruno Andrade Fernandes - 119110378
  */
 public class Conta extends Comparador {
@@ -23,12 +21,11 @@ public class Conta extends Comparador {
 	private String nomeCliente;
 
 	/**
-	 * construtor da conta
+	 * Constroi a conta
 	 * 
-	 * @param data              data da compra
-	 * @param nome_produto      nome do produto comprado
-	 * @param descricao_produto descricao do produto comprado
-	 * @param cliente2
+	 * @param cpfCliente  cpf do cliente dono da conta
+	 * @param fornecedor  nome do fornecedor da conta
+	 * @param nomeCliente nome do cliente dono da conta
 	 */
 	public Conta(String cpfCliente, String fornecedor, String nomeCliente) {
 		super(fornecedor);
@@ -50,7 +47,7 @@ public class Conta extends Comparador {
 	}
 
 	/**
-	 * calcula o gasto total na conta
+	 * calcula o gasto total na conta, somando todas as compras
 	 * 
 	 * @return gasto total da conta
 	 */
@@ -63,7 +60,7 @@ public class Conta extends Comparador {
 	}
 
 	/**
-	 * retorna o cpf do cliente que possui a conta
+	 * retorna o cpf do cliente dono da conta
 	 * 
 	 * @return cpf do cliente
 	 */
@@ -73,7 +70,8 @@ public class Conta extends Comparador {
 
 	@Override
 	/**
-	 * representacao textual da conta
+	 * representacao textual padrao da conta no formato: nome do fornecedor |
+	 * representacao textual de cada compra na conta
 	 */
 	public String toString() {
 		// Cliente: Amigao Fernandes | Marcos | Coxao com batata - 03-12-2013 |
@@ -84,7 +82,7 @@ public class Conta extends Comparador {
 	/**
 	 * representacao textual da lista de compras cadastradas
 	 * 
-	 * @return listagem das compras cadastradas
+	 * @return listagem das representacoes textuais das compras cadastradas
 	 */
 	public String listaCompras() {
 		String compras = "";
@@ -94,6 +92,12 @@ public class Conta extends Comparador {
 		return compras;
 	}
 
+	/**
+	 * compara duas contas quanto ao seu nome
+	 * 
+	 * @param other a conta a ser comparada
+	 * @return compareTo das strings correspondentes ao nome do fornecedor
+	 */
 	public int compareTo(Conta other) {
 		return this.getFornecedor().compareTo(other.getFornecedor());
 	}

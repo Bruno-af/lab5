@@ -5,12 +5,30 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class ControllerGeral {
+	/**
+	 * subsistema responsavel por manipular clientes
+	 */
 	private CrudCliente sistemaCliente;
+	/**
+	 * subsistema responsavel por manipular fornecedores
+	 */
 	private CrudFornecedor sistemaFornecedor;
+	/**
+	 * colecao de contas cadastradas
+	 */
 	private HashMap<String, List<Conta>> contasCadastradas;
+	/**
+	 * validador de dados da classe
+	 */
 	private ValidaDados validador;
 
+	/**
+	 * constroi o sistema geral inicializando seus subsistemas e validador
+	 */
 	public ControllerGeral() {
 		this.sistemaCliente = new CrudCliente();
 		this.sistemaFornecedor = new CrudFornecedor();
@@ -21,7 +39,7 @@ public class ControllerGeral {
 	// US1 comandos administrador/cliente
 
 	/**
-	 * cadastra cliente
+	 * cadastra cliente no subsistema de clientes e cria sua lista de contas
 	 * 
 	 * @param cpf         identificador do cliente
 	 * @param nome        nome do cliente
@@ -56,7 +74,7 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * edita certo atributo de certo cliente
+	 * edita certo atributo de dado cliente
 	 * 
 	 * @param cpf       identificador do cliente
 	 * @param atributo  atributo que se deseja alterar
@@ -67,7 +85,7 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * deleta cliente que possui cpf cedido
+	 * deleta cliente que possui dado cpf
 	 * 
 	 * @param cpf identificador do cliente
 	 */
@@ -87,12 +105,8 @@ public class ControllerGeral {
 	 *         um erro IllegalArgumentException
 	 */
 	public String adicionaFornecedor(String nome, String email, String telefone) {
-		try {
-			sistemaFornecedor.cadastraFornecedor(nome, email, telefone);
-			return nome;
-		} catch (Exception e) {
-			throw e;
-		}
+		sistemaFornecedor.cadastraFornecedor(nome, email, telefone);
+		return nome;
 	}
 
 	/**
@@ -115,7 +129,7 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * edita fornecedor
+	 * edita certo atributo de um dado fornecedor
 	 * 
 	 * @param nome      identificador imutavel do fornecedor
 	 * @param atributo  atributo que se deseja editar
@@ -192,7 +206,7 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * delublic class Facade {eta um dado produto do sistema de um fornecedor
+	 * remove um dado produto do sistema de um fornecedor
 	 * 
 	 * @param nomeFornecedor nome do fornecedor
 	 * @param nomeProduto    nome do produto
@@ -205,7 +219,7 @@ public class ControllerGeral {
 	// US5 metodos para manipular vendas
 
 	/**
-	 * cadastra compra
+	 * cadastra compra no sistema
 	 * 
 	 * @param cpf               cpf e identificador do cliente
 	 * @param fornecedor        nome do fornecedor do produto
@@ -236,6 +250,16 @@ public class ControllerGeral {
 		}
 	}
 
+	/**
+	 * cadastra compra na lista de compras do cliente
+	 * 
+	 * @param cpf               identificador e cpf do cliente
+	 * @param data              data da compra
+	 * @param nome_produto      nome do produto adquirido
+	 * @param descricao_produto descricao do produto adquirido
+	 * @param preco             custo da compra
+	 * @param fornecedor        nome do fornecedor dos produtos
+	 */
 	private void cadastraCompraLista(String cpf, String data, String nome_produto, String descricao_produto,
 			double preco, String fornecedor) {
 		if ((!sistemaFornecedor.haProduto(nome_produto, descricao_produto, fornecedor))
@@ -250,11 +274,12 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * verifica se ha um fornecedor
+	 * verifica se ha uma conta de um dado cliente com um fornecedor
 	 * 
-	 * @param fornecedor fornecedor da conta
+	 * @param fornecedor nome do fornecedor da conta
 	 * @param cpf        cpf e identificador do cliente
-	 * @return se torna a veracidade da existencia do cliente no cadastro
+	 * @return retorna a veracidade da existencia da conta do fornecedor com o
+	 *         cliente
 	 */
 	private boolean haContaFornecedor(String fornecedor, String cpf) {
 		for (Conta conta : contasCadastradas.get(cpf)) {
@@ -265,6 +290,13 @@ public class ControllerGeral {
 		return false;
 	}
 
+	/**
+	 * exibe a conta de um dado cliente com um fornecedor
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor da conta
+	 * @return nome do cliente + representacao da conta
+	 */
 	public String exibeContas(String cpf, String fornecedor) {
 		validador.validaString("Erro ao exibir conta do cliente: cpf nao pode ser vazio ou nulo.", cpf);
 		validador.validaCpfTamanho("Erro ao exibir conta do cliente: cpf invalido.", cpf);
@@ -275,29 +307,37 @@ public class ControllerGeral {
 		if (!haFornecedor(fornecedor)) {
 			throw new NullPointerException("Erro ao exibir conta do cliente: fornecedor nao existe.");
 		}
-		for(Conta conta : contasCadastradas.get(cpf)) {
+		for (Conta conta : contasCadastradas.get(cpf)) {
 			if ((conta.getFornecedor().toLowerCase()).equals(fornecedor.toLowerCase())) {
-				return "Cliente: " + sistemaCliente.getCliente(cpf).getNome() + " | " +conta.toString().substring(0, conta.toString().length() - 3);
+				return "Cliente: " + sistemaCliente.getCliente(cpf).getNome() + " | "
+						+ conta.toString().substring(0, conta.toString().length() - 3);
 			}
 		}
-		throw new NullPointerException("Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
+		throw new NullPointerException(
+				"Erro ao exibir conta do cliente: cliente nao tem nenhuma conta com o fornecedor.");
 	}
-	
+
 	private void criaConta(String cpf, String fornecedor) {
 		contasCadastradas.get(cpf).add(new Conta(cpf, fornecedor, sistemaCliente.getCliente(cpf).getNome()));
 	}
 
-
 	/**
-	 * verifica a existencia da conta de um cliente
+	 * verifica a existencia de um cliente no sistema de contas
 	 * 
 	 * @param cpf cpf e identificador do cliente
-	 * @return true caso o cliente possua uma conta, false caso o contrario
+	 * @return true caso o cliente esteja no sistema, false caso o contrario
 	 */
 	private boolean haContaCliente(String cpf) {
 		return contasCadastradas.containsKey(cpf);
 	}
 
+	/**
+	 * retorna o debito de uma conta
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor
+	 * @return retorna o valor total gasto na conta
+	 */
 	public String getDebito(String cpf, String fornecedor) {
 		double debitoTotal = 0.0;
 		validador.validaString("Erro ao recuperar debito: cpf nao pode ser vazio ou nulo.", cpf);
@@ -312,7 +352,7 @@ public class ControllerGeral {
 			if (!haFornecedor(fornecedor)) {
 				throw new NullPointerException("Erro ao recuperar debito: fornecedor nao existe.");
 			}
-			if(debitoTotal == 0) {
+			if (debitoTotal == 0) {
 				throw new IllegalArgumentException("Erro ao recuperar debito: cliente nao tem debito com fornecedor.");
 			}
 			return String.format("%.2f", debitoTotal).replace(",", ".");
@@ -321,6 +361,12 @@ public class ControllerGeral {
 		}
 	}
 
+	/**
+	 * verifica se ha um certo fornecedor no sistema de fornecedores
+	 * 
+	 * @param fornecedor nome do fornecedor
+	 * @return a veracidade da existencia da conta
+	 */
 	private boolean haFornecedor(String fornecedor) {
 		return sistemaFornecedor.haFornecedor(fornecedor);
 	}
@@ -328,12 +374,12 @@ public class ControllerGeral {
 	// US6 metodos para combos
 
 	/**
-	 * adiciona um combo
+	 * adiciona um combo no sistema de produtos
 	 * 
 	 * @param nome_fornecedor nome do fornecedor
 	 * @param nome_combo      nome do combo
 	 * @param descricao_combo descricao do combo
-	 * @param fator           porcentagem do preco original cobrado no combo
+	 * @param fator           porcentagem de desconto do preco total
 	 * @param produtos        produtos que fazem parte do combo
 	 */
 	public void cadastraCombo(String nome_fornecedor, String nome_combo, String descricao_combo, double fator,
@@ -342,69 +388,89 @@ public class ControllerGeral {
 	}
 
 	/**
-	 * edita o desconto de um combo
+	 * edita o fator de desconto de um combo
 	 * 
 	 * @param nome       nome do combo
 	 * @param descricao  descricao do combo
 	 * @param fornecedor fornecedor do combo
-	 * @param novoFator  novo fator do preco do combo
+	 * @param novoFator  novo fator dde desconto do combo
 	 */
 	public void editaCombo(String nome, String descricao, String fornecedor, double novoFator) {
 		sistemaFornecedor.editaCombo(nome, descricao, fornecedor, novoFator);
 	}
 
+	/**
+	 * exibe todas as contas de um dado cliente
+	 * 
+	 * @param cpf identificador e cpf do cliente
+	 * @return listagem em texto das contas do cliente
+	 */
 	public String exibeContasClientes(String cpf) {
 		validador.validaString("Erro ao exibir contas do cliente: cpf nao pode ser vazio ou nulo.", cpf);
 		validador.validaCpfTamanho("Erro ao exibir contas do cliente: cpf invalido.", cpf);
-		if(!contasCadastradas.containsKey(cpf)) {
+		if (!contasCadastradas.containsKey(cpf)) {
 			throw new NullPointerException("Erro ao exibir contas do cliente: cliente nao existe.");
 		}
-		if(contasCadastradas.get(cpf).isEmpty()) {
+		if (contasCadastradas.get(cpf).isEmpty()) {
 			throw new IllegalArgumentException("Erro ao exibir contas do cliente: cliente nao tem nenhuma conta.");
 		}
 		return listaOrdenado(cpf).substring(0, listaOrdenado(cpf).length() - 3);
 	}
 
+	/**
+	 * concatena as representacoes das contas em ordem alfabetica dos fornecedores
+	 * 
+	 * @param cpf identificador e cpf do cliente
+	 * @return listagem de todas as contas de um cliente em ordem alfabetica dos
+	 *         fornecedores
+	 */
 	private String listaOrdenado(String cpf) {
 		String saida = "Cliente: " + sistemaCliente.getCliente(cpf).getNome() + " | ";
 		List<Conta> fornecedoresOrdenados = ordenaFornecedores(cpf);
-		for(Conta conta : fornecedoresOrdenados) {
+		for (Conta conta : fornecedoresOrdenados) {
 			saida += conta.toString();
 		}
 		return saida;
 	}
-	
+
 	/**
-	 * ordena fornecedores que um cliente possui conta
+	 * ordena a lista de fornecedores
 	 * 
 	 * @param cpf identificador e cpf do cliente
-	 * @return lista de fornecedores ordenada alfabeticamente
+	 * @return lista ordenada de clientes
 	 */
-	public List<Conta> ordenaFornecedores(String cpf){
+	public List<Conta> ordenaFornecedores(String cpf) {
 		List<Conta> contas = new ArrayList<>();
 		contas.addAll(contasCadastradas.get(cpf));
 		Collections.sort(contas);
 		return contas;
 	}
 
+	/**
+	 * quita as dividas de um cliente numa dada conta
+	 * 
+	 * @param cpf        identificador e cpf do cliente
+	 * @param fornecedor nome do fornecedor
+	 */
 	public void realizaPagamento(String cpf, String fornecedor) {
 		validador.validaString("Erro no pagamento de conta: cpf nao pode ser vazio ou nulo.", cpf);
 		validador.validaCpfTamanho("Erro no pagamento de conta: cpf invalido.", cpf);
 		validador.validaString("Erro no pagamento de conta: fornecedor nao pode ser vazio ou nulo.", fornecedor);
-		if(!contasCadastradas.containsKey(cpf)) {
+		if (!contasCadastradas.containsKey(cpf)) {
 			throw new NullPointerException("Erro no pagamento de conta: cliente nao existe.");
 		}
 		if (!sistemaFornecedor.haFornecedor(fornecedor)) {
 			throw new NullPointerException("Erro no pagamento de conta: fornecedor nao existe.");
 		}
 		Conta removivel = null;
-		for(Conta conta : contasCadastradas.get(cpf)) {
-			if(conta.getFornecedor().toLowerCase().equals(fornecedor.toLowerCase())) {
+		for (Conta conta : contasCadastradas.get(cpf)) {
+			if (conta.getFornecedor().toLowerCase().equals(fornecedor.toLowerCase())) {
 				removivel = conta;
 			}
 		}
-		if(removivel == null) {
-			throw new NullPointerException("Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
+		if (removivel == null) {
+			throw new NullPointerException(
+					"Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
 		}
 		contasCadastradas.get(cpf).remove(removivel);
 	}

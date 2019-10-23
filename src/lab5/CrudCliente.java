@@ -5,11 +5,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Bruno Andrade Fernandes - 119110378
+ */
 public class CrudCliente {
 	/**
 	 * colecao de armazenamento dos clientes cadastrados
 	 */
 	private HashMap<String, Cliente> clientesCadastrados;
+	/**
+	 * validador de dados da classe
+	 */
+	private ValidaDados validador = new ValidaDados();
 
 	/**
 	 * Construtor do sistema de Clientes
@@ -19,7 +26,7 @@ public class CrudCliente {
 	}
 
 	/**
-	 * Cadastra um cliente caso n�o cadastrado, caso contrario lanca um erro
+	 * Cadastra um cliente caso nao cadastrado, caso contrario lanca um erro
 	 * 
 	 * @param cpf         identificador do cliente
 	 * @param nome        nome do cliente
@@ -37,15 +44,14 @@ public class CrudCliente {
 	}
 
 	/**
-	 * retorna a representacao textual padrao de um dado cliente especifico
+	 * retorna a representacao textual padrao de um dado cliente
 	 * 
-	 * @param cpf identificador do cliente
+	 * @param cpf identificador e cpf do cliente
 	 * @return representacao textual padrao de um cliente
 	 */
 	public String RepresentacaoCliente(String cpf) {
-		if (cpf == null || cpf.equals("")) {
-			throw new IllegalAccessError("Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.");
-		} else if (!haCliente(cpf)) {
+		validador.validaString("Erro na exibicao do cliente: cpf nao pode ser vazio ou nulo.", cpf);
+		if (!haCliente(cpf)) {
 			throw new NullPointerException("Erro na exibicao do cliente: cliente nao existe.");
 		}
 		return clientesCadastrados.get(cpf).toString();
@@ -54,7 +60,7 @@ public class CrudCliente {
 	/**
 	 * lista todos os clientes cadastrados na forma de sua representacao textual
 	 * 
-	 * @return texto da listagem
+	 * @return listagem em forma de texto
 	 */
 	public String listaClientes() {
 		String saida = "";
@@ -63,27 +69,20 @@ public class CrudCliente {
 		for (Cliente atual : clientesOrdenados) {
 			saida += atual.toString() + " | ";
 		}
-		if (saida.contentEquals("")) {
-			throw new NullPointerException("Nao ha clientes cadastrados");
-		}
+		validador.validaString("Nao ha clientes cadastrados", saida);
 		return saida.substring(0, saida.length() - 3);
 	}
 
 	/**
 	 * Edita os dados do cliente, exeto o cpf(imutavel)
 	 * 
-	 * @param cpf         identificador do cliente
+	 * @param cpf         identificador e cpf do cliente
 	 * @param nome        novo nome do cliente
 	 * @param email       novo email do cliente
 	 * @param localizacao novo local de trabalho do cliente
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
-		if (cpf == null) {
-			throw new NullPointerException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
-		}
-		if (cpf.equals("")) {
-			throw new IllegalArgumentException("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.");
-		}
+		validador.validaString("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.", cpf);
 		if (haCliente(cpf)) {
 			clientesCadastrados.get(cpf).editaCliente(atributo, novoValor);
 		} else {
@@ -92,16 +91,13 @@ public class CrudCliente {
 	}
 
 	/**
-	 * deleta o cliente que possui o cpf recebido
+	 * deleta um dado cliente
 	 * 
-	 * @param cpf cpf do cliente
+	 * @param cpf identificador e cpf do cliente
 	 */
 	public void deletarCliente(String cpf) {
-		if (cpf == null) {
-			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
-		} else if (cpf.equals("")) {
-			throw new NullPointerException("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo");
-		} else if (haCliente(cpf)) {
+		validador.validaString("Erro na remocao do cliente: cpf nao pode ser vazio ou nulo", cpf);
+		if (haCliente(cpf)) {
 			clientesCadastrados.remove(cpf);
 		} else {
 			throw new NullPointerException("Erro na remocao do cliente: cliente nao existe.");
@@ -123,7 +119,7 @@ public class CrudCliente {
 	}
 
 	/**
-	 * pega um cliente cadastrado
+	 * retorna um cliente cadastrado
 	 * 
 	 * @param cpf identificador e cpf do cliente
 	 * @return cliente que possui o cpf
