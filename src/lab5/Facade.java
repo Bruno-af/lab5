@@ -250,9 +250,11 @@ public class Facade {
 	public String exibeContasClientes(String cpf) {
 		return sistema.exibeContasClientes(cpf);
 	}
-
-	public String listaContas(String cpf) {
-		return "";
+	
+	// Comando para o pagamento
+	
+	public void realizaPagamento(String cpf, String fornecedor) {
+		sistema.realizaPagamento(cpf, fornecedor);
 	}
 
 	// public main de testes de aceitacao
@@ -260,7 +262,7 @@ public class Facade {
 	public static void main(String[] args) {
 		args = new String[] { "lab5.Facade", "Testes_aceitacao/use_case_1.txt", "Testes_aceitacao/use_case_2.txt",
 				"Testes_aceitacao/use_case_3.txt", "Testes_aceitacao/use_case_4.txt", "Testes_aceitacao/use_case_6.txt",
-				"Testes_aceitacao/use_case_5.txt" };
+				"Testes_aceitacao/use_case_5.txt", "Testes_aceitacao/use_case_7.txt", "Testes_aceitacao/use_case_8.txt"};
 		EasyAccept.main(args);
 	}
 }

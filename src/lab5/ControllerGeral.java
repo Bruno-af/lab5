@@ -386,4 +386,26 @@ public class ControllerGeral {
 		Collections.sort(contas);
 		return contas;
 	}
+
+	public void realizaPagamento(String cpf, String fornecedor) {
+		validador.validaString("Erro no pagamento de conta: cpf nao pode ser vazio ou nulo.", cpf);
+		validador.validaCpfTamanho("Erro no pagamento de conta: cpf invalido.", cpf);
+		validador.validaString("Erro no pagamento de conta: fornecedor nao pode ser vazio ou nulo.", fornecedor);
+		if(!contasCadastradas.containsKey(cpf)) {
+			throw new NullPointerException("Erro no pagamento de conta: cliente nao existe.");
+		}
+		if (!sistemaFornecedor.haFornecedor(fornecedor)) {
+			throw new NullPointerException("Erro no pagamento de conta: fornecedor nao existe.");
+		}
+		Conta removivel = null;
+		for(Conta conta : contasCadastradas.get(cpf)) {
+			if(conta.getFornecedor().toLowerCase().equals(fornecedor.toLowerCase())) {
+				removivel = conta;
+			}
+		}
+		if(removivel == null) {
+			throw new NullPointerException("Erro no pagamento de conta: nao ha debito do cliente associado a este fornecedor.");
+		}
+		contasCadastradas.get(cpf).remove(removivel);
+	}
 }
