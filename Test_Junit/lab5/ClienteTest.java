@@ -58,7 +58,7 @@ class ClienteTest {
 	@Test
 	void testClienteNomeNulo() {
 		try {
-			Cliente nomeNulo = new Cliente("3247288211", null, "Gaudencio.Lenda@ccc.ufcg.edu.br", "Lcc3");
+			Cliente nomeNulo = new Cliente("32472882111", null, "Gaudencio.Lenda@ccc.ufcg.edu.br", "Lcc3");
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 		}
@@ -76,7 +76,7 @@ class ClienteTest {
 	@Test
 	void testClienteEmailNulo() {
 		try {
-			Cliente emailNulo = new Cliente("3247288211", "nome incrivel", null, "Lcc3");
+			Cliente emailNulo = new Cliente("32472882111", "nome incrivel", null, "Lcc3");
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 			
@@ -95,7 +95,7 @@ class ClienteTest {
 	@Test
 	void testClienteLocNulo() {
 		try {
-			Cliente locNulo = new Cliente("3247288211", "nome do cara", "email do cara", null);
+			Cliente locNulo = new Cliente("32472882111", "nome do cara", "email do cara", null);
 			fail(); // nao deve ser construido na pratica
 		} catch (NullPointerException npe) {
 		}

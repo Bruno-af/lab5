@@ -67,8 +67,8 @@ class CrudClienteTest {
 		try {
 			sistemaVazio.listaClientes();
 			fail(); // nao se lista listas vazias
-		} catch (NullPointerException npe) {
-			
+		} catch (IllegalArgumentException npe) {
+			assertTrue(npe.getMessage().equals("Nao ha clientes cadastrados"));
 		}
 	}
 

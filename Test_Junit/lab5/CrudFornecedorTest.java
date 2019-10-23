@@ -133,7 +133,7 @@ class CrudFornecedorTest {
 	
 		@Test
 		void testListaProdutos() {
-			assertEquals(sistemaFornecedores.listaProdutos("cafe com monitor"),"misto - quente - R$4,00");
+			assertEquals(sistemaFornecedores.listaProdutos("cafe com monitor"),"cafe com monitor - misto - quente - R$4,00");
 		}
 		
 		@Test
@@ -155,8 +155,8 @@ class CrudFornecedorTest {
 			try{
 				assertEquals(sistemaVazio.listaTodosProdutos(),"cafe com monitor - misto - quente - R$4,00");
 				fail();
-			} catch(NullPointerException npe) {
-				
+			} catch(IllegalArgumentException npe) {
+				assertTrue(npe.getMessage().equals("nenhum produto cadastrado"));
 			}
 		}
 	

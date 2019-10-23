@@ -172,7 +172,7 @@ class FornecedorTest {
 	void testListaProdutosInexistentes() {
 		try {
 			fornecedorSemProdutos.listaProdutos();
-			fail(); // nao � possivel listar produtos inexistentes
+			fail(); // nao e possivel listar produtos inexistentes
 		} catch (NullPointerException npe) {
 			assertEquals("Nao ha produtos cadastrados", npe.getMessage());
 		}
@@ -185,11 +185,7 @@ class FornecedorTest {
 	
 	@Test
 	void testListagemProdutosInexistentes() {
-		try {
-			fornecedorSemProdutos.listagemProdutos();
-			fail(); // nao � possivel listar produtos inexistentes
-		} catch (NullPointerException npe) {
-		}
+		assertTrue(fornecedorSemProdutos.listagemProdutos().equals("nome -"));
 	}
 
 	 @Test

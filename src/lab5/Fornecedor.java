@@ -287,7 +287,7 @@ public class Fornecedor implements Comparable<Fornecedor> {
 		validador.validaString("Erro no cadastro de combo: combo deve ter produtos.", produtos2);
 		IdProduto key = new IdProduto(nome_combo, descricao_combo);
 		if (haCombo(key.retornaId())) {
-			throw new IllegalAccessError("Erro no cadastro de combo: combo ja existe.");
+			throw new IllegalArgumentException("Erro no cadastro de combo: combo ja existe.");
 		}
 		if (fator <= 0 | fator >= 1) {
 			throw new IllegalArgumentException("Erro no cadastro de combo: fator invalido.");

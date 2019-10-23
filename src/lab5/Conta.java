@@ -31,7 +31,7 @@ public class Conta extends Comparador {
 		super(fornecedor);
 		this.cpfCliente = cpfCliente;
 		this.nomeCliente = nomeCliente;
-		comprasCadastradas = new ArrayList<>();
+		comprasCadastradas = new ArrayList<Compra>();
 	}
 
 	/**
@@ -74,8 +74,6 @@ public class Conta extends Comparador {
 	 * representacao textual de cada compra na conta
 	 */
 	public String toString() {
-		// Cliente: Amigao Fernandes | Marcos | Coxao com batata - 03-12-2013 |
-		// Refrigerante - 03-06-2017
 		return super.getFornecedor() + " | " + listaCompras();
 	}
 
