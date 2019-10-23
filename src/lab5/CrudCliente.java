@@ -76,10 +76,9 @@ public class CrudCliente {
 	/**
 	 * Edita os dados do cliente, exeto o cpf(imutavel)
 	 * 
-	 * @param cpf         identificador e cpf do cliente
-	 * @param nome        novo nome do cliente
-	 * @param email       novo email do cliente
-	 * @param localizacao novo local de trabalho do cliente
+	 * @param cpf identificador e cpf do cliente
+	 * @param atributo atributo que se deseja alterar
+	 * @param novoValor novo valor associador
 	 */
 	public void editaCliente(String cpf, String atributo, String novoValor) {
 		validador.validaString("Erro na edicao do cliente: cpf nao pode ser vazio ou nulo.", cpf);

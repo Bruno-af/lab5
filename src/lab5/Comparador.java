@@ -11,6 +11,8 @@ public abstract class Comparador implements Comparable<Comparador> {
 
 	/**
 	 * constroi o comparador de fornecedores
+	 * 
+	 * @param fornecedor nome do fornecedor
 	 */
 	public Comparador(String fornecedor) {
 		this.fornecedor = fornecedor;
