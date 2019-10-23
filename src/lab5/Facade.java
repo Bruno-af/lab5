@@ -290,6 +290,18 @@ public class Facade {
 	}
 
 	
+	// comandos de ordenacao
+	
+	
+	public String listarCompras() {
+		return sistema.listarCompras();
+	}
+	
+	public void ordenaPor(String criterio) {
+		sistema.ordenaPor(criterio);
+	}
+	
+	
 	// public main de testes de aceitacao
 
 	

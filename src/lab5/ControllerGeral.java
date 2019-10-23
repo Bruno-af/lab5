@@ -25,6 +25,10 @@ public class ControllerGeral {
 	 * validador de dados da classe
 	 */
 	private ValidaDados validador;
+	/**
+	 * criterio de ordenacao do sistema
+	 */
+	private String criterioOrdenacao;
 
 	/**
 	 * constroi o sistema geral inicializando seus subsistemas e validador
@@ -34,6 +38,7 @@ public class ControllerGeral {
 		this.sistemaFornecedor = new CrudFornecedor();
 		this.contasCadastradas = new HashMap<String, List<Conta>>();
 		this.validador = new ValidaDados();
+		criterioOrdenacao = "brunoD+oi&z3h";
 	}
 
 	// US1 comandos administrador/cliente
@@ -474,4 +479,66 @@ public class ControllerGeral {
 		}
 		contasCadastradas.get(cpf).remove(removivel);
 	}
+
+	/**
+	 * lista Compras com o criterio definido
+	 * 
+	 * @return lista ordenada pelo criterio
+	 */
+	public String listarCompras() {
+		if(criterioOrdenacao.equals("brunoD+oi&z3h")) {
+			throw new IllegalArgumentException("Erro na listagem de compras: criterio ainda nao definido pelo sistema.");
+		} else if(criterioOrdenacao.equals("Cliente")) {
+			
+//			(<fornecedor>, <desc_prod>, <data_compra>)
+		} else if(criterioOrdenacao.equals("Fornecedor")) {
+			
+//		<cliente>, <desc_prod>, <data_compra>
+		} else if(criterioOrdenacao.equals("Data")) {
+			
+//			(<cliente>, <fornecedor>, <desc_prod>);
+		}
+		return null;
+	}
+	
+	private String OrdenaPeloCriterio() {
+		String saida = "";
+		for(Cliente cliente : ordenaClientes()) {
+			
+		}
+		return saida;
+	}
+	
+	/**
+	 * ordena clientes cadastrados, alfabeticamente
+	 * 
+	 * @return lista ordenada de clientes
+	 */
+	private List<Cliente> ordenaClientes() {
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		for(String clienteCpf : contasCadastradas.keySet()) {
+			clientes.add(sistemaCliente.getCliente(clienteCpf));
+		}
+		Collections.sort(clientes);
+		return clientes;
+	}
+
+	/**
+	 * Define um novo criterio de ordenacao
+	 * 
+	 * @param criterio novo criterio associado
+	 */
+	public void ordenaPor(String criterio) {
+		validador.validaString("Erro na listagem de compras: criterio nao pode ser vazio ou nulo.", criterio);
+		if(criterio.equals("Cliente")) {
+			this.criterioOrdenacao = "Cliente";
+		} else if(criterio.equals("Fornecedor")) {
+			this.criterioOrdenacao = "Fornecedor";
+		} else if (criterio.equals("Data")) {
+			this.criterioOrdenacao = "Data";
+		} else {
+			throw new IllegalArgumentException("Erro na listagem de compras: criterio nao oferecido pelo sistema.");
+		}
+	}
+
 }
